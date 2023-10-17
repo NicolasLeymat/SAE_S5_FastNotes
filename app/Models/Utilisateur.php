@@ -22,7 +22,8 @@ class Utilisateur extends Authenticatable
         'prenom',
         'password',
         'isProf',
-        'isAdmin'
+        'isAdmin',
+        'groupe_id'
     ];
 
     protected $primaryKey = "code";

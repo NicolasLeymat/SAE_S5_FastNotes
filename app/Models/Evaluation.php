@@ -9,7 +9,7 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","coefficient","type"];
+    protected $fillable = ["libelle","coefficient","type", "ressource_id"];
 
     protected $primaryKey = "id";
 

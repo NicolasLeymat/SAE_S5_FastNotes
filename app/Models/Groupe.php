@@ -9,7 +9,7 @@ class Groupe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","semestre","annee"];
+    protected $fillable = ["libelle","semestre","annee", "parcours_id"];
 
     protected $id = "id";
 

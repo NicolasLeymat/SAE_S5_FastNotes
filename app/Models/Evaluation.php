@@ -9,7 +9,7 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","coefficient","type", "ressource_id"];
+    protected $fillable = ["libelle","coefficient","type", "id_ressource"];
 
     protected $primaryKey = "id";
 
@@ -18,6 +18,6 @@ class Evaluation extends Model
     }
 
     public function ressource () {
-        return $this->belongsTo(Ressource::class);
+        return $this->belongsTo(Ressource::class, "id_ressource");
     }
 }

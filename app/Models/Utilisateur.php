@@ -23,7 +23,7 @@ class Utilisateur extends Authenticatable
         'password',
         'isProf',
         'isAdmin',
-        'groupe_id'
+        'id_groupe'
     ];
 
     protected $primaryKey = "code";
@@ -43,7 +43,7 @@ class Utilisateur extends Authenticatable
     }
 
     public function groupe() {
-        return $this->belongsTo(Groupe::class);
+        return $this->belongsTo(Groupe::class, "id_groupe");
     }
 
     /**

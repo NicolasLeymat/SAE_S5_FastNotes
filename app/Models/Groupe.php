@@ -9,12 +9,12 @@ class Groupe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","semestre","annee", "parcours_id"];
+    protected $fillable = ["libelle","semestre","annee", "id_parcours"];
 
     protected $id = "id";
 
     public function parcours () {
-        return $this->belongsTo(Parcours::class);
+        return $this->belongsTo(Parcours::class,"id_parcours");
     }
 
     public function utilisateurs () {

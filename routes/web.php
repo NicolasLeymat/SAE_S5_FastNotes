@@ -16,7 +16,15 @@ use App\Http\Controllers\EvaluationController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+
+Route::get('/dashprof', function () {
+    return view('dashprof');
+});
+
+Route::get('/eval', function () {
+    return view('evalutation');
 });
 
 Route::get('/dashboard', function () {

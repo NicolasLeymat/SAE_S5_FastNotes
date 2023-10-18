@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Utilisateur;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -35,13 +35,13 @@ class RegisteredUserController extends Controller
             'identification' => ['required', 'string', 'min:8','max:8'],
             'name' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Utilisateur::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'isProf' => ['required'],
             'isAdmin' => ['required']
         ]);
 
-        $user = User::create([
+        $user = Utilisateur::create([
             'code' => $request->code,
             'identification' => $request->identification,
             'nom' => $request->name,

@@ -80,7 +80,10 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
         <div class="home_content grid">
-            $eleves,$eval
+            @foreach($eleves as $eleve)
+                
+            @endforeach
+            $eval
         </div>
         </div>
     </section>

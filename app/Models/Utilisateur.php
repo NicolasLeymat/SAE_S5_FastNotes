@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Utilisateur extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -30,6 +30,8 @@ class User extends Authenticatable
         'isAdmin',
         'id_groupe'
     ];
+
+    protected $table = "users";
 
     public function evaluations() {
         return $this->belongsToMany (Evaluation::class)->withPivot("note");

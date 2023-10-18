@@ -7,9 +7,9 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="identifiant" :value="__('Identifiant IUT')" />
-            <x-text-input id="identifiant" class="block mt-1 w-full" type="text" name="identifiant" :value="old('identifiant')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('identifiant')" class="mt-2" />
+            <x-input-label for="code" :value="__('Identifiant')" />
+            <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" :value="old('code')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('code')" class="mt-2" />
         </div>
 
         <!-- Password -->

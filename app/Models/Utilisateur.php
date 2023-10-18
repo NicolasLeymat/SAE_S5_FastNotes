@@ -17,10 +17,15 @@ class Utilisateur extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $primaryKey = "code";
     protected $fillable = [
+        'code',
+        'identification',
+        'password',
+        'email',
         'nom',
         'prenom',
-        'password',
         'isProf',
         'isAdmin',
         'id_groupe'
@@ -28,7 +33,13 @@ class Utilisateur extends Authenticatable
 
     protected $table = "users";
 
-    protected $primaryKey = "code";
+    public function evaluations() {
+        return $this->belongsToMany (Evaluation::class)->withPivot("note");
+    }
+
+    public function groupe() {
+        return $this->belongsTo(Groupe::class, "id_groupe");
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -40,21 +51,12 @@ class Utilisateur extends Authenticatable
         'remember_token',
     ];
 
-    public function evaluations() {
-        return $this->belongsToMany (Evaluation::class)->withPivot("note");
-    }
-
-    public function groupe() {
-        return $this->belongsTo(Groupe::class, "id_groupe");
-    }
-
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

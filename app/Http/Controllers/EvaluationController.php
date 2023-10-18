@@ -14,7 +14,7 @@ class EvaluationController extends Controller
     public function index()
     {
         $results = Evaluation::paginate(10);
-        return view('listeEvaluations')->with('results', $results);
+        return view('dashprof')->with('evals', $results);
     }
 
     /**
@@ -46,7 +46,7 @@ class EvaluationController extends Controller
             }
         }
         dd($eleves);
-        return view('')->with('eleves', $eleves);
+        return view('evaluation')->with('eleves', $eleves)->with('eval', $evaluation);
     }
 
     /**

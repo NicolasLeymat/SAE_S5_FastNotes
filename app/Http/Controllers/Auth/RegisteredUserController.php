@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Utilisateur;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -31,16 +31,28 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
+            'code' => ['required', 'string', 'min:8','max:8'],
+            'identification' => ['required', 'string', 'min:8','max:8'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Utilisateur::class],
+            'prenom' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'isProf' => ['required'],
+            'isAdmin' => ['required']
         ]);
 
-        $user = Utilisateur::create([
-            'name' => $request->name,
+        $user = User::create([
+            'code' => $request->code,
+            'identification' => $request->identification,
+            'nom' => $request->name,
+            'prenom' => $request->prenom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'isProf' => $request->isProf,
+            'isAdmin' => $request->isAdmin,
+            'idGroupe' => $request->idGroupe
         ]);
+        
 
         event(new Registered($user));
 

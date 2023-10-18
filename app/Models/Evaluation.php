@@ -12,6 +12,8 @@ class Evaluation extends Model
     protected $fillable = ["libelle","coefficient","type"];
 
     protected $primaryKey = "id";
+    
+    protected $table = "evaluation";
 
     public function utilisateurs () {
         return $this->hasMany(Utilisateur::class)->withPivot('note');

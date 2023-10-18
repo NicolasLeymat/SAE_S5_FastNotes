@@ -79,11 +79,12 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-          <div class="home_content grid">
-          </div>
+        <div class="home_content grid">
+            $eleves,$eval
         </div>
-      </section>
-      <!-- HOME FIN -->
+        </div>
+    </section>
+    <!-- HOME FIN -->
     </main>
     <!-- MAIN FIN -->
 

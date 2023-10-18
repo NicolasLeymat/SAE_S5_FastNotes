@@ -79,11 +79,30 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-          <div class="home_content grid">
-          </div>
+        <div class="home_content grid">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($evals as $evaluation)
+                    <a href="{{ route('evaluations') }}" class="">
+                    <tr>
+                        <td>{{evaluation -> libelle}}</td>
+                        <td>{{ evaluation -> type }}</td>
+                    </tr>
+                    </a>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
-      </section>
-      <!-- HOME FIN -->
+        </div>
+    </section>
+    <!-- HOME FIN -->
     </main>
     <!-- MAIN FIN -->
 

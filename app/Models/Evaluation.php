@@ -16,7 +16,7 @@ class Evaluation extends Model
     protected $table = "evaluation";
 
     public function utilisateurs () {
-        return $this->hasMany(Utilisateur::class)->withPivot('note');
+        return $this->belongsToMany(Utilisateur::class, 'note_evaluation', 'id_evaluation', 'code_eleve')->withPivot('note');
     }
 
     public function ressource () {

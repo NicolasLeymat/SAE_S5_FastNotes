@@ -39,9 +39,14 @@ class EvaluationController extends Controller
     public function show(string $id)
     {
         $evaluation = Evaluation::find($id);
-        $eleves = Utilisateur::find($evaluation->eleves_id);
+        $eleves = [];
+        foreach($evaluation->utilisateurs as $utilisateur){
+            if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
+                array_push($eleves, $utilisateur->pivot->code_eleve);
+            }
+        }
         dd($eleves);
-        return view('')->with('', $evaluation);
+        return view('')->with('eleves', $eleves);
     }
 
     /**

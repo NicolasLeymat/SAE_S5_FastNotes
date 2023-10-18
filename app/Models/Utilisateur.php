@@ -26,6 +26,8 @@ class Utilisateur extends Authenticatable
         'id_groupe'
     ];
 
+    protected $table = "users";
+
     protected $primaryKey = "code";
 
     /**

@@ -63,7 +63,17 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-          <div class="home_content grid">
+          <div class="home_content">
+            @auth
+              <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
+              @if (Auth::user()->isProf)
+                <p >Profésseur</p>
+              @elseif (Auth::user()->isAdmin)
+                <p>Admin</p>
+              @else
+                <p>Éleve</p>
+              @endif
+            @endauth
           </div>
         </div>
       </section>

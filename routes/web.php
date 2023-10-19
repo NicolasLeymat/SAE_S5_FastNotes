@@ -45,5 +45,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('evaluations', EvaluationController::class);
-Route::resource('evaluations', EvaluationController::class)->name("index","evaluations");
+Route::resource('evaluation', EvaluationController::class);
+Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");

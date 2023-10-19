@@ -44,7 +44,7 @@ class EvaluationController extends Controller
         foreach($evaluation->utilisateurs as $utilisateur){
             if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
 
-                $infoEleve = ['id'=>$utilisateur->identification, 'nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
+                $infoEleve = ['code'=>$utilisateur->pivot->code_eleve, 'nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
                 array_push($eleves, $infoEleve);
             }
         }
@@ -65,13 +65,22 @@ class EvaluationController extends Controller
 
 
         if ($note >=0 && $note <=20) {
-        $eleve->evaluations()
-        ->updateExistingPivot($idEval, ['note' => $note]);
+        $evaluation->utilisateurs()
+        ->updateExistingPivot($idEleve, ['note' => $note]);
         }
     }
 
     public function saisirNotes (Request $request) {
+        
+        $evalId =$request->input('evaluation_id');
+        $notes = $request->input('notes');
 
+        foreach ($notes as $eleveID => $note) {
+            $this->saisirNote($evalId,$eleveID,$note["note"]);
+
+        }
+
+        return back();
     }
 
     /**

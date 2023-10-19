@@ -31,7 +31,8 @@ Route::get('/visuNote', function () {
     return view('visuNote');
 })->name('visuNote');
 
-Route::post('saisir_notes','EvaluationController@saisirNote')->name('saisir_notes');
+Route::post('saisir_note',[EvaluationController::class, 'saisirNote'])->name('saisir_note');
+Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -80,9 +80,25 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
         <div class="home_content grid">
+        <form action="{{ route('saisir_notes') }}" method="POST">
+            
+            @csrf
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
             @foreach($eleves as $eleve)
-                
+                <tr>
+                    <td>{{$eleve['nom']}}</td>
+                    <td>{{$eleve['prenom']}}</td>
+                    <td>{{$eleve['note']}}</td>
+                </tr>
             @endforeach
+            </table>
             $eval
         </div>
         </div>

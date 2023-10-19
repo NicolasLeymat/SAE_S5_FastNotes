@@ -27,6 +27,8 @@ Route::get('/eval', function () {
     return view('evaluation');
 });
 
+Route::post('saisir_notes','EvaluationController@saisirNote')->name('saisir_notes');
+
 Route::get('/dashprof', function () {
     return view('dashprof');
 })->middleware(['auth', 'verified'])->name('dashprof');

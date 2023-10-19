@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Evaluation;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
+use Validator;
 
 class EvaluationController extends Controller
 {
@@ -42,10 +43,12 @@ class EvaluationController extends Controller
         $eleves = [];
         foreach($evaluation->utilisateurs as $utilisateur){
             if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
-                array_push($eleves, $utilisateur->pivot->code_eleve);
+
+                $infoEleve = ['nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
+                array_push($eleves, $infoEleve);
             }
         }
-        return view('evaluation')->with('eleves', $eleves)->with('eval', $evaluation);
+        return view('evaluation',compact('evaluation','eleves'));
     }
 
     /**
@@ -54,6 +57,17 @@ class EvaluationController extends Controller
     public function edit(string $id)
     {
         //
+    }
+
+    public function saisirNote (string $idEval, string $idEleve, float $note) {
+        $evaluation = Evaluation::findOrFail($idEval);
+        $eleve = Utilisateur::findOrFail($idEleve);
+
+
+        if ($note >=0 && $note <=20) {
+        $eleve->evaluations()
+        ->updateExistingPivot($idEval, ['note' => $note]);
+        }
     }
 
     /**

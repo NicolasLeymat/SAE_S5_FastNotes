@@ -24,12 +24,12 @@ Route::get('/dashprof', function () {
 });
 
 Route::get('/eval', function () {
-    return view('evaluation');
+    return view('evalutation');
 });
 
-Route::get('/dashprof', function () {
-    return view('dashprof');
-})->middleware(['auth', 'verified'])->name('dashprof');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

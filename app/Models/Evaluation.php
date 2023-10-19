@@ -12,9 +12,11 @@ class Evaluation extends Model
     protected $fillable = ["libelle","coefficient","type", "id_ressource"];
 
     protected $primaryKey = "id";
+    
+    protected $table = "evaluation";
 
     public function utilisateurs () {
-        return $this->hasMany(Utilisateur::class)->withPivot('note');
+        return $this->belongsToMany(Utilisateur::class, 'note_evaluation', 'id_evaluation', 'code_eleve')->withPivot('note');
     }
 
     public function ressource () {

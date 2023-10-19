@@ -70,6 +70,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Numéro étudiant<th>
                         <th>Nom</th>
                         <th>Prenom</th>
                         <th>Note</th>
@@ -77,7 +78,8 @@
                 </thead>
             @foreach($eleves as $eleve)
                 <tr>
-                    <td>{{$eleve['id']}} {{$eleve['nom']}}</td>
+                    <td>{{$eleve['id']}}</td>
+                    <td>{{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
                     <td><input type="text" name="notes[{{ $eleve['id'] }}]" value="{{ $eleve['note'] }}"></td>
                 </tr>

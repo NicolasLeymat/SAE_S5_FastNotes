@@ -17,7 +17,7 @@ use App\Http\Controllers\EvaluationController;
 
 Route::get('/', function () {
     return view('index');
-})->name('');
+})->name('index');
 
 Route::get('/dashprof', function () {
     return view('dashprof');
@@ -31,7 +31,8 @@ Route::get('/visuNote', function () {
     return view('visuNote');
 })->name('visuNote');
 
-Route::post('saisir_notes','EvaluationController@saisirNote')->name('saisir_notes');
+Route::post('saisir_note',[EvaluationController::class, 'saisirNote'])->name('saisir_note');
+Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

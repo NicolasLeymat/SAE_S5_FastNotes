@@ -21,7 +21,7 @@
     <!--  HEADER  -->
     <header class="header" id="header">
     <nav class="nav container">
-        <a href="#" class="nav_logo"
+        <a href="{{ route('index') }}" class="nav_logo"
         >Fast <br />
         Notes</a
         >
@@ -65,8 +65,8 @@
         <div class="home_container container grid">
         <div class="home_content grid">
         <form action="{{ route('saisir_notes') }}" method="POST">
-            
             @csrf
+            <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
             <table>
                 <thead>
                     <tr>
@@ -81,7 +81,7 @@
                     <td>{{$eleve['id']}}</td>
                     <td>{{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
-                    <td><input type="text" name="notes[{{ $eleve['id'] }}]" value="{{ $eleve['note'] }}"></td>
+                    <td><input type="text" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}"></td>
                 </tr>
             @endforeach
             </table>

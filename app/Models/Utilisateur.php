@@ -18,7 +18,8 @@ class Utilisateur extends Authenticatable
      * @var array<int, string>
      */
 
-    protected $primaryKey = "code";
+    public $primaryKey = 'code';
+    public $incrementing = false;
     protected $fillable = [
         'code',
         'identification',
@@ -34,11 +35,12 @@ class Utilisateur extends Authenticatable
     protected $table = "users";
 
     public function evaluations() {
-        return $this->belongsToMany (Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')->withPivot("note");
+        return $this->belongsToMany (Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')
+        ->withPivot("note");
     }
 
     public function groupe() {
-        return $this->belongsTo(Groupe::class, "id_groupe");
+        return $this->belongsTo(Groupe::class);
     }
 
     /**

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
+use App\Models\Groupe;
 use App\Models\Utilisateur;
+use App\Models\Parcours;
+use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -37,15 +40,42 @@ class EvaluationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $idEval)
     {
-        $evaluation = Evaluation::find($id);
+        $evaluation = Evaluation::find($idEval);
         $eleves = [];
-        foreach($evaluation->utilisateurs as $utilisateur){
-            if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
-                array_push($eleves, $utilisateur);
+
+
+
+        foreach($evaluation->ressource->parcours as $parcoursEval){
+            foreach($parcoursEval->groupes as $groupe){
+                $groupe = Groupe::find($groupe->id);
+                foreach($groupe->utilisateurs as $eleve){
+
+
+                    if($eleve->isProf == 0 && $eleve->isAdmin == 0){
+                        $pivotData = $eleve
+                        ->evaluations()
+                        ->where('id_evaluation', $idEval)->first();
+
+                        if ($pivotData) {
+                            $note = $pivotData->pivot->note;
+                        } else {
+                            $note = '';
+                        }
+                        
+                        
+                        
+                        $infosEleve = ['nom'=>$eleve->nom, 'identification'=>$eleve->identification, 'prenom'=>$eleve->prenom, 'note'=>$note,'code'=>$eleve->code];
+                        array_push($eleves, $infosEleve);
+                    }
+                    
+                }
             }
         }
+                    
+                
+        
         return view('evaluation',compact('evaluation','eleves'));
     }
 
@@ -74,7 +104,9 @@ class EvaluationController extends Controller
         $notes = $request->input('notes');
 
         foreach ($notes as $eleveID => $note) {
-            $this->saisirNote($evalId,$eleveID,$note["note"]);
+            if ($note != null) {
+                $this->saisirNote($evalId,$eleveID,$note["note"]);
+            }
 
         }
 

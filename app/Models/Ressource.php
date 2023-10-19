@@ -10,7 +10,7 @@ class Ressource extends Model
     use HasFactory;
 
     protected $table = 'ressource';
-    protected $fillable = ["nom"];
+    protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
 
     public function evaluations() {
@@ -22,6 +22,6 @@ class Ressource extends Model
     }
 
     public function parcours() {
-        return $this->belongsToMany(Parcours::class);
+        return $this->belongsToMany(Parcours::class,"coefficient_ressource","code_ressource","id_parcours")->withPivot("coefficient");
     }
 }

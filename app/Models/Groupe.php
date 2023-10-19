@@ -13,11 +13,13 @@ class Groupe extends Model
 
     protected $id = "id";
 
+    protected $table = "groupe";
+
     public function parcours () {
-        return $this->belongsTo(Parcours::class,"id_parcours");
+        return $this->belongsTo(Parcours::class,"id_parcours","id");
     }
 
     public function utilisateurs () {
-        return $this->hasMany(Utilisateur::class);
+        return $this->hasMany(Utilisateur::class,"id_groupe");
     }
 }

@@ -13,8 +13,8 @@ class Parcours extends Model
 
     protected $primaryKey = "id";
 
-    public function groupe() {
-        return $this->hasMany(Groupe::class);
+    public function groupes() {
+        return $this->hasMany(Groupe::class,"id");
     }
 
     public function ressources() {

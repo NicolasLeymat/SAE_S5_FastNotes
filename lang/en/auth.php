@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Cet identifiant n\'existe pas.',
+    'failed' => 'Mot de passe ou identifiant incorrect.',
     'password' => 'Mot de passe incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

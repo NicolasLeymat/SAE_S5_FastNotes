@@ -45,7 +45,6 @@ class EvaluationController extends Controller
                 array_push($eleves, $utilisateur->pivot->code_eleve);
             }
         }
-        dd($eleves);
         return view('evaluation')->with('eleves', $eleves)->with('eval', $evaluation);
     }
 

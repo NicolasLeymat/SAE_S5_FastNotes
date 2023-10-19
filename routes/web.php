@@ -39,4 +39,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('evaluations', EvaluationController::class);
+Route::resource('evaluation', EvaluationController::class);

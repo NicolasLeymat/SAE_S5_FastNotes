@@ -27,23 +27,23 @@
         >
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">
-        @auth 
-        <li class="nav_item">
+          @auth 
+          <li class="nav_item">
             <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-dropdown-link :href="route('logout')"
-                onclick="event.preventDefault();
+              @csrf
+              <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault();
                     this.closest('form').submit();">
                 <p class="nav_link">{{ __('Se déconnecter') }}</p>
-            </x-dropdown-link>
+              </x-dropdown-link>
             </form>
-        </li>
+          </li>
             @else
-            <li class="nav_item">
-            <a href="{{ route('login') }}" class="nav_link">
-                <i class="uil uil-message nav_icon"></i> Log in
-            </a>
-            </li>
+              <li class="nav_item">
+              <a href="{{ route('login') }}" class="nav_link">
+                  <i class="uil uil-message nav_icon"></i> Log in
+              </a>
+              </li>
             @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
@@ -63,31 +63,14 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <div class="home_content grid">
-        <form action="{{ route('saisir_notes') }}" method="POST">
-            @csrf
-            <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Note</th>
-                    </tr>
-                </thead>
-            @foreach($eleves as $eleve)
-                <tr>
-                    <td>{{$eleve['code']}} {{$eleve['nom']}}</td>
-                    <td>{{$eleve['prenom']}}</td>
-                    <td><input type="text" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}"></td>
-                </tr>
+          <div class="home_content">
+            @foreach ($evaluations as $evaluation)
+
             @endforeach
-            </table>
-            <button type="submit">Enregistrer les notes</button>
+          </div>
         </div>
-        </div>
-    </section>
-    <!-- HOME FIN -->
+      </section>
+      <!-- HOME FIN -->
     </main>
     <!-- MAIN FIN -->
 
@@ -138,5 +121,6 @@
     <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
     <!--  MAIN JS  -->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

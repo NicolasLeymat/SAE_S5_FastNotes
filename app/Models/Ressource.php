@@ -9,8 +9,8 @@ class Ressource extends Model
 {
     use HasFactory;
 
+    protected $table = 'ressource';
     protected $fillable = ["nom"];
-
     protected $primaryKey = "code";
 
     public function evaluations() {

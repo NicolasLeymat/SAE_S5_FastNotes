@@ -64,9 +64,24 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
           <div class="home_content">
-            @foreach ($evaluations as $evaluation)
-
-            @endforeach
+          {{ $evaluations }}
+          @csrf
+            <table>
+                <thead>
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Type</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                @foreach ($evaluations as $evaluation)
+                <tr>
+                  <td> {{ $evaluation['libelle'] }} </td>
+                  <td> {{ $evaluation['type'] }} </td>
+                  <td> {{ $evaluation['pivot']['note'] }} </td>
+                </tr>
+                @endforeach
+            </table>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EleveController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
@@ -48,3 +49,5 @@ require __DIR__.'/auth.php';
 
 Route::resource('evaluation', EvaluationController::class);
 Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
+
+Route::resource('visualisation', EleveController::class);

@@ -71,16 +71,16 @@
               <p>Admin et Prof</p>
               <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
               <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
+              <a class="Entreprise button button-order" href="/visualisation/{{Auth::user()->identification}}"> Accéder à la visualitation des notes </a>
               @elseif (Auth::user()->isAdmin)
               <p>Admin</p>
-              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
               <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isProf)
               <p >Profésseur</p>
               <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
               @else
                 <p>Éleve</p>
-                <a class="Entreprise button button-order" href="{{ route('visuNote') }}"> Accéder à la visualitation des notes </a>
+                <a class="Entreprise button button-order" href="/visualisation/{{Auth::user()->identification}}"> Accéder à la visualitation des notes </a>
               @endif
             @endauth
           </div>

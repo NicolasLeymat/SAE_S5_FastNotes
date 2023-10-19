@@ -65,8 +65,10 @@
         <div class="home_container container grid">
           <div class="home_content">
             @auth
+              {{Auth::user()}}
               <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
               @if (Auth::user()->isProf)
+                
                 <p >Profésseur</p>
                 <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
               @elseif (Auth::user()->isAdmin)

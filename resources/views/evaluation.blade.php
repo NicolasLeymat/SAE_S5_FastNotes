@@ -64,8 +64,8 @@
         <div class="home_container container grid">
         <div class="home_content grid">
         <form action="{{ route('saisir_notes') }}" method="POST">
-            
             @csrf
+            <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
             <table>
                 <thead>
                     <tr>
@@ -76,9 +76,9 @@
                 </thead>
             @foreach($eleves as $eleve)
                 <tr>
-                    <td>{{$eleve['id']}} {{$eleve['nom']}}</td>
+                    <td>{{$eleve['code']}} {{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
-                    <td><input type="text" name="notes[{{ $eleve['id'] }}]" value="{{ $eleve['note'] }}"></td>
+                    <td><input type="text" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}"></td>
                 </tr>
             @endforeach
             </table>

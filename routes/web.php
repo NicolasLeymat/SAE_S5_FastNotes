@@ -24,12 +24,14 @@ Route::get('/dashprof', function () {
 });
 
 Route::get('/eval', function () {
-    return view('evalutation');
+    return view('evaluation');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('saisir_notes','EvaluationController@saisirNote')->name('saisir_notes');
+
+Route::get('/dashprof', function () {
+    return view('dashprof');
+})->middleware(['auth', 'verified'])->name('dashprof');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,4 +41,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('evaluations', EvaluationController::class);
+Route::resource('evaluation', EvaluationController::class);

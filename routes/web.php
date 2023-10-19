@@ -17,7 +17,7 @@ use App\Http\Controllers\EvaluationController;
 
 Route::get('/', function () {
     return view('index');
-})->name('');
+})->name('index');
 
 Route::get('/dashprof', function () {
     return view('dashprof');

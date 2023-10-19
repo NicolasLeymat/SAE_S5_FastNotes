@@ -21,7 +21,7 @@
     <!--  HEADER  -->
     <header class="header" id="header">
     <nav class="nav container">
-        <a href="#" class="nav_logo"
+        <a href="{{ route('index') }}" class="nav_logo"
         >Fast <br />
         Notes</a
         >

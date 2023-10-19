@@ -11,11 +11,11 @@ use App\Models\Utilisateur;
 class EleveController extends Controller
 {
 
-    public function show($id) {
-        $user = Utilisateur::find($id);
-        $m = $this->moyenneParRessource($id, 'BFTA5R01');
-        return view('test')->with('m', $m);
-    }
+    //public function show($id) {
+        //$user = Utilisateur::find($id);
+        //$m = $this->moyenneParRessource($id, 'BFTA5R01');
+        //return view('test')->with('m', $m);
+    //}
     #Retourne toutes les évaluations d'un élève
     public function index(){
         $result = Utilisateur::paginate(10);
@@ -24,7 +24,9 @@ class EleveController extends Controller
 
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
-        return view('visuNote', compact('evaluations'));
+        $user = Utilisateur::find($id);
+        $m = $this->moyenneParRessource($id, 'BFTA5R01');
+        return view('visuNote', compact('evaluations', 'm'));
     }
     
     public function evalsEleve($id){

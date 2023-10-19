@@ -93,13 +93,13 @@
                 </thead>
             @foreach($eleves as $eleve)
                 <tr>
-                    <td>{{$eleve['nom']}}</td>
+                    <td>{{$eleve['id']}} {{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
-                    <td>{{$eleve['note']}}</td>
+                    <td><input type="text" name="notes[{{ $eleve['id'] }}]" value="{{ $eleve['note'] }}"></td>
                 </tr>
             @endforeach
             </table>
-            $eval
+            <button type="submit">Enregistrer les notes</button>
         </div>
         </div>
     </section>

@@ -44,7 +44,7 @@ class EvaluationController extends Controller
         foreach($evaluation->utilisateurs as $utilisateur){
             if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
 
-                $infoEleve = ['nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
+                $infoEleve = ['id'=>$utilisateur->identification, 'nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
                 array_push($eleves, $infoEleve);
             }
         }
@@ -68,6 +68,10 @@ class EvaluationController extends Controller
         $eleve->evaluations()
         ->updateExistingPivot($idEval, ['note' => $note]);
         }
+    }
+
+    public function saisirNotes (Request $request) {
+
     }
 
     /**

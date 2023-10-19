@@ -89,12 +89,12 @@
                 </thead>
                 <tbody>
                     @foreach ($evals as $evaluation)
-                    <a href="{{ route('evaluations') }}" class="">
+                    
                     <tr>
-                        <td>{{evaluation -> libelle}}</td>
-                        <td>{{ evaluation -> type }}</td>
+                        <td><a href="/evaluation/{{$evaluation->id}}" class="">{{$evaluation -> libelle}}</a></td>
+                        <td>{{ $evaluation -> type }}</td>
                     </tr>
-                    </a>
+                    
                     @endforeach
                 </tbody>
             </table>

@@ -43,9 +43,7 @@ class EvaluationController extends Controller
         $eleves = [];
         foreach($evaluation->utilisateurs as $utilisateur){
             if($utilisateur->isProf == 0 && $utilisateur->isAdmin == 0){
-
-                $infoEleve = ['code'=>$utilisateur->pivot->code_eleve, 'nom'=>$utilisateur->nom, 'prenom'=>$utilisateur->prenom, 'note'=>$utilisateur->pivot->note];
-                array_push($eleves, $infoEleve);
+                array_push($eleves, $utilisateur);
             }
         }
         return view('evaluation',compact('evaluation','eleves'));

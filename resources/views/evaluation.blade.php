@@ -78,10 +78,10 @@
                 </thead>
             @foreach($eleves as $eleve)
                 <tr>
-                    <td>{{$eleve['id']}}</td>
-                    <td>{{$eleve['nom']}}</td>
-                    <td>{{$eleve['prenom']}}</td>
-                    <td><input type="text" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}"></td>
+                    <td>{{$eleve->identification}}</td>
+                    <td>{{$eleve->nom}}</td>
+                    <td>{{$eleve->prenom}}</td>
+                    <td><input type="text" name="notes[{{ $eleve->code }}][note]" value="{{ $eleve->note }}"></td>
                 </tr>
             @endforeach
             </table>

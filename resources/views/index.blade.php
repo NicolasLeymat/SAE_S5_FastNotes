@@ -63,7 +63,25 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-          <div class="home_content grid">
+          <div class="home_content">
+            @auth
+              <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
+              @if (Auth::user()->isProf)
+                <p >Profésseur</p>
+                <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
+              @elseif (Auth::user()->isAdmin)
+                <p>Admin</p>
+                <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
+                <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
+              @elseif (Auth::user()->isAdmin && Auth::user()->isProf)
+                <p>Admin et Prof</p>
+                <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
+                <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
+              @else
+                <p>Éleve</p>
+                <a class="Entreprise button button-order" href="{{ route('visuNote') }}"> Accéder à la visualitation des notes </a>
+              @endif
+            @endauth
           </div>
         </div>
       </section>

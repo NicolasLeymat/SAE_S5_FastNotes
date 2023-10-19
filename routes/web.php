@@ -17,15 +17,21 @@ use App\Http\Controllers\EvaluationController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('');
 
 Route::get('/dashprof', function () {
     return view('dashprof');
-});
+})->name('dashprof');
 
-Route::get('/eval', function () {
-    return view('evalutation');
-});
+Route::get('/evaluation', function () {
+    return view('evaluation');
+})->name('evaluation');
+
+Route::get('/visuNote', function () {
+    return view('visuNote');
+})->name('visuNote');
+
+Route::post('saisir_notes','EvaluationController@saisirNote')->name('saisir_notes');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,4 +45,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('evaluation', EvaluationController::class);
+Route::resource('evaluations', EvaluationController::class);
+Route::resource('evaluations', EvaluationController::class)->name("index","evaluations");

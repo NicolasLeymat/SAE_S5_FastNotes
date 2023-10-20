@@ -867,6 +867,7 @@ img {
 
 .footer_container {
   row-gap: 3.5rem;
+  max-width: 1000px;
 }
 
 .footer_bg {

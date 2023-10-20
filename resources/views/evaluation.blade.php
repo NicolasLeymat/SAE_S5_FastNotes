@@ -108,7 +108,7 @@
             </li>
 
             <li>
-            <a href="" class="footer_link">Mederic Damailly</a>
+            <a href="" class="footer_link">Mederic Demailly</a>
             </li>
 
             <li>

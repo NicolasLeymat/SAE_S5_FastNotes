@@ -73,7 +73,7 @@
                 <tr>
                   <td> {{ $evaluation['libelle'] }} </td>
                   <td> {{ $evaluation['type'] }} </td>
-                  <td> {{ $evaluation['note'] }} </td>
+                  <td> {{ $evaluation['pivot']['note'] }} </td>
                 </tr>
                 @endif
                 @endforeach

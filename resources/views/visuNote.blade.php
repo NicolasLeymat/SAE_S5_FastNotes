@@ -71,9 +71,9 @@
                 @foreach ($evaluations as $evaluation)
                 @if ($evaluation['code_ressource'] == $key)
                 <tr>
-                  <td> {{ $evaluation->libelle }} </td>
-                  <td> {{ $evaluation->type }} </td>
-                  <td> {{ $evaluation->note }} </td>
+                  <td> {{ $evaluation['libelle'] }} </td>
+                  <td> {{ $evaluation['type'] }} </td>
+                  <td> {{ $evaluation['note'] }} </td>
                 </tr>
                 @endif
                 @endforeach

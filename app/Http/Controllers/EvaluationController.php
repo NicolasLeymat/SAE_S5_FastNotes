@@ -6,6 +6,7 @@ use App\Models\Evaluation;
 use App\Models\Groupe;
 use App\Models\Utilisateur;
 use App\Models\Parcours;
+use DB;
 use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
 use Validator;
@@ -17,7 +18,7 @@ class EvaluationController extends Controller
      */
     public function index()
     {
-        $results = Evaluation::paginate(10);
+        $results = DB::table('evaluation')->get()->sortBy('libelle');
         return view('dashprof')->with('evals', $results);
     }
 

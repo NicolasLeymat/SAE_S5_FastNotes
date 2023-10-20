@@ -66,17 +66,17 @@
           <div class="home_content">
           @csrf
             <table>
-                @foreach ($evaluations as $evaluation)
                 @foreach ($tabmoyennes as $key => $valeur)
-                  @if ($evaluation['code_ressource'] == $key)
-                    <td><b>{{ $valeur[1] }} - {{ $valeur[0] }}</b></td>
-                  @endif
-                @endforeach
+                <td><b>{{ $valeur[1] }} - {{ $valeur[0] }}</b></td>
+                @foreach ($evaluations as $evaluation)
+                @if ($evaluation['code_ressource'] == $key)
                 <tr>
                   <td> {{ $evaluation['libelle'] }} </td>
                   <td> {{ $evaluation['type'] }} </td>
                   <td> {{ $evaluation['pivot']['note'] }} </td>
                 </tr>
+                @endif
+                @endforeach
                 @endforeach
             </table>
           </div>

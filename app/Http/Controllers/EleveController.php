@@ -6,12 +6,13 @@ use App\Models\Evaluation;
 use App\Models\Ressource;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\DB;
 
 
 class EleveController extends Controller
 {
 
-    //public function show($id) {
+    //public function show($id) {note_evaluation
         //$user = Utilisateur::find($id);
         //$m = $this->moyenneParRessource($id, 'BFTA5R01');
         //return view('test')->with('m', $m);
@@ -38,8 +39,12 @@ class EleveController extends Controller
     }
     
     public function evalsEleve($id){
-        $eleve = Utilisateur::find($id);
-        return $eleve->evaluations;
+        $data = DB::table('note_evaluation')
+        ->join('evaluation', 'note_evaluation.id_evaluation', '=', 'evaluation.id')
+        ->select('note_evaluation.*', 'evaluation.*')
+        ->where('note_evaluation.code_eleve', $id)
+        ->get();
+        return $data;
     }
 
     #Retourne toutes les ressources d'un élève

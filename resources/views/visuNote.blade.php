@@ -73,9 +73,9 @@
                   @endif
                 @endforeach
                 <tr>
-                  <td> {{ $evaluation['libelle'] }} </td>
-                  <td> {{ $evaluation['type'] }} </td>
-                  <td> {{ $evaluation['pivot']['note'] }} </td>
+                  <td> {{ $evaluation->libelle }} </td>
+                  <td> {{ $evaluation->type }} </td>
+                  <td> {{ $evaluation->note }} </td>
                 </tr>
                 @endforeach
             </table>

@@ -39,12 +39,9 @@ class EleveController extends Controller
     }
     
     public function evalsEleve($id){
-        $data = DB::table('note_evaluation')
-        ->join('evaluation', 'note_evaluation.id_evaluation', '=', 'evaluation.id')
-        ->select('note_evaluation.*', 'evaluation.*')
-        ->where('note_evaluation.code_eleve', $id)
-        ->get();
-        return $data;
+        $eleve = Utilisateur::find($id);
+        
+        return $eleve->evaluations;
     }
 
     #Retourne toutes les ressources d'un élève

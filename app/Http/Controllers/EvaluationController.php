@@ -49,10 +49,7 @@ class EvaluationController extends Controller
 
         foreach($evaluation->ressource->parcours as $parcoursEval){
             foreach($parcoursEval->groupes as $groupe){
-                $groupe = Groupe::find($groupe->id);
                 foreach($groupe->utilisateurs as $eleve){
-
-
                     if($eleve->isProf == 0 && $eleve->isAdmin == 0){
                         $pivotData = $eleve
                         ->evaluations()
@@ -63,8 +60,6 @@ class EvaluationController extends Controller
                         } else {
                             $note = '';
                         }
-                        
-                        
                         
                         $infosEleve = ['nom'=>$eleve->nom, 'identification'=>$eleve->identification, 'prenom'=>$eleve->prenom, 'note'=>$note,'code'=>$eleve->code];
                         array_push($eleves, $infosEleve);
@@ -92,9 +87,10 @@ class EvaluationController extends Controller
         $eleve = Utilisateur::findOrFail($idEleve);
 
 
-        if ($note >=0 && $note <=20) {
-        $evaluation->utilisateurs()
-        ->updateExistingPivot($idEleve, ['note' => $note]);
+        if ($note >=0 && $note <=20 && $evaluation && $eleve) {
+        $evaluation->utilisateurs()->syncWithoutDetaching([
+            $idEleve => ['note' => $note]
+        ]);
         }
     }
 
@@ -104,7 +100,8 @@ class EvaluationController extends Controller
         $notes = $request->input('notes');
 
         foreach ($notes as $eleveID => $note) {
-            if ($note != null) {
+            //return $note;
+            if ($note["note"] !== null) {
                 $this->saisirNote($evalId,$eleveID,$note["note"]);
             }
 

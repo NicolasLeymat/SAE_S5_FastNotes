@@ -34,7 +34,7 @@ class Utilisateur extends Authenticatable
     protected $table = "users";
 
     public function evaluations() {
-        return $this->belongsToMany (Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')->withPivot("note");
+        return $this->belongsToMany(Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')->withPivot("note");
     }
 
     public function groupe() {

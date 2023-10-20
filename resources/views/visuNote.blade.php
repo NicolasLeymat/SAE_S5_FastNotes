@@ -64,17 +64,14 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
           <div class="home_content">
-          {{ $evaluations }}
           @csrf
             <table>
-                <thead>
-                    <tr>
-                        <th>Libelle</th>
-                        <th>Type</th>
-                        <th>Note</th>
-                    </tr>
-                </thead>
                 @foreach ($evaluations as $evaluation)
+                @foreach ($tabmoyennes as $key => $valeur)
+                  @if ($evaluation['code_ressource'] == $key)
+                    <td><b>{{ $valeur[1] }} - {{ $valeur[0] }}</b></td>
+                  @endif
+                @endforeach
                 <tr>
                   <td> {{ $evaluation->libelle }} </td>
                   <td> {{ $evaluation->type }} </td>

@@ -26,7 +26,15 @@ class EleveController extends Controller
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
         $m = $this->moyenneParRessource($id, 'BFTA5R01');
-        return view('visuNote', compact('evaluations', 'm'));
+        $tabressources = [];
+        $tabmoyennes = [];
+        foreach($evaluations as $eval) {
+            if (!in_array($eval->code_ressource, $tabressources)){
+                array_push($tabressources, $eval->code_ressource);
+                $tabmoyennes[$eval->code_ressource] = [$this->moyenneParRessource($id, $eval->code_ressource), $eval->ressource->libelle];
+            }
+        }
+        return view('visuNote', compact('evaluations', 'tabmoyennes'));
     }
     
     public function evalsEleve($id){

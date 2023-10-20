@@ -40,7 +40,7 @@ class EleveController extends Controller
     
     public function evalsEleve($id){
         $eleve = Utilisateur::find($id);
-        
+
         return $eleve->evaluations;
     }
 

@@ -69,7 +69,6 @@
               @if  (Auth::user()->isAdmin && Auth::user()->isProf)
               <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard profésseur </a>
               <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
-              <a class="Entreprise button button-order" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @elseif (Auth::user()->isAdmin)
               <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isProf)
@@ -96,28 +95,31 @@
 
         <ul class="footer_links">
             <li>
-            <a href="#services" class="footer_link">Services</a>
+            <a href="" class="footer_link">Leymat Nicolas</a>
             </li>
 
             <li>
-            <a href="#portfolio" class="footer_link">Portfolio</a>
+            <a href="" class="footer_link">Mederic Damailly</a>
             </li>
 
             <li>
-            <a href="#contact" class="footer_link">Contact Me</a>
+            <a href="" class="footer_link">Noa Despaux</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">David Pacuraru</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Lucas Veslin</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Louis Camborieux</a>
             </li>
         </ul>
-
-        <div class="footer_socials">
-            <a href="" target="_blank" class="footer_social">
-            <i class="uil uil-facebook-f"></i>
-            </a>
-            <a href="" target="_blank" class="footer_social">
-            <i class="uil uil-instagram"></i>
-            </a>
         </div>
-        </div>
-        <p class="footer_copy">&#169; Leymat. All rights reserved.</p>
+        <p class="footer_copy">&#169; Code F. All rights reserved.</p>
     </div>
     </footer>
     <!-- FOOTER FIN -->

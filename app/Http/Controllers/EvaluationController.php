@@ -9,6 +9,7 @@ use App\Models\Parcours;
 use DB;
 use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class EvaluationController extends Controller
@@ -19,7 +20,13 @@ class EvaluationController extends Controller
     public function index()
     {
         $results = DB::table('evaluation')->get()->sortBy('libelle');
-        return view('dashprof')->with('evals', $results);
+        if (Auth::check()) {
+            if (!Auth::user()->isProf && !Auth::user()->isAdmin){
+                return redirect('/');
+            }else{
+                return view('dashprof')->with('evals', $results);
+            }
+        }
     }
 
     /**
@@ -69,10 +76,13 @@ class EvaluationController extends Controller
                 }
             }
         }
-                    
-                
-        
-        return view('evaluation',compact('evaluation','eleves'));
+        if (Auth::check()) {
+            if (!Auth::user()->isProf && !Auth::user()->isAdmin){
+                return redirect('/');
+            }else{
+                return view('evaluation',compact('evaluation','eleves'));
+            }
+        }
     }
 
     /**

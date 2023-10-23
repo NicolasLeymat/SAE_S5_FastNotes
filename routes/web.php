@@ -24,6 +24,10 @@ Route::get('/dashprof', function () {
     return view('dashprof');
 })->name('dashprof');
 
+Route::get('/dashadmin', function () {
+    return view('dashAdmin');
+})->name('dashadmin');
+
 Route::get('/evaluation', function () {
     return view('evaluation');
 })->name('evaluation');

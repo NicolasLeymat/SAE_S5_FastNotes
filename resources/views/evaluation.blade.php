@@ -81,7 +81,7 @@
                     <td>{{$eleve['identification']}}</td>
                     <td>{{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
-                    <td><input type="number" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td><input type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
                 </tr>
             @endforeach
             </table>

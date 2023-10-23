@@ -38,6 +38,10 @@ return new class extends Migration
             $table->boolean('isAdmin');
             $table->unsignedBigInteger('id_groupe');
             $table->foreign('id_groupe')->references('id')->on('groupe');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
+            $table->timestamp('email_verified_at');
+            $table->timestamp('email_updated_at');
         });
 
         Schema::create('competence', function (Blueprint $table) {
@@ -86,13 +90,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('competence');
-        Schema::dropIfExists('evaluation');
-        Schema::dropIfExists('parcours');
-        Schema::dropIfExists('groupe');
-        Schema::dropIfExists('ressource');
         Schema::dropIfExists('note_evaluation');
         Schema::dropIfExists('coefficient_ressource');
+        Schema::dropIfExists('competence');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('evaluation');
+        Schema::dropIfExists('groupe');
+        Schema::dropIfExists('parcours');
+        Schema::dropIfExists('ressource');
     }
 };

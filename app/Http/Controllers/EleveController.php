@@ -6,6 +6,7 @@ use App\Models\Evaluation;
 use App\Models\Ressource;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -35,6 +36,7 @@ class EleveController extends Controller
                 $tabmoyennes[$eval->code_ressource] = [$this->moyenneParRessource($id, $eval->code_ressource), $eval->ressource->libelle];
             }
         }
+        
         return view('visuNote', compact('evaluations', 'tabmoyennes'));
     }
     

@@ -12,13 +12,15 @@ class Ressource extends Model
     protected $table = 'ressource';
     protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
+    public $incrementing = false;
+
 
     public function evaluations() {
         return $this->hasMany(Evaluation::class);
     }
 
     public function competence() {
-        return $this->belongsToMany(Competence::class);
+        return $this->belongsToMany(Competence::class, "coefficient_ressource", "code_ressource", "id_competence")->withPivot("coefficient");
     }
 
     public function parcours() {

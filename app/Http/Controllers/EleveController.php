@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Competence;
 use App\Models\Evaluation;
 use App\Models\Ressource;
 use Illuminate\Http\Request;
@@ -66,5 +67,27 @@ class EleveController extends Controller
             }
         }
         return $notes / $c;
+    }
+
+    //public function moyenneParCompetence(string $idEleve, string $idCompetence) {
+    public function moyenneParCompetence() {
+        $idEleve = 'eleve';
+        $idCompetence = '1';
+        
+        $eleve = Utilisateur::find($idEleve);
+        $competence = Competence::find($idCompetence);
+        $notes = 0;
+        $c = 0;
+        $ressourcesCoef = [];
+        $moyRessources = [];
+        foreach($competence->ressources as $ressource) {
+            $ressourcesCoef[$ressource->code] = $ressource->pivot->Coefficient;
+            $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
+        }
+        foreach($moyRessources as $key => $valeur){
+            $notes += $valeur * $ressourcesCoef[$key];
+            $c += $ressourcesCoef[$key];
+        }
+        dd($notes / $c);
     }
 }

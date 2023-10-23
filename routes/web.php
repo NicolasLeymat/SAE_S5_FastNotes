@@ -51,3 +51,5 @@ Route::resource('evaluation', EvaluationController::class);
 Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
 
 Route::resource('visualisation', EleveController::class);
+
+Route::get('/test', [EleveController::class,'moyenneParCompetence'])->name('test');

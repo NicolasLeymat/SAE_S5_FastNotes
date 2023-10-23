@@ -86,6 +86,7 @@
             @endforeach
             </table>
             <button type="submit">Enregistrer les notes</button>
+        </form>
         </div>
         </div>
     </section>

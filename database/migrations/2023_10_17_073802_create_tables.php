@@ -73,7 +73,7 @@ return new class extends Migration
 
         Schema::create('coefficient_ressource', function (Blueprint $table) {
             $table->double('coefficient');
-            $table->unsignedBigInteger('id_competence');
+            $table->char('code_competence');
             $table->unsignedBigInteger('id_parcours');
             $table->string('code_ressource');
             $table->foreign('code_ressource')->references('code')->on('ressource');

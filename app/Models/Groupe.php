@@ -9,6 +9,8 @@ class Groupe extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = ["libelle","semestre","annee", "id_parcours"];
 
     protected $id = "id";

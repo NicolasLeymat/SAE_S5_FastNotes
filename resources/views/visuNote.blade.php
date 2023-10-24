@@ -73,7 +73,11 @@
                 <tr>
                   <td> {{ $evaluation->libelle }} </td>
                   <td> {{ $evaluation->type }} </td>
+                  @if($evaluation->pivot->note == '')
+                  <td>Pas disponible</td>
+                  @else
                   <td> {{ $evaluation->pivot->note }} </td>
+                  @endif
                 </tr>
                 @endif
                 @endforeach

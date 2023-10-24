@@ -28,7 +28,6 @@ class EleveController extends Controller
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
-        $m = $this->moyenneParRessource($id, 'BFTA5R01');
         $tabressources = [];
         $tabmoyennes = [];
         foreach($evaluations as $eval) {
@@ -66,15 +65,17 @@ class EleveController extends Controller
                 $c += $evaluation->coefficient;
             }
         }
+        if($notes == 0){
+            return 'Pas disponible';
+        }
         return $notes / $c;
     }
 
     //public function moyenneParCompetence(string $idEleve, string $idCompetence) {
     public function moyenneParCompetence() {
-        $idEleve = 'eleve';
-        $idCompetence = '1';
+        $idEleve = 'eleveA';
+        $idCompetence = 'BFTA51AU';
         
-        $eleve = Utilisateur::find($idEleve);
         $competence = Competence::find($idCompetence);
         $notes = 0;
         $c = 0;
@@ -82,7 +83,12 @@ class EleveController extends Controller
         $moyRessources = [];
         foreach($competence->ressources as $ressource) {
             $ressourcesCoef[$ressource->code] = $ressource->pivot->Coefficient;
-            $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
+            if($this->moyenneParRessource($idEleve, $ressource->code) != 'Pas disponible'){
+                $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
+            }
+        }
+        if(empty($moyRessources)){
+            return '';
         }
         foreach($moyRessources as $key => $valeur){
             $notes += $valeur * $ressourcesCoef[$key];

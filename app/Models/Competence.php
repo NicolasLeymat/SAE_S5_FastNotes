@@ -9,11 +9,11 @@ class Competence extends Model
 {
     protected $fillable = ["libelle"];
 
-    protected $primaryKey = "id";
+    protected $primaryKey = "code";
     protected $table = "competence";
 
     public function ressources() {
-        return $this->belongsToMany(Ressource::class, "coefficient_ressource", "id_competence", "code_ressource")->withPivot("Coefficient");
+        return $this->belongsToMany(Ressource::class, "coefficient_ressource", "code_competence", "code_ressource")->withPivot("Coefficient");
     }
 
     public function parcours() {

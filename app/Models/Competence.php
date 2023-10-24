@@ -9,7 +9,7 @@ class Competence extends Model
 {
     protected $fillable = ["libelle"];
 
-    protected $primaryKey = "id";
+    protected $primaryKey = "code";
 
     public function ressources() {
         return $this->belongsToMany(Ressource::class)->withPivot("Coefficient");

@@ -20,9 +20,15 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/dashprof', function () {
-    return view('dashprof');
-})->name('dashprof');
+Route::middleware('professeur')->group(function () {
+    Route::get('/dashprof', function () {
+        return view('dashprof');
+    })->name('dashprof');
+});
+
+Route::get('/dashadmin', function () {
+    return view('dashAdmin');
+})->name('dashadmin');
 
 Route::get('/evaluation', function () {
     return view('evaluation');
@@ -47,7 +53,11 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('evaluation', EvaluationController::class);
-Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
+Route::middleware('professeur')->group(function () {
+    Route::resource('evaluation', EvaluationController::class);
+    Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
+});
 
-Route::resource('visualisation', EleveController::class);
+Route::middleware('eleve')->group(function () {
+    Route::resource('visualisation', EleveController::class);
+});

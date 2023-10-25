@@ -65,16 +65,11 @@
         <div class="home_container container grid">
           <div class="home_content">
             @auth
-              <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
-              @if  (Auth::user()->isAdmin && Auth::user()->isProf)
-              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
-              <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
-              @elseif (Auth::user()->isAdmin)
-              <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
-              @elseif (Auth::user()->isProf)
-              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
+              @if (!Auth::user()->isAdmin)
+                Erreur 405 Vous n'avez pas accès à cette pasge
               @else
-                <a class="Entreprise button button-order" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
+              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Ajout élève </a>
+              <a class="Entreprise button button-order" href="{{ route('dashadmin') }}"> Ajout évaluation </a>
               @endif
             @endauth
           </div>
@@ -99,7 +94,7 @@
             </li>
 
             <li>
-            <a href="" class="footer_link">Mederic Demailly</a>
+            <a href="" class="footer_link">Mederic Damailly</a>
             </li>
 
             <li>

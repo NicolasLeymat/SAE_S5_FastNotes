@@ -9,6 +9,8 @@ class Parcours extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = ["nom","code"];
 
     protected $primaryKey = "id";

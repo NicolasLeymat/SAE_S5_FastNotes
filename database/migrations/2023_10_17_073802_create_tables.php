@@ -10,20 +10,13 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('parcours', function (Blueprint $table) {
-            $table->id();
-            $table->string('libelle');
-            $table->string('code');
-        });
-
+    {       
         Schema::create('groupe', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
             $table->string('semestre');
             $table->year('annee');
-            $table->unsignedBigInteger('id_parcours');
-            $table->foreign('id_parcours')->references('id')->on('parcours');
+            $table->string('parcours');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -74,12 +67,18 @@ return new class extends Migration
         Schema::create('coefficient_ressource', function (Blueprint $table) {
             $table->double('coefficient');
             $table->char('code_competence');
-            $table->unsignedBigInteger('id_parcours');
             $table->string('code_ressource');
             $table->foreign('code_ressource')->references('code')->on('ressource');
             $table->foreign('code_competence')->references('code')->on('competence');
-            $table->foreign('id_parcours')->references('id')->on('parcours');
-            $table->primary(['code_competence', 'id_parcours', 'code_ressource']);
+            $table->primary(['code_competence', 'code_ressource']);
+        });
+
+        Schema::create('ressource_groupe', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_groupe');
+            $table->string('code_ressource');
+            $table->foreign('code_ressource')->references('code')->on('ressource');
+            $table->foreign('id_groupe')->references('id')->on('groupe');
+            $table->primary(['id_groupe', 'code_ressource']);
         });
     }
 
@@ -94,7 +93,7 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('evaluation');
         Schema::dropIfExists('groupe');
-        Schema::dropIfExists('parcours');
+        Schema::dropIfExists('ressource_groupe');
         Schema::dropIfExists('ressource');
     }
 };

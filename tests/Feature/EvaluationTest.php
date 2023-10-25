@@ -46,6 +46,6 @@ class EvaluationTest extends TestCase
             $eleve => ['note' => 1]
         ]);
 
-        $response = $this->post('/evaluation/'.$eval->id,["'".$eleve->code."'" => 4]);
+        $response = $this->post('/evaluation/'.$eval->id,['evaluation_id'=> $eval->id, "'notes[".$eleve->code."]'" => 4]);
     }
 }

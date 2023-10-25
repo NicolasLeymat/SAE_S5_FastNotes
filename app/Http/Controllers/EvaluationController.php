@@ -57,7 +57,6 @@ class EvaluationController extends Controller
         
         $ressourceEval = $evaluation->ressource; 
         if (! empty($ressourceEval) ) {
-            return $ressourceEval->groupes;
             foreach($ressourceEval->groupes as $groupe){
                 foreach($groupe->utilisateurs as $eleve){
                     if($eleve->isProf == 0 && $eleve->isAdmin == 0){

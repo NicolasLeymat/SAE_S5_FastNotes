@@ -54,9 +54,10 @@ class EvaluationController extends Controller
         $eleves = [];
 
 
-
-        foreach($evaluation->ressource->parcours as $parcoursEval){
-            foreach($parcoursEval->groupes as $groupe){
+        
+        $ressourceEval = $evaluation->ressource; 
+        if (! empty($ressourceEval) ) {
+            foreach($ressourceEval->groupes as $groupe){
                 foreach($groupe->utilisateurs as $eleve){
                     if($eleve->isProf == 0 && $eleve->isAdmin == 0){
                         $pivotData = $eleve
@@ -74,8 +75,8 @@ class EvaluationController extends Controller
                     }
                     
                 }
-            }
-        }
+            }}
+        
         if (Auth::check()) {
             if (!Auth::user()->isProf && !Auth::user()->isAdmin){
                 return redirect('/');

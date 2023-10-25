@@ -11,17 +11,17 @@ class Groupe extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ["libelle","semestre","annee", "id_parcours"];
+    protected $fillable = ["libelle","semestre","annee", "parcours"];
 
     protected $id = "id";
 
     protected $table = "groupe";
 
-    public function parcours () {
-        return $this->belongsTo(Parcours::class,"id_parcours","id");
-    }
-
     public function utilisateurs () {
         return $this->hasMany(Utilisateur::class,"id_groupe");
+    }
+
+    public function ressources() {
+        return $this->belongsToMany(Groupe::class,"ressource_groupe","code_ressource","id_groupe");
     }
 }

@@ -9,7 +9,7 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","coefficient","type", "id_ressource"];
+    protected $fillable = ["libelle","coefficient","type", "code_ressource"];
 
     
     protected $table = "evaluation";

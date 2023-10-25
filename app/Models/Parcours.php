@@ -23,7 +23,7 @@ class Parcours extends Model
         return $this->belongsToMany(Ressource::class);
     }
 
-    public function competence() {
+    public function competences() {
         return $this->belongsToMany(Competence::class);
     }
 }

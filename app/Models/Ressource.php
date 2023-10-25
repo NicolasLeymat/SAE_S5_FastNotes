@@ -17,7 +17,7 @@ class Ressource extends Model
         return $this->hasMany(Evaluation::class);
     }
 
-    public function competence() {
+    public function competences() {
         return $this->belongsToMany(Competence::class);
     }
 

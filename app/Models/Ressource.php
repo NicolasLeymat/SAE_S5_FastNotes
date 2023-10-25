@@ -13,6 +13,8 @@ class Ressource extends Model
     protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
 
+    public $incrementing = false;
+
     public function evaluations() {
         return $this->hasMany(Evaluation::class);
     }

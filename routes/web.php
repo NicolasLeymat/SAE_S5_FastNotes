@@ -60,4 +60,5 @@ Route::middleware('professeur')->group(function () {
 
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
+    Route::resource('ajoutEleve', EleveController::class)->name("import", "ajoutEleve");
 });

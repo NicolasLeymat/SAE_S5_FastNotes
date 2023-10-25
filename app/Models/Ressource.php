@@ -21,7 +21,7 @@ class Ressource extends Model
         return $this->belongsToMany(Competence::class);
     }
 
-    public function parcours() {
-        return $this->belongsToMany(Parcours::class,"coefficient_ressource","code_ressource","id_parcours")->withPivot("coefficient");
+    public function groupes() {
+        return $this->belongsToMany(Groupe::class,"ressource_groupe","code_ressource","id_groupe");
     }
 }

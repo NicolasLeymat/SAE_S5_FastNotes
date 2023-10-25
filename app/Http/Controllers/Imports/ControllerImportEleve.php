@@ -9,13 +9,13 @@ use Illuminate\Routing\Controller as BaseController;
 use Maatwebsite\Excel\Facades\Excel;
 use Request;
 
-class Controller extends BaseController
+class ControllerImportEleve extends BaseController
 {
     public function export(Request $request){
         
     }
 
     public function import(Request $request){
-        Excel::import(new ElevesImport, $request->file('eleve'));
+        Excel::import(new ElevesImport, $request->file('eleves'));
     }
 }

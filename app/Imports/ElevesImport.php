@@ -2,16 +2,22 @@
 
 namespace App\Imports;
 
+use App\Models\Utilisateur;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ElevesImport implements ToCollection
 {
     /**
-    * @param Collection $collection
+    * @param Collection $rows
     */
-    public function collection(Collection $collection)
+    public function collection(Collection $rows)
     {
-        //
+        foreach($rows as row)
+        {
+            Utilisateur::create([
+
+            ]);
+        }
     }
 }

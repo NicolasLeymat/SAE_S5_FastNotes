@@ -21,15 +21,19 @@
         function confirmerSaisie(){
             var nbNotes = 0;
             var nbNotesNonSaisies = 0;
-            var inputElements = document.querySelectorAll('input[type="number"]');
-            inputElements.forEach(function(inputElement) {
-                nbNotes+=1;
-                if (inputElement.value === "") {
-                    nbNotesNonSaisies+=1;
+            var saisies = document.querySelectorAll('#formulaireNotes table tr');
+            saisies.forEach(function(inputElement, index) {
+                if(index!=0){
+                    var isAbsent = inputElement.querySelector('input[type="checkbox"]').checked;
+                    var noteInput = inputElement.querySelector('input[type="number"]').value;
+                    nbNotes+=1;
+                    if (noteInput == "" && !isAbsent) {
+                        nbNotesNonSaisies+=1;
+                    }
                 }
             });
 
-            if (nbNotes==nbNotesNonSaisies) {
+            if (nbNotesNonSaisies==0) {
                 document.getElementById('formulaireNotes').submit();
             } else if(nbNotesNonSaisies>1){
                 if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
@@ -100,6 +104,7 @@
                         <th>Nom</th>
                         <th>Prenom</th>
                         <th>Note</th>
+                        <th>Absent</th>
                     </tr>
                 </thead>
             @foreach($eleves as $eleve)
@@ -108,6 +113,7 @@
                     <td>{{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
                     <td><input type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td><input type="checkbox" name="absent" id="isAbsent"></td>
                 </tr>
             @endforeach
             </table>

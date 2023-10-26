@@ -16,6 +16,32 @@
     <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
 
     <title>Notes Iut</title>
+
+    <script>
+        function confirmerSaisie(){
+            var nbNotes = 0;
+            var nbNotesNonSaisies = 0;
+            var inputElements = document.querySelectorAll('input[type="number"]');
+            inputElements.forEach(function(inputElement) {
+                nbNotes+=1;
+                if (inputElement.value === "") {
+                    nbNotesNonSaisies+=1;
+                }
+            });
+
+            if (nbNotes==nbNotesNonSaisies) {
+                document.getElementById('formulaireNotes').submit();
+            } else if(nbNotesNonSaisies>1){
+                if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            } else {
+                if(confirm(nbNotesNonSaisies+' note n\'a pas été saisie. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <!--  HEADER  -->
@@ -64,7 +90,7 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
         <div class="home_content grid">
-        <form action="{{ route('saisir_notes') }}" method="POST">
+        <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes">
             @csrf
             <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
             <table>
@@ -85,7 +111,7 @@
                 </tr>
             @endforeach
             </table>
-            <button type="submit">Enregistrer les notes</button>
+            <input type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
         </form>
         </div>
         </div>

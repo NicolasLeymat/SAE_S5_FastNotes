@@ -40,7 +40,7 @@ class Utilisateur extends Authenticatable
     }
 
     public function groupe() {
-        return $this->belongsTo(Groupe::class);
+        return $this->belongsTo(Groupe::class, "id_groupe", "id");
     }
 
     /**

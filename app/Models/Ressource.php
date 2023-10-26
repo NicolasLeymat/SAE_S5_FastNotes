@@ -14,20 +14,13 @@ class Ressource extends Model
     protected $primaryKey = "code";
     public $incrementing = false;
 
-
-    public $incrementing = false;
-
+    
     public function evaluations() {
         return $this->hasMany(Evaluation::class);
     }
 
-<<<<<<< HEAD
-    public function competence() {
-        return $this->belongsToMany(Competence::class, "coefficient_ressource", "code_ressource", "id_competence")->withPivot("coefficient");
-=======
     public function competences() {
-        return $this->belongsToMany(Competence::class);
->>>>>>> bb1365a6bb47b0bc7e294a4ab516b90b1810a250
+        return $this->belongsToMany(Competence::class, "coefficient_ressource", "code_ressource", "code_competence")->withPivot("coefficient");
     }
 
     public function groupes() {

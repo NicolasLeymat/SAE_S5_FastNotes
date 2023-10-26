@@ -12,6 +12,8 @@ class Competence extends Model
     protected $primaryKey = "code";
     protected $table = "competence";
 
+    public $timestamps = false;
+
     public function ressources() {
         return $this->belongsToMany(Ressource::class)->withPivot("Coefficient");
     }

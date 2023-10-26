@@ -21,7 +21,7 @@ class GroupeFactory extends Factory
             'libelle' => fake()->name(),
             'semestre' => fake()->name(),
             'annee' => fake()->numberBetween(1990, 2006),
-            'id_parcours' => Parcours::factory()
+            'parcours' => fake()->unique()->regexify("[A-Z,a-z]{4}")
         ];
     }
 }

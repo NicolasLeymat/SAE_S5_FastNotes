@@ -17,7 +17,7 @@ class RessourceFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom' => fake()->name(),
+            'libelle' => fake()->name(),
             'code' => fake()->unique()->regexify('[A-Z]{4}[1-9][A-Z]{1}[0-1][0-9]')
         ];
     }

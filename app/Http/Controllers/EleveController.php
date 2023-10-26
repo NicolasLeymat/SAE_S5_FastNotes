@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 
 class EleveController extends Controller
@@ -47,6 +48,12 @@ class EleveController extends Controller
     }
     
     public function evalsEleve($id){
+
+        if (!Gate::allows('isEleve') && !Gate::allows('isAdmin')) {
+            abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
+        }
+
+
         $eleve = Utilisateur::find($id);
 
         return $eleve->evaluations;
@@ -54,6 +61,11 @@ class EleveController extends Controller
 
     #Retourne toutes les ressources d'un élève
     public function ressourcesEleve($id){
+
+        if (!Gate::allows('isEleve') && !Gate::allows('isAdmin')) {
+            abort(403, Gate::allows('Vous ne pouvez pas accéder aux ressources'));
+        }
+
         $eleve = Utilisateur::find($id);
         if ($eleve->isProf == 1){
             return 'ratio';
@@ -62,6 +74,11 @@ class EleveController extends Controller
     }
 
     public function moyenneParRessource(string $idEleve, string $idRessource) {
+        
+        if (!Gate::allows('isEleve') && !Gate::allows('isAdmin')) {
+            abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
+        }
+
         $eleve = Utilisateur::find($idEleve);
         $notes = 0;
         $c = 0;

@@ -38,14 +38,51 @@ class EvaluationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function guest_cant_rate_eval()  : void {
+    public function test_guest_cant_rate_eval()  : void {
         $eval = Evaluation::factory()->create();
         $eleve = Utilisateur::factory()->create();
 
         $eval->utilisateurs()->syncWithoutDetaching([
-            $eleve => ['note' => 1]
+            $eleve->code => ['note' => 1]
         ]);
 
-        $response = $this->post('/evaluation/'.$eval->id,['evaluation_id'=> $eval->id, "'notes[".$eleve->code."]'" => 4]);
+        $response = $this->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
+
+        $response->assertStatus(302);
+
+        $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
+        $this->assertEquals(1, $noteDonnee->pivot->note);
+    }
+
+    public function test_eleve_cant_rate_eval()  : void {
+        $eleveConnecte = Utilisateur::factory()->create();
+        $eval = Evaluation::factory()->create();
+        $eleve = Utilisateur::factory()->create();
+
+        $eval->utilisateurs()->syncWithoutDetaching([
+            $eleve->code => ['note' => 1]
+        ]);
+
+        $response = $this->actingAs($eleveConnecte)->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
+
+        $response->assertStatus(302);
+        $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
+        $this->assertEquals(1, $noteDonnee->pivot->note);
+    }
+
+    public function test_prof_can_rate_eval()  : void {
+        $prof = Utilisateur::factory()->create(['isProf'=>1]);
+        $eval = Evaluation::factory()->create();
+        $eleve = Utilisateur::factory()->create();
+
+        $eval->utilisateurs()->syncWithoutDetaching([
+            $eleve->code => ['note' => 1]
+        ]);
+
+        $response = $this->actingAs($prof)->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
+
+        $response->assertStatus(302);
+        $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
+        $this->assertEquals(4, $noteDonnee->pivot->note);
     }
 }

@@ -12,6 +12,12 @@ class Ressource extends Model
     protected $table = 'ressource';
     protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
+<<<<<<< HEAD
+=======
+
+    public $timestamps = false;
+
+>>>>>>> f4eb9a17e3db4a6b78e0b8fbcbb9034affd20bf8
     public $incrementing = false;
 
     

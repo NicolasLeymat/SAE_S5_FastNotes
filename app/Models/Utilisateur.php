@@ -19,6 +19,7 @@ class Utilisateur extends Authenticatable
      */
 
     public $primaryKey = 'code';
+    public $timestamps = false;
     public $incrementing = false;
     protected $fillable = [
         'code',

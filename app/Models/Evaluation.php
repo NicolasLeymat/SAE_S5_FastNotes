@@ -11,7 +11,7 @@ class Evaluation extends Model
 
     protected $fillable = ["libelle","coefficient","type", "code_ressource"];
 
-    
+    public $timestamps = false;
     protected $table = "evaluation";
 
     public function utilisateurs () {

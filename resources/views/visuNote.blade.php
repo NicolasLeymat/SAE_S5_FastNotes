@@ -73,10 +73,15 @@
                 <tr>
                   <td> {{ $evaluation->libelle }} </td>
                   <td> {{ $evaluation->type }} </td>
-                  @if($evaluation->pivot === NULL)
-                  <td>Pas disponible</td>
-                  @else
-                  <td> {{ $evaluation->pivot->note }} </td>
+                  {{ $a = false }}
+                  @foreach($tabNotes as $note )
+                  @if($note->id == $evaluation->id)
+                  <td>{{ $note->pivot->note }}</td>
+                  {{ $a = true }}
+                  @endif
+                  @endforeach
+                  @if ($a != true)
+                  <td> Pas disponible </td>
                   @endif
                 </tr>
                 @endif

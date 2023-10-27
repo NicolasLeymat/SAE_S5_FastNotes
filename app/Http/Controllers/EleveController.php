@@ -27,6 +27,11 @@ class EleveController extends Controller
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
+        $evalsnotees = $user->evaluations;
+        $tabNotes = [];
+        foreach($evalsnotees as $evalnotee){
+            array_push($tabNotes, $evalnotee);
+        }
         $tabressources = [];
         $tabMoyennesRessources = [];
         $tabMoyennesCompetences = [];
@@ -41,7 +46,7 @@ class EleveController extends Controller
             $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($id, $competence->code);
         }
         $moyenneSemestre = $this->moyenneSemestre($id);
-        return view('visuNote', compact('evaluations', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
+        return view('visuNote', compact('evaluations', 'tabNotes', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
     }
     
     public function evalsEleve($id){

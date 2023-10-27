@@ -73,8 +73,9 @@
                 <tr>
                   <td> {{ $evaluation->libelle }} </td>
                   <td> {{ $evaluation->type }} </td>
-                  @if($evaluation->pivot === NULL)
-                  <td>Pas disponible</td>
+                  @foreach($tabNotes as $note )
+                  @if($note->id == $evaluation->id)
+                  <td>{{ $note->pivot->note }}</td>
                   @else
                   <td> {{ $evaluation->pivot->note }} </td>
                   @endif

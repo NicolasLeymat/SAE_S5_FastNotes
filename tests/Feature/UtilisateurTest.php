@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\EleveController;
 use App\Models\Competence;
 use App\Models\Ressource;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertEquals;
@@ -19,6 +20,7 @@ class UtilisateurTest extends TestCase
     /**
      * A basic feature test example.
      */
+    use WithoutMiddleware;
     public function test_guest_cant_see_notes(): void
     {
         $user = Utilisateur::factory()->create();
@@ -50,18 +52,14 @@ class UtilisateurTest extends TestCase
 
     }
 
+
+
     public function test_moyenne(): void
     {
-        Gate::define('isEleve', function ($user) {
-            return true;
-        });
-
-        Gate::define('isAdmin', function ($user) {
-            return true;
-        });
-
+        
 
         $user = Utilisateur::factory()->create();
+        $this->actingAs($user);
         $competence = Competence::factory()->create();
         $ressource = Ressource::factory()->create();
         
@@ -85,12 +83,9 @@ class UtilisateurTest extends TestCase
          
         $controller = app(EleveController::class);
         $code = $competence->code;
-        try {
         $moyenne = $controller->moyenneSemestre($user->code);
-        } catch (\Exception $e) {
-            // Capturez l'exception et affichez ses détails
-            $this->assertTrue(true, $e->getMessage());
-        }
+        assertEquals(7.5,$moyenne);
+        
         
 
     }

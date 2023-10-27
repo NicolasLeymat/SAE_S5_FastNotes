@@ -68,9 +68,9 @@
               <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
               @if  (Auth::user()->isAdmin && Auth::user()->isProf)
               <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
-              <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
+              <a class="Entreprise button button-order" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isAdmin)
-              <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
+              <a class="Entreprise button button-order" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isProf)
               <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
               @else

@@ -48,7 +48,7 @@ class EvaluationTest extends TestCase
 
         $response = $this->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(403);
 
         $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
         $this->assertEquals(1, $noteDonnee->pivot->note);
@@ -65,9 +65,25 @@ class EvaluationTest extends TestCase
 
         $response = $this->actingAs($eleveConnecte)->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(403);
         $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
         $this->assertEquals(1, $noteDonnee->pivot->note);
+    }
+
+    public function test_prof_can_rate_eval()  : void {
+        $prof = Utilisateur::factory()->create(['isProf'=>1]);
+        $eval = Evaluation::factory()->create();
+        $eleve = Utilisateur::factory()->create();
+
+        $eval->utilisateurs()->syncWithoutDetaching([
+            $eleve->code => ['note' => 1]
+        ]);
+
+        $response = $this->actingAs($prof)->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
+
+        $response->assertStatus(302);
+        $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
+        $this->assertEquals(4, $noteDonnee->pivot->note);
     }
 
     public function test_prof_can_rate_eval()  : void {

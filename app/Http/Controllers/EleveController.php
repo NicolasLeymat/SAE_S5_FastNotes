@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ElevesImport;
-use App\Models\Evaluation;
-use App\Models\Groupe;
-use App\Models\Ressource;
+use App\Models\Competence;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
 

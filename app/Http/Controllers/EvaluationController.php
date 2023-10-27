@@ -4,15 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
-use App\Models\Groupe;
 use App\Models\Utilisateur;
-use App\Models\Parcours;
 use DB;
-use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Validator;
 use Illuminate\Support\Facades\Gate;
 
 class EvaluationController extends Controller

@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ElevesImport;
 use App\Models\Competence;
-use App\Models\Evaluation;
-use App\Models\Groupe;
-use App\Models\Ressource;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class EleveController extends Controller
@@ -30,6 +27,12 @@ class EleveController extends Controller
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
+        $evalsnotees = $user->evaluations;
+        $tabNotes = [];
+        foreach($evalsnotees as $evalnotee){
+            dd($evalnotee->pivot->note);
+            array_push($tabNotes, $evalnotee);
+        }
         $tabressources = [];
         $tabMoyennesRessources = [];
         $tabMoyennesCompetences = [];
@@ -44,7 +47,7 @@ class EleveController extends Controller
             $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($id, $competence->code);
         }
         $moyenneSemestre = $this->moyenneSemestre($id);
-        return view('visuNote', compact('evaluations', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
+        return view('visuNote', compact('evaluations', 'tabNotes', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
     }
     
     public function evalsEleve($id){
@@ -165,5 +168,20 @@ class EleveController extends Controller
             return 'Pas disponible';
         }
         return $notes / $c;
+    }
+
+    public function import(Request $request){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new ElevesImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('success', 'File has been imported successfully.');
+        }else{
+            dd($request);
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

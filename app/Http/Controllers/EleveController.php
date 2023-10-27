@@ -41,7 +41,7 @@ class EleveController extends Controller
         }
         foreach($this->listeCompetences($id) as $comp) {
             $competence = Competence::find($comp);
-            $tabMoyennesCompetences[$competence->code] = $this->moyenneParCompetence($id, $competence->code);
+            $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($id, $competence->code);
         }
         $moyenneSemestre = $this->moyenneSemestre($id);
         return view('visuNote', compact('evaluations', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));

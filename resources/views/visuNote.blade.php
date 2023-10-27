@@ -83,6 +83,15 @@
                 @endforeach
                 @endforeach
             </table>
+            <table>
+              @foreach ($tabMoyennesCompetences as $key => $valeur)
+              <tr>
+                <td><b>{{ $key }}</b></td>
+                <td>{{ $valeur }}</td>
+              </tr>
+              @endforeach
+            </table>
+            <b>Moyenne du Semestre : </b> <p>{{ $moyenneSemestre }}</p>
           </div>
         </div>
       </section>

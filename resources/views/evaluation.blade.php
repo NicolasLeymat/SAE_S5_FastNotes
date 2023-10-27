@@ -16,6 +16,36 @@
     <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
 
     <title>Notes Iut</title>
+
+    <script>
+        function confirmerSaisie(){
+            var nbNotes = 0;
+            var nbNotesNonSaisies = 0;
+            var saisies = document.querySelectorAll('#formulaireNotes table tr');
+            saisies.forEach(function(inputElement, index) {
+                if(index!=0){
+                    var isAbsent = inputElement.querySelector('input[type="checkbox"]').checked;
+                    var noteInput = inputElement.querySelector('input[type="number"]').value;
+                    nbNotes+=1;
+                    if (noteInput == "" && !isAbsent) {
+                        nbNotesNonSaisies+=1;
+                    }
+                }
+            });
+
+            if (nbNotesNonSaisies==0) {
+                document.getElementById('formulaireNotes').submit();
+            } else if(nbNotesNonSaisies>1){
+                if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            } else {
+                if(confirm(nbNotesNonSaisies+' note n\'a pas été saisie. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <!--  HEADER  -->
@@ -64,7 +94,7 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
         <div class="home_content grid">
-        <form action="{{ route('saisir_notes') }}" method="POST">
+        <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes">
             @csrf
             <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
             <table>
@@ -74,6 +104,7 @@
                         <th>Nom</th>
                         <th>Prenom</th>
                         <th>Note</th>
+                        <th>Absent</th>
                     </tr>
                 </thead>
             @foreach($eleves as $eleve)
@@ -81,11 +112,13 @@
                     <td>{{$eleve['identification']}}</td>
                     <td>{{$eleve['nom']}}</td>
                     <td>{{$eleve['prenom']}}</td>
-                    <td><input type="number" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td><input type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td><input type="checkbox" name="absent" id="isAbsent"></td>
                 </tr>
             @endforeach
             </table>
-            <button type="submit">Enregistrer les notes</button>
+            <input type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
+        </form>
         </div>
         </div>
     </section>

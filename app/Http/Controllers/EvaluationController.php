@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
-use App\Models\Groupe;
 use App\Models\Utilisateur;
-use App\Models\Parcours;
 use DB;
-use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Gate;
 
 class EvaluationController extends Controller
 {
@@ -20,13 +18,7 @@ class EvaluationController extends Controller
     public function index()
     {
         $results = DB::table('evaluation')->get()->sortBy('libelle');
-        if (Auth::check()) {
-            if (!Auth::user()->isProf && !Auth::user()->isAdmin){
-                return redirect('/');
-            }else{
-                return view('dashprof')->with('evals', $results);
-            }
-        }
+        return view('dashprof')->with('evals', $results);
     }
 
     /**
@@ -50,13 +42,15 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
+
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
 
 
-
-        foreach($evaluation->ressource->parcours as $parcoursEval){
-            foreach($parcoursEval->groupes as $groupe){
+        
+        $ressourceEval = $evaluation->ressource; 
+        if (! empty($ressourceEval) ) {
+            foreach($ressourceEval->groupes as $groupe){
                 foreach($groupe->utilisateurs as $eleve){
                     if($eleve->isProf == 0 && $eleve->isAdmin == 0){
                         $pivotData = $eleve
@@ -76,13 +70,7 @@ class EvaluationController extends Controller
                 }
             }
         }
-        if (Auth::check()) {
-            if (!Auth::user()->isProf && !Auth::user()->isAdmin){
-                return redirect('/');
-            }else{
-                return view('evaluation',compact('evaluation','eleves'));
-            }
-        }
+        return view('evaluation',compact('evaluation','eleves'));        
     }
 
     /**
@@ -94,6 +82,11 @@ class EvaluationController extends Controller
     }
 
     public function saisirNote (string $idEval, string $idEleve, float $note) {
+
+        if (!Gate::allows('isProf')){
+            abort(403, Gate::allows('Vous n\'êtes pas prof'));
+        }
+
         $evaluation = Evaluation::findOrFail($idEval);
         $eleve = Utilisateur::findOrFail($idEleve);
 
@@ -107,6 +100,10 @@ class EvaluationController extends Controller
 
     public function saisirNotes (Request $request) {
         
+        if (!Gate::allows('isProf')){
+            abort(403, Gate::allows('Vous n\'êtes pas prof'));
+        }
+
         $evalId =$request->input('evaluation_id');
         $notes = $request->input('notes');
 
@@ -135,5 +132,15 @@ class EvaluationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            Excel::import( new EvaluationImport(), $request->file("file") );    
+            return redirect()->back()->with('success', 'File has been imported successfully.');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

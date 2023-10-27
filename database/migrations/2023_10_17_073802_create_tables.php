@@ -10,20 +10,13 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('parcours', function (Blueprint $table) {
-            $table->id();
-            $table->string('libelle');
-            $table->string('code');
-        });
-
+    {       
         Schema::create('groupe', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
             $table->string('semestre');
             $table->year('annee');
-            $table->unsignedBigInteger('id_parcours');
-            $table->foreign('id_parcours')->references('id')->on('parcours');
+            $table->string('parcours');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -41,7 +34,8 @@ return new class extends Migration
         });
 
         Schema::create('competence', function (Blueprint $table) {
-            $table->id();
+            $table->string('code');
+            $table->primary('code');
             $table->string('libelle');
         });
 
@@ -70,14 +64,19 @@ return new class extends Migration
         });
 
         Schema::create('coefficient_ressource', function (Blueprint $table) {
-            $table->string('coefficient');
-            $table->unsignedBigInteger('id_competence');
-            $table->unsignedBigInteger('id_parcours');
+            $table->string('code_ressource');
+            $table->string('code_competence');
+            $table->foreign('code_ressource')->references('code')->on('ressource');
+            $table->foreign('code_competence')->references('code')->on('competence');
+            $table->primary(['code_competence', 'code_ressource']);
+        });
+
+        Schema::create('ressource_groupe', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_groupe');
             $table->string('code_ressource');
             $table->foreign('code_ressource')->references('code')->on('ressource');
-            $table->foreign('id_competence')->references('id')->on('competence');
-            $table->foreign('id_parcours')->references('id')->on('parcours');
-            $table->primary(['id_competence', 'id_parcours', 'code_ressource']);
+            $table->foreign('id_groupe')->references('id')->on('groupe');
+            $table->primary(['id_groupe', 'code_ressource']);
         });
     }
 
@@ -86,13 +85,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('competence');
-        Schema::dropIfExists('evaluation');
-        Schema::dropIfExists('parcours');
-        Schema::dropIfExists('groupe');
-        Schema::dropIfExists('ressource');
         Schema::dropIfExists('note_evaluation');
         Schema::dropIfExists('coefficient_ressource');
+        Schema::dropIfExists('competence');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('evaluation');
+        Schema::dropIfExists('groupe');
+        Schema::dropIfExists('ressource_groupe');
+        Schema::dropIfExists('ressource');
     }
 };

@@ -55,8 +55,16 @@ class EleveController extends Controller
 
 
         $eleve = Utilisateur::find($id);
+        $groupe = $eleve->groupe;
+        $ressources = $groupe->ressources;
+        $evals = [];
+        foreach($ressources as $ressource){
+            foreach($ressource->evaluations as $eval){
+                array_push($evals, $eval);
+            }
+        }
 
-        return $eleve->evaluations;
+        return $evals;
     }
 
     #Retourne toutes les ressources d'un élève

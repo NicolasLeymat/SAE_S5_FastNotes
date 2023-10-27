@@ -68,6 +68,7 @@ return new class extends Migration
             $table->string('code_competence');
             $table->foreign('code_ressource')->references('code')->on('ressource');
             $table->foreign('code_competence')->references('code')->on('competence');
+            $table->float('coefficient');
             $table->primary(['code_competence', 'code_ressource']);
         });
 

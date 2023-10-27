@@ -30,7 +30,6 @@ class EleveController extends Controller
         $evalsnotees = $user->evaluations;
         $tabNotes = [];
         foreach($evalsnotees as $evalnotee){
-            dd($evalnotee->pivot->note);
             array_push($tabNotes, $evalnotee);
         }
         $tabressources = [];

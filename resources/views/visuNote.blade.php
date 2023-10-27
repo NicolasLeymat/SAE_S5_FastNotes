@@ -66,14 +66,18 @@
           <div class="home_content">
           @csrf
             <table>
-                @foreach ($tabmoyennes as $key => $valeur)
+                @foreach ($tabMoyenneRessource as $key => $valeur)
                 <td><b>{{ $valeur[1] }} - {{ $valeur[0] }}</b></td>
                 @foreach ($evaluations as $evaluation)
                 @if ($evaluation['code_ressource'] == $key)
                 <tr>
                   <td> {{ $evaluation->libelle }} </td>
                   <td> {{ $evaluation->type }} </td>
+                  @if($evaluation->pivot->note == '')
+                  <td>Pas disponible</td>
+                  @else
                   <td> {{ $evaluation->pivot->note }} </td>
+                  @endif
                 </tr>
                 @endif
                 @endforeach

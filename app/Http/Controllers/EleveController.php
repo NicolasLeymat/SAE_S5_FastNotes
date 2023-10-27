@@ -71,6 +71,17 @@ class EleveController extends Controller
     }
 
     public function import(Request $request){
-        Excel::import(new ElevesImport, $request->file('eleves'));
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new ElevesImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('success', 'File has been imported successfully.');
+        }else{
+            dd($request);
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

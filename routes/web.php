@@ -30,6 +30,14 @@ Route::get('/dashadmin', function () {
     return view('dashAdmin');
 })->name('dashadmin');
 
+Route::get('/ajoutEleve', function () {
+    return view('ajoutEleves');
+})->name('ajoutEleve');
+
+Route::get('/ajoutEval', function () {
+    return view('ajoutEvals');
+})->name('ajoutEval');
+
 Route::get('/evaluation', function () {
     return view('evaluation');
 })->name('evaluation');
@@ -57,8 +65,9 @@ Route::middleware('professeur')->group(function () {
     Route::resource('evaluation', EvaluationController::class);
     Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
 });
+Route::post('importEval', [EvaluationController::class, 'import'])->name("importEvals");
+Route::post('importEleves', [EleveController::class, 'import'])->name("importEleves");
 
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
-    Route::resource('ajoutEleve', EleveController::class)->name("import", "ajoutEleve");
 });

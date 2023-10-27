@@ -16,16 +16,17 @@ class ElevesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
+            //dd($rows);
             Utilisateur::create([
-                'code' => $row["Code"],
-                'identification' => $row["Identifiant"],
-                'nom' => $row["Nom"],
-                'prenom' =>$row["Prenom"],
-                'email' => $row["Email"],
-                'password' => Hash::make($row["Nom"]+$row["Prenom"]+$row["Groupe"]),
+                'code' => $row["code"],
+                'identification' => $row["identifiant"],
+                'nom' => $row["nom"],
+                'prenom' =>$row["prenom"],
+                'email' => $row["email"],
+                'password' => Hash::make($row["nom"].$row["prenom"].$row["groupe"]),
                 'isProf' => 0,
                 'isAdmin' => 0,
-                'idGroupe' => $row["Groupe"]
+                'idGroupe' => $row["groupe"]
             ]);
         }
     }

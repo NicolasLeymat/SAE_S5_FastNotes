@@ -68,9 +68,10 @@
               @if (!Auth::user()->isAdmin)
                 Erreur 405 Vous n'avez pas accès à cette pasge
               @else
-              <form action="{{ route('ajoutEleve') }}" method="get">
-                <label for="eleves"> Selectionner un fichier : </label>
-                <input type="file" name="eleves" id="eleves">
+              <form action="{{ route('importEvals') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label for="file"> Selectionner un fichier : </label>
+                <input type="file" name="file" id="file">
                 <button class="Entreprise button button-order" type="submit"> Ajouter des élèves </button>
               </form>
               @endif

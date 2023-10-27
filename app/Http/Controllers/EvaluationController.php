@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
 use App\Models\Groupe;
 use App\Models\Utilisateur;
@@ -10,6 +11,7 @@ use DB;
 use Dflydev\DotAccessData\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 
 class EvaluationController extends Controller
@@ -136,5 +138,17 @@ class EvaluationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function import(Request $request){
+        Excel::import( new EvaluationImport(), $request->file("file") );    
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     //dd($request);
+        //     Excel::import( new EvaluationImport(), $request->file("file") );    
+        //     return redirect()->back()->with('success', 'File has been imported successfully.');
+        // }else{
+        //     return redirect()->back()->with('error', 'Please upload a file.');
+        // }
     }
 }

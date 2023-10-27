@@ -11,13 +11,12 @@ class Competence extends Model
 
     protected $primaryKey = "code";
     protected $table = "competence";
+    public $incrementing = false;
+
+    public $timestamps = false;
 
     public function ressources() {
-        return $this->belongsToMany(Ressource::class)->withPivot("Coefficient");
-    }
-
-    public function parcours() {
-        return $this->belongsToMany(Parcours::class);
+        return $this->belongsToMany(Ressource::class, "coefficient_ressource", "code_competence", "code_ressource")->withPivot("coefficient");
     }
 
     use HasFactory;

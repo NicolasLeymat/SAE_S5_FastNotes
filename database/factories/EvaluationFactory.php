@@ -20,10 +20,10 @@ class EvaluationFactory extends Factory
     public function definition(): array
     {
         return [
-            "libelle" => $this->fake()->name(),
-            "coefficient" => $this->fake()->randomFloat(2,0.1,4.0),
-            "type" => $this->fake()->name(),
-            "id_ressource" => Ressource::factory()->create()
+            "libelle" => fake()->name(),
+            "coefficient" => fake()->randomFloat(2,0.1,4.0),
+            "type" => fake()->name(),
+            "code_ressource" => Ressource::factory()->create()
         ];
 
     }

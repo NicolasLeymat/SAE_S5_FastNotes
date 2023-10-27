@@ -31,14 +31,11 @@ return new class extends Migration
             $table->boolean('isAdmin');
             $table->unsignedBigInteger('id_groupe');
             $table->foreign('id_groupe')->references('id')->on('groupe');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('email_verified_at');
-            $table->timestamp('email_updated_at');
         });
 
         Schema::create('competence', function (Blueprint $table) {
-            $table->id();
+            $table->string('code');
+            $table->primary('code');
             $table->string('libelle');
         });
 
@@ -67,13 +64,8 @@ return new class extends Migration
         });
 
         Schema::create('coefficient_ressource', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_parcours');
             $table->string('code_ressource');
-            $table->foreign('code_ressource')->references('code')->on('ressource');
-            $table->foreign('id_competence')->references('id')->on('competence');
-            $table->foreign('id_parcours')->references('id')->on('parcours');
-            $table->primary(['id_competence', 'id_parcours', 'code_ressource']);
-            $table->string('code_ressource');
+            $table->string('code_competence');
             $table->foreign('code_ressource')->references('code')->on('ressource');
             $table->foreign('code_competence')->references('code')->on('competence');
             $table->primary(['code_competence', 'code_ressource']);

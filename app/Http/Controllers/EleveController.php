@@ -53,6 +53,9 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
         }
 
+        if (!Gate::allows('matchId', $id)){
+            abort(403, Gate::allows('Vous ne pouvez regarder que vos notes'));
+        }
 
         $eleve = Utilisateur::find($id);
 

@@ -101,7 +101,7 @@ class EleveController extends Controller
         $ressourcesCoef = [];
         $moyRessources = [];
         foreach($competence->ressources as $ressource) {
-            $ressourcesCoef[$ressource->code] = $ressource->pivot->Coefficient;
+            $ressourcesCoef[$ressource->code] = $ressource->pivot->coefficient;
             if($this->moyenneParRessource($idEleve, $ressource->code) != 'Pas disponible'){
                 $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
             }
@@ -116,7 +116,7 @@ class EleveController extends Controller
         if($notes == 0){
             return 'Pas disponible';
         }
-        dd($notes / $c);
+        return $notes / $c;
     }
 
     public function listeCompetences(string $idEleve) {

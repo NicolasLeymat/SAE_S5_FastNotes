@@ -330,6 +330,21 @@ img {
   margin-top: 10px;
 }
 
+.eval_tab{
+  margin-left:auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.button-modifier-note{
+  background-color: var(--input-color) !important;
+  border: none;
+  border-radius: 0px !important;
+}
+
+.button-modifier-note:hover{
+  cursor: pointer;
+}
 /* Active link */
 
 .active-link {

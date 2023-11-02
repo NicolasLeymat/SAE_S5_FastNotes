@@ -39,13 +39,7 @@
             </x-dropdown-link>
             </form>
         </li>
-            @else
-            <li class="nav_item">
-            <a href="{{ route('login') }}" class="nav_link">
-                <i class="uil uil-message nav_icon"></i> Log in
-            </a>
-            </li>
-            @endauth
+        @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
         </div>
@@ -64,20 +58,21 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <div class="home_content grid">
-            <table>
-                <thead>
+        <div class="home_content">
+            <table class="eval_tab">
+                <thead class="tab-row-dark">
                     <tr>
                         <th>Nom</th>
                         <th>Type</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($evals as $evaluation)
-                    
-                    <tr>
-                        <td><a href="/evaluation/{{$evaluation->id}}" class="">{{$evaluation -> libelle}}</a></td>
-                        <td>{{ $evaluation -> type }}</td>
+                    <tr >
+                        <td class="clear-cell">{{$evaluation -> libelle}}</td>
+                        <td class="clear-cell">{{ $evaluation -> type }}</td>
+                        <td><button class="clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
                     </tr>
                     
                     @endforeach

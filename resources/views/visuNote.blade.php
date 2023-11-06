@@ -80,14 +80,14 @@
               @foreach ($tabMoyennesCompetences as $key => $valeur)
               <tr class="tab-row tab-row-dark">
                 <td class="tab-cell"><b>{{ $key }}</b></td>
-                @if($valeur < 10)
+                @if ($valeur==="Pas disponible")
                   <td style="color:red" class="tab-cell">{{ $valeur }}</td>
-                @endif
-                @if($valeur > 10 && $valeur < 15)
-                  <td style="color:orange" class="tab-cell">{{ $valeur }}</td> 
-                @endif
-                @if($valeur > 15)
-                  <td style="color:green"class="tab-cell">{{ $valeur }}</td>
+                @elseif($valeur < 10)
+                <td style="color:red" class="tab-cell">{{ $valeur }}</td>
+                @elseif($valeur > 10 && $valeur < 15)
+                <td style="color:orange" class="tab-cell">{{ $valeur }}</td> 
+                @elseif($valeur > 15)
+                <td style="color:green"class="tab-cell">{{ $valeur }}</td>
                 @endif
               </tr>
               @endforeach
@@ -98,7 +98,7 @@
                   <tr class="tab-row tab-row-dark">
                     <td class="tab-cell" ><b>{{ $valeur[1] }}</b></td>
                     <td class="tab-cell"></td>
-                    <td class="tab-cell"> 
+                    <td class="tab-cell centered-cell"> 
                       @if($valeur[0] == "Pas disponible") 
                         <p style="color:red">{{ $valeur[0] }} </p>
                       @elseif($valeur[0] < 10)
@@ -113,27 +113,27 @@
                   @foreach ($evaluations as $evaluation)
                     @if ($evaluation['code_ressource'] == $key)
                       <tr class="tab-row tab-row-clear">
-                        <td class="tab-cell clear-cell"> {{ $evaluation->libelle }} </td>
-                        <td class="tab-cell clear-cell"> {{ $evaluation->type }} </td>
+                        <td class="tab-cell"> {{ $evaluation->libelle }} </td>
+                        <td class="tab-cell"> {{ $evaluation->type }} </td>
                         @php
                           $a = false;
                         @endphp
                         @foreach($tabNotes as $note )
                           @if($note->id == $evaluation->id)
                             @if($note->pivot->note < 10)
-                              <td style="color:red"  class="tab-cell clear-cell">{{ $note->pivot->note }}</td>
+                              <td style="color:red"  class="tab-cell centered-cell">{{ $note->pivot->note }}</td>
                             @endif
                             @if($note->pivot->note > 10 && $note->pivot->note < 15)
-                              <td style="color:orange"  class="tab-cell clear-cell">{{ $note->pivot->note }}</td>
+                              <td style="color:orange"  class="tab-cell centered-cell">{{ $note->pivot->note }}</td>
                             @endif
                             @if($note->pivot->note > 15)
-                              <td style="color:green" class="tab-cell clear-cell" >{{ $note->pivot->note }}</td>
+                              <td style="color:green" class="tab-cell centered-cell" >{{ $note->pivot->note }}</td>
                             @endif
                             @php $a = true; @endphp
                           @endif
                         @endforeach
                         @if ($a != true)
-                          <td style="color:red" class="tab-cell clear-cell" > Pas disponible </td>
+                          <td style="color:red" class="tab-cell centered-cell" > Pas disponible </td>
                         @endif
                       </tr>
                     @endif

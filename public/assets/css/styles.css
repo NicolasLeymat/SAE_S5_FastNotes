@@ -21,6 +21,7 @@
   --text-color-dark: hsl(var(--hue-color), 8%, 75%);
   --text-color-darker: hsl(var(--hue-color), 100%, 100%);
   --input-color: hsl(var(--hue-color), 70%, 96%);
+  --input-color-darker: hsl(var(--hue-color), 80%, 96%);
   --body-color: hsl(var(--hue-color), 60%, 99%);
   --container-color: #fff;
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
@@ -81,6 +82,7 @@ body.dark-theme {
   --title-color: hsl(var(--hue-color), 8%, 95%);
   --text-color: hsl(var(--hue-color), 8%, 75%);
   --input-color: hsl(var(--hue-color), 29%, 16%);
+  --input-color-darker: hsl(var(--hue-color), 80%, 16%);
   --body-color: hsl(var(--hue-color), 28%, 12%);
   --container-color: hsl(var(--hue-color), 29%, 16%);
   --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
@@ -273,6 +275,11 @@ img {
   margin-bottom: 10px;
 }
 
+
+.tab-row-clear{
+  background-color:var(--input-color);
+}
+
 .tab-cell{
   padding: 10px 10px 10px 10px;
 }
@@ -289,8 +296,8 @@ img {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.clear-cell{
-  background-color:var(--input-color);
+.centered-cell{
+  text-align: center;
 }
 
 .semestre-m{
@@ -345,12 +352,46 @@ img {
 .button-modifier-note:hover{
   cursor: pointer;
 }
+
+.saissi_note_tab{
+  margin-left:auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.button_save_notes{
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.saissi_notes_form{
+  text-align: center;
+}
 /* Active link */
 
 .active-link {
   color: var(--first-color);
 }
 
+.input{
+  width: 100%;
+  height: 45px;
+  background-color: var(--input-color);
+  color:var(--text-color-dark);
+  text-align: center;
+  border: none;
+}
+
+.input:hover{
+  background-color: var(--input-color-darker);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 /* Change background header */
 
 .scroll-header {
@@ -835,29 +876,72 @@ img {
   padding-bottom: 50px;
 }
 
-.card{
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 45%;
-  height: 250px;
-  background-color: var(--first-color-alt);
-  align-content: center;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 10px 5px 5px black;
-}
-
 .button-index{
   margin-top: 15px;
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 325px;
+  text-align: center;
 }
 .button-ajout{
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 136px;
+}
+
+.center{
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 32%;
+  height: 100%;
+  margin-left:auto;
+  margin-right:auto;
+  padding-bottom: 50px;
+}
+
+.button-admin{
+  width: 200px !important;
+  text-align: center;
+}
+
+.button-admin-dash{
+  width: 200px !important;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.items_admin{
+  text-align: center;
+  width: 32%;
+  margin-top:15px;
+  margin-bottom: 15px;
+}
+.text_admin{
+  text-align: center;
+  margin-top:1px;
+  margin-bottom: 1px;
+}
+
+.full_home{
+  max-width: none;
+  width: 100%;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.flex_forms{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left:10px;
+}
+
+.flex_form{
+  height: 479px;
+  text-align: center;
 }

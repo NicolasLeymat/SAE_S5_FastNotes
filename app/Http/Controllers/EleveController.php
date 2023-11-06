@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ElevesImport;
 use App\Models\Competence;
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Gate;
@@ -169,7 +170,7 @@ class EleveController extends Controller
         return $notes / $c;
     }
 
-    public function import(Request $request){
+    public function addManyStudents(Request $request){
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             //dd($request);
@@ -177,10 +178,25 @@ class EleveController extends Controller
     
             // You can add more logic here after importing the file.
     
-            return redirect()->back()->with('success', 'File has been imported successfully.');
+            return redirect()->back()->with('successManyEleves', 'Les élèves ont été ajoutés avec succés');
         }else{
-            dd($request);
             return redirect()->back()->with('error', 'Please upload a file.');
         }
+    }
+
+    public function addOneStudent(Request $request){
+        //dd($request->groupe);
+        Utilisateur::create([
+            'code'=> $request->code,
+            'identification'=>$request->identifiant,
+            'nom'=>$request->nom,
+            'prenom'=>$request->prenom,
+            'email'=>$request->email,
+            'password'=> Hash::make($request->nom.$request->prenom.$request->groupe),
+            'isProf' => 0,
+            'isAdmin' => 0,
+            'id_groupe'=> $request->groupe
+        ]);
+        return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');
     }
 }

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {       
         Schema::create('groupe', function (Blueprint $table) {
-            $table->id();
+            $table->string('id');
+            $table->primary('id');
             $table->string('libelle');
             $table->string('semestre');
             $table->year('annee');

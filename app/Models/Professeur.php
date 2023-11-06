@@ -17,6 +17,6 @@ class Professeur extends Utilisateur
         );
 
     public function enseignements () {
-        return $this->hasMany(Enseignement::class,"code");
+        return $this->hasMany(Enseignement::class,"code_prof");
     }
 }

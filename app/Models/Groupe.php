@@ -17,11 +17,15 @@ class Groupe extends Model
 
     protected $table = "groupe";
 
-    public function utilisateurs () {
-        return $this->hasMany(Utilisateur::class,"id_groupe");
+    public function eleve () {
+        return $this->hasMany(Eleve::class,"id_groupe");
     }
 
     public function ressources() {
         return $this->belongsToMany(Ressource::class,"ressource_groupe","id_groupe","code_ressource");
+    }
+
+    public function enseignement(){
+        return $this->hasMany(Enseignement::class,"id_groupe");
     }
 }

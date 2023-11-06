@@ -31,6 +31,6 @@ class Ressource extends Model
     }
 
     public function enseignement() {
-        return $this->hasMany(Enseignement::class,"code");
+        return $this->hasMany(Enseignement::class,"code_ressource");
     }
 }

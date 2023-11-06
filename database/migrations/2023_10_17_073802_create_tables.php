@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {       
-        Schema::create('groupe', function (Blueprint $table) {
+        Schema::create('groupes', function (Blueprint $table) {
             $table->string('id');
             $table->primary('id');
             $table->string('libelle');
@@ -23,65 +23,96 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('code');
             $table->primary('code');
-            $table->string('identification');
             $table->string('password');
             $table->string('email');
             $table->string('nom');
             $table->string('prenom');
+        });
+
+        Schema::create('professeurs', function (Blueprint $table) {
+            $table->string('code');
+            $table->primary('code');
             $table->boolean('isProf');
+            $table->foreign('code')->references('code')->on('users');
+        });
+
+        Schema::create('admins', function (Blueprint $table) {
+            $table->string('code');
+            $table->primary('code');
             $table->boolean('isAdmin');
-            $table->unsignedBigInteger('id_groupe');
-            $table->foreign('id_groupe')->references('id')->on('groupe');
+            $table->foreign('code')->references('code')->on('users');
         });
 
-        Schema::create('competence', function (Blueprint $table) {
+        Schema::create('eleves', function (Blueprint $table) {
+            $table->string('code');
+            $table->primary('code');
+            $table->string('identification');
+            $table->string('id_groupe');
+            $table->foreign('id_groupe')->references('id')->on('groupes');
+            $table->foreign('code')->references('code')->on('users');
+        });
+        
+        
+        Schema::create('competences', function (Blueprint $table) {
             $table->string('code');
             $table->primary('code');
             $table->string('libelle');
         });
-
-        Schema::create('ressource', function (Blueprint $table) {
+        
+        Schema::create('ressources', function (Blueprint $table) {
             $table->string('code');
             $table->primary('code');
             $table->string('libelle');
         });
-
-        Schema::create('evaluation', function (Blueprint $table) {
+        
+        Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
             $table->float('coefficient');
             $table->string('type');
+            $table->timestamp('date_epreuve')->nullable()->default(null);
+            $table->timestamp('date_rattrapage')->nullable()->default(null);
             $table->string('code_ressource');
-            $table->foreign('code_ressource')->references('code')->on('ressource');
+            $table->foreign('code_ressource')->references('code')->on('ressources');
         });
-
+        
         Schema::create('note_evaluation', function (Blueprint $table) {
             $table->string('note');
             $table->unsignedBigInteger('id_evaluation');
             $table->string('code_eleve');
-            $table->foreign('code_eleve')->references('code')->on('users');
-            $table->foreign('id_evaluation')->references('id')->on('evaluation');
+            $table->foreign('code_eleve')->references('code')->on('eleves');
+            $table->foreign('id_evaluation')->references('id')->on('evaluations');
             $table->primary(['id_evaluation', 'code_eleve']);
         });
-
+        
         Schema::create('coefficient_ressource', function (Blueprint $table) {
             $table->string('code_ressource');
             $table->string('code_competence');
-            $table->foreign('code_ressource')->references('code')->on('ressource');
-            $table->foreign('code_competence')->references('code')->on('competence');
+            $table->foreign('code_ressource')->references('code')->on('ressources');
+            $table->foreign('code_competence')->references('code')->on('competences');
             $table->float('coefficient');
             $table->primary(['code_competence', 'code_ressource']);
         });
-
+        
         Schema::create('ressource_groupe', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_groupe');
+            $table->string('id_groupe');
             $table->string('code_ressource');
-            $table->foreign('code_ressource')->references('code')->on('ressource');
-            $table->foreign('id_groupe')->references('id')->on('groupe');
+            $table->foreign('code_ressource')->references('code')->on('ressources');
+            $table->foreign('id_groupe')->references('id')->on('groupes');
             $table->primary(['id_groupe', 'code_ressource']);
         });
+        
+        Schema::create('enseignements', function (Blueprint $table) {
+            $table->id();
+            $table->string('code_prof');
+            $table->string('id_groupe');
+            $table->string('code_ressource');
+            $table->foreign('code_prof')->references('code')->on('professeurs');
+            $table->foreign('id_groupe')->references('id')->on('groupes');
+            $table->foreign('code_ressource')->references('code')->on('ressources');
+        });
     }
-
+    
     /**
      * Reverse the migrations.
      */
@@ -89,11 +120,14 @@ return new class extends Migration
     {
         Schema::dropIfExists('note_evaluation');
         Schema::dropIfExists('coefficient_ressource');
-        Schema::dropIfExists('competence');
+        Schema::dropIfExists('competences');
         Schema::dropIfExists('users');
-        Schema::dropIfExists('evaluation');
-        Schema::dropIfExists('groupe');
+        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('groupes');
         Schema::dropIfExists('ressource_groupe');
-        Schema::dropIfExists('ressource');
+        Schema::dropIfExists('professeurs');
+        Schema::dropIfExists('admins');
+        Schema::dropIfExists('eleves');
+        Schema::dropIfExists('enseignements');
     }
 };

@@ -12,7 +12,6 @@ class Competence extends Model
     protected $primaryKey = "code";
     protected $table = "competence";
     public $incrementing = false;
-
     public $timestamps = false;
 
     public function ressources() {

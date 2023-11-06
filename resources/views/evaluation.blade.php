@@ -97,6 +97,7 @@
                         <th class="tab-cell">Numéro étudiant</th>
                         <th class="tab-cell">Nom</th>
                         <th class="tab-cell">Prenom</th>
+                        <th class="tab-cell">Groupe</th>
                         <th class="tab-cell">Note</th>
                         <th class="tab-cell">Absent</th>
                     </tr>
@@ -106,6 +107,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['identification']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
+                    <td class="tab-cell clear-cell">{{$eleve['id_groupe']}}</td>
                     <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>

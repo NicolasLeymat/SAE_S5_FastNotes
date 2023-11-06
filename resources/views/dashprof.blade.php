@@ -70,9 +70,9 @@
                 <tbody>
                     @foreach ($evals as $evaluation)
                     <tr >
-                        <td class="clear-cell">{{$evaluation -> libelle}}</td>
-                        <td class="clear-cell">{{ $evaluation -> type }}</td>
-                        <td><button class="clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
+                        <td class="tab-cell clear-cell">{{$evaluation -> libelle}}</td>
+                        <td class="tab-cell clear-cell">{{ $evaluation -> type }}</td>
+                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
                     </tr>
                     
                     @endforeach

@@ -62,3 +62,5 @@ Route::middleware('administrateur')->group(function () {
         return view('dashAdmin');
     })->name('dashadmin');
 });
+
+Route::get('/bar', 'App\Http\Controllers\MailController@bar',);

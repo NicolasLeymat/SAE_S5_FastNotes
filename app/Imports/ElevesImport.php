@@ -26,7 +26,7 @@ class ElevesImport implements ToCollection, WithHeadingRow
                 'password' => Hash::make($row["nom"].$row["prenom"].$row["groupe"]),
                 'isProf' => 0,
                 'isAdmin' => 0,
-                'idGroupe' => $row["groupe"]
+                'id_groupe' => $row["groupe"]
             ]);
         }
     }

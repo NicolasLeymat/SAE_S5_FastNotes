@@ -71,7 +71,8 @@ Route::middleware('professeur')->group(function () {
     Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');
 });
 Route::post('importEval', [EvaluationController::class, 'import'])->name("importEvals");
-Route::post('importEleves', [EleveController::class, 'import'])->name("importEleves");
+Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
+Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
 
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);

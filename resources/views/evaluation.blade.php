@@ -16,6 +16,36 @@
     <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
 
     <title>Notes Iut</title>
+
+    <script>
+        function confirmerSaisie(){
+            var nbNotes = 0;
+            var nbNotesNonSaisies = 0;
+            var saisies = document.querySelectorAll('#formulaireNotes table tr');
+            saisies.forEach(function(inputElement, index) {
+                if(index!=0){
+                    var isAbsent = inputElement.querySelector('input[type="checkbox"]').checked;
+                    var noteInput = inputElement.querySelector('input[type="number"]').value;
+                    nbNotes+=1;
+                    if (noteInput == "" && !isAbsent) {
+                        nbNotesNonSaisies+=1;
+                    }
+                }
+            });
+
+            if (nbNotesNonSaisies==0) {
+                document.getElementById('formulaireNotes').submit();
+            } else if(nbNotesNonSaisies>1){
+                if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            } else {
+                if(confirm(nbNotesNonSaisies+' note n\'a pas été saisie. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                    document.getElementById('formulaireNotes').submit();
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <!--  HEADER  -->
@@ -38,13 +68,7 @@
             </x-dropdown-link>
             </form>
         </li>
-            @else
-            <li class="nav_item">
-            <a href="{{ route('login') }}" class="nav_link">
-                <i class="uil uil-message nav_icon"></i> Log in
-            </a>
-            </li>
-            @endauth
+        @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
         </div>
@@ -63,29 +87,33 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <div class="home_content grid">
-        <form action="{{ route('saisir_notes') }}" method="POST">
+        <div class="home_content">
+        <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes" class="saissi_notes_form">
             @csrf
             <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
-            <table>
+            <table class="saissi_note_tab">
                 <thead>
-                    <tr>
-                        <th>Numéro étudiant</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Note</th>
+                    <tr class="tab-row-dark">
+                        <th class="tab-cell">Numéro étudiant</th>
+                        <th class="tab-cell">Nom</th>
+                        <th class="tab-cell">Prenom</th>
+                        <th class="tab-cell">Groupe</th>
+                        <th class="tab-cell">Note</th>
+                        <th class="tab-cell">Absent</th>
                     </tr>
                 </thead>
             @foreach($eleves as $eleve)
                 <tr>
-                    <td>{{$eleve['identification']}}</td>
-                    <td>{{$eleve['nom']}}</td>
-                    <td>{{$eleve['prenom']}}</td>
-                    <td><input type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="tab-cell clear-cell">{{$eleve['identification']}}</td>
+                    <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
+                    <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
+                    <td class="tab-cell clear-cell">{{$eleve['id_groupe']}}</td>
+                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach
             </table>
-            <button type="submit">Enregistrer les notes</button>
+            <input class="button button_save_notes" type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
         </form>
         </div>
         </div>

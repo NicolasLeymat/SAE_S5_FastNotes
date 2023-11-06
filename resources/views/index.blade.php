@@ -38,12 +38,6 @@
               </x-dropdown-link>
             </form>
           </li>
-            @else
-              <li class="nav_item">
-              <a href="{{ route('login') }}" class="nav_link">
-                  <i class="uil uil-message nav_icon"></i> Log in
-              </a>
-              </li>
             @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
@@ -63,19 +57,51 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-          <div class="home_content">
+          <div class="home_content-fix">
             @auth
-              <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h2>
+              <h2 class="section_title">Bienvenue sur Fast Notes  </br>M/Mme. {{ Auth::user()->nom }} {{ Auth::user()->prenom }} </h2>
               @if  (Auth::user()->isAdmin && Auth::user()->isProf)
-              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
-              <a class="Entreprise button button-order" > Accéder à la dashboard Admin </a>
+              <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
+              <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isAdmin)
-              <a class="Entreprise button button-order" href=""> Accéder à la dashboard Admin </a>
+              <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
               @elseif (Auth::user()->isProf)
-              <a class="Entreprise button button-order" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
+              <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
               @else
-                <a class="Entreprise button button-order" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
+                <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @endif
+            @else
+            <form method="POST" action="{{ route('login') }}" class="form">
+              @csrf
+                <!-- Email Address -->
+                <div class="flex_items email_flex">
+                    <x-input-label for="code" class="label" :value="__('Identifiant')" />
+                    <x-text-input id="code" class="form_input" type="text" name="code" :value="old('code')" required autofocus autocomplete="username" />
+                    <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                </div>
+
+                <!-- Password -->
+                <div class="flex_items">
+                    <x-input-label for="password" class="label" :value="__('Mot de passe')" />
+
+                    <x-text-input id="password" class="form_input"
+                                    type="password"
+                                    name="password"
+                                    required autocomplete="current-password" />
+
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                
+
+                <div class="flex_items button-div">
+
+
+                    <x-primary-button class="button button--flex log_btn">
+                        {{ __('Se connecter') }}
+                    </x-primary-button>
+                </div>
+            </form>
             @endauth
           </div>
         </div>
@@ -85,7 +111,7 @@
     <!-- MAIN FIN -->
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer-index">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>

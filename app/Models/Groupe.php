@@ -22,6 +22,6 @@ class Groupe extends Model
     }
 
     public function ressources() {
-        return $this->belongsToMany(Groupe::class,"ressource_groupe","code_ressource","id_groupe");
+        return $this->belongsToMany(Ressource::class,"ressource_groupe","id_groupe","code_ressource");
     }
 }

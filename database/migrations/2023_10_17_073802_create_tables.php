@@ -31,7 +31,6 @@ return new class extends Migration
             $table->boolean('isAdmin');
             $table->unsignedBigInteger('id_groupe');
             $table->foreign('id_groupe')->references('id')->on('groupe');
-            $table->timestamps();
         });
 
         Schema::create('competence', function (Blueprint $table) {
@@ -65,11 +64,11 @@ return new class extends Migration
         });
 
         Schema::create('coefficient_ressource', function (Blueprint $table) {
-            $table->double('coefficient');
-            $table->char('code_competence');
             $table->string('code_ressource');
+            $table->string('code_competence');
             $table->foreign('code_ressource')->references('code')->on('ressource');
             $table->foreign('code_competence')->references('code')->on('competence');
+            $table->float('coefficient');
             $table->primary(['code_competence', 'code_ressource']);
         });
 

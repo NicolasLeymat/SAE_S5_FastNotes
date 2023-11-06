@@ -48,7 +48,7 @@ class EvaluationTest extends TestCase
 
         $response = $this->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(403);
 
         $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
         $this->assertEquals(1, $noteDonnee->pivot->note);
@@ -65,7 +65,7 @@ class EvaluationTest extends TestCase
 
         $response = $this->actingAs($eleveConnecte)->post('saisir_notes',['evaluation_id'=> $eval->id, 'notes'=> [$eleve->code=>["note"=> 4]]]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(403);
         $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
         $this->assertEquals(1, $noteDonnee->pivot->note);
     }
@@ -85,4 +85,6 @@ class EvaluationTest extends TestCase
         $noteDonnee = $eval->utilisateurs()->where('code_eleve',$eleve->code)->first();
         $this->assertEquals(4, $noteDonnee->pivot->note);
     }
+
+
 }

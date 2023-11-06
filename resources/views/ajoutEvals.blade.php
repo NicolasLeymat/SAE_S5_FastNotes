@@ -10,7 +10,6 @@
     href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
 
-    
     <!--  SWIPER CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
     <!--  CSS  -->
@@ -28,18 +27,24 @@
         >
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">
-        @auth 
-        <li class="nav_item">
+          @auth 
+          <li class="nav_item">
             <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-dropdown-link :href="route('logout')"
-                onclick="event.preventDefault();
+              @csrf
+              <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault();
                     this.closest('form').submit();">
                 <p class="nav_link">{{ __('Se déconnecter') }}</p>
-            </x-dropdown-link>
+              </x-dropdown-link>
             </form>
-        </li>
-        @endauth
+          </li>
+            @else
+              <li class="nav_item">
+              <a href="{{ route('login') }}" class="nav_link">
+                  <i class="uil uil-message nav_icon"></i> Log in
+              </a>
+              </li>
+            @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
         </div>
@@ -58,36 +63,28 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <div class="home_content">
-            <table class="eval_tab">
-                <thead class="tab-row-dark">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Type</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($evals as $evaluation)
-                    <tr >
-                        <td class="tab-cell clear-cell">{{$evaluation -> libelle}}</td>
-                        <td class="tab-cell clear-cell">{{ $evaluation -> type }}</td>
-                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
-                    </tr>
-                    
-                    @endforeach
-                </tbody>
-            </table>
-
+          <div class="home_content">
+            @auth
+              @if (!Auth::user()->isAdmin)
+                Erreur 405 Vous n'avez pas accès à cette pasge
+              @else
+              <form action="{{ route('importEvals') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label for="file"> Selectionner un fichier : </label>
+                <input type="file" name="file" id="file">
+                <button class="Entreprise button button-order" type="submit"> Ajouter des évaluations </button>
+              </form>
+              @endif
+            @endauth
+          </div>
         </div>
-        </div>
-    </section>
-    <!-- HOME FIN -->
+      </section>
+      <!-- HOME FIN -->
     </main>
     <!-- MAIN FIN -->
 
-        <!-- FOOTER -->
-        <footer class="footer">
+    <!-- FOOTER -->
+    <footer class="footer">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>
@@ -101,7 +98,7 @@
             </li>
 
             <li>
-            <a href="" class="footer_link">Mederic Demailly</a>
+            <a href="" class="footer_link">Mederic Damailly</a>
             </li>
 
             <li>
@@ -125,7 +122,7 @@
     </div>
     </footer>
     <!-- FOOTER FIN -->
-    
+
     <!-- SCROLL TOP  -->
     <a href="#" class="scrollup" id="scroll-up">
     <i class="uil uil-arrow-up scrollup_icon"></i>
@@ -136,5 +133,6 @@
     <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
     <!--  MAIN JS  -->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

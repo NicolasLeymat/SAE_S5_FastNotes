@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ElevesImport;
 use App\Models\Competence;
-use App\Models\Evaluation;
-use App\Models\Groupe;
-use App\Models\Ressource;
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class EleveController extends Controller
@@ -30,6 +28,11 @@ class EleveController extends Controller
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
+        $evalsnotees = $user->evaluations;
+        $tabNotes = [];
+        foreach($evalsnotees as $evalnotee){
+            array_push($tabNotes, $evalnotee);
+        }
         $tabressources = [];
         $tabMoyennesRessources = [];
         $tabMoyennesCompetences = [];
@@ -44,7 +47,7 @@ class EleveController extends Controller
             $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($id, $competence->code);
         }
         $moyenneSemestre = $this->moyenneSemestre($id);
-        return view('visuNote', compact('evaluations', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
+        return view('visuNote', compact('evaluations', 'tabNotes', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
     }
     
     public function evalsEleve($id){
@@ -58,8 +61,16 @@ class EleveController extends Controller
         }
 
         $eleve = Utilisateur::find($id);
+        $groupe = $eleve->groupe;
+        $ressources = $groupe->ressources;
+        $evals = [];
+        foreach($ressources as $ressource){
+            foreach($ressource->evaluations as $eval){
+                array_push($evals, $eval);
+            }
+        }
 
-        return $eleve->evaluations;
+        return $evals;
     }
 
     #Retourne toutes les ressources d'un élève
@@ -104,7 +115,7 @@ class EleveController extends Controller
         $ressourcesCoef = [];
         $moyRessources = [];
         foreach($competence->ressources as $ressource) {
-            $ressourcesCoef[$ressource->code] = $ressource->pivot->Coefficient;
+            $ressourcesCoef[$ressource->code] = $ressource->pivot->coefficient;
             if($this->moyenneParRessource($idEleve, $ressource->code) != 'Pas disponible'){
                 $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
             }
@@ -119,7 +130,7 @@ class EleveController extends Controller
         if($notes == 0){
             return 'Pas disponible';
         }
-        dd($notes / $c);
+        return $notes / $c;
     }
 
     public function listeCompetences(string $idEleve) {
@@ -157,5 +168,35 @@ class EleveController extends Controller
             return 'Pas disponible';
         }
         return $notes / $c;
+    }
+
+    public function addManyStudents(Request $request){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new ElevesImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyEleves', 'Les élèves ont été ajoutés avec succés');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
+    }
+
+    public function addOneStudent(Request $request){
+        //dd($request->groupe);
+        Utilisateur::create([
+            'code'=> $request->code,
+            'identification'=>$request->identifiant,
+            'nom'=>$request->nom,
+            'prenom'=>$request->prenom,
+            'email'=>$request->email,
+            'password'=> Hash::make($request->nom.$request->prenom.$request->groupe),
+            'isProf' => 0,
+            'isAdmin' => 0,
+            'id_groupe'=> $request->groupe
+        ]);
+        return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');
     }
 }

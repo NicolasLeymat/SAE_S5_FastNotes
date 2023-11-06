@@ -100,7 +100,7 @@
 
               <div class="center">
                 <div class="flex_forms">
-                  <form action="" class="ajoutEleves flex_form" method="post">
+                  <form action="{{ route('importEval') }}" class="ajoutEleves flex_form" method="post">
                     @csrf
                     <h3> Ajout évaluation via formulaire : </h3>
                     <label for="code_apogee">Code Apogée : </label></br><input type="text" name="code_apogee" id="code_apogee" required></br>
@@ -119,7 +119,7 @@
                     </datalist>
                     <input type="submit" value="Ajouter une évaluation" class="button button-admin-dash">
                   </form>
-                  <form action="" class="ajoutEleves flex_form">
+                  <form action="{{ route('importEvals') }}" class="ajoutEleves flex_form">
                     @csrf
                     <h3> Ajout évaluations via fichier excel : </h3>
                     <label for="file"> Selectionner un fichier : </label> </br>

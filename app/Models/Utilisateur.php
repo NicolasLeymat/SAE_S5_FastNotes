@@ -23,27 +23,13 @@ class Utilisateur extends Authenticatable
     public $incrementing = false;
     protected $fillable = [
         'code',
-        'identification',
         'password',
         'email',
         'nom',
-        'prenom',
-        'isProf',
-        'isAdmin',
-        'id_groupe'
+        'prenom'
     ];
 
     protected $table = "users";
-
-    public function evaluations() {
-        return $this->belongsToMany (Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')
-        ->withPivot("note");
-    }
-
-    public function groupe() {
-        return $this->belongsTo(Groupe::class, "id_groupe", "id");
-    }
-
     /**
      * The attributes that should be hidden for serialization.
      *

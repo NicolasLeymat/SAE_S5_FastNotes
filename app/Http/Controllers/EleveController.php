@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ElevesImport;
 use App\Models\Competence;
+use App\Models\Eleve;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
@@ -60,7 +61,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez regarder que vos notes'));
         }
 
-        $eleve = Utilisateur::find($id);
+        $eleve = Eleve::find($id);
         $groupe = $eleve->groupe;
         $ressources = $groupe->ressources;
         $evals = [];
@@ -80,10 +81,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux ressources'));
         }
 
-        $eleve = Utilisateur::find($id);
-        if ($eleve->isProf == 1){
-            return 'ratio';
-        }
+        $eleve = Eleve::find($id);
         return $eleve->groupe->ressources;
     }
 
@@ -93,7 +91,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
         }
 
-        $eleve = Utilisateur::find($idEleve);
+        $eleve = Eleve::find($idEleve);
         $notes = 0;
         $c = 0;
         foreach($eleve->evaluations as $evaluation) {
@@ -186,15 +184,13 @@ class EleveController extends Controller
 
     public function addOneStudent(Request $request){
         //dd($request->groupe);
-        Utilisateur::create([
+        Eleve::create([
             'code'=> $request->code,
             'identification'=>$request->identifiant,
             'nom'=>$request->nom,
             'prenom'=>$request->prenom,
             'email'=>$request->email,
             'password'=> Hash::make($request->nom.$request->prenom.$request->groupe),
-            'isProf' => 0,
-            'isAdmin' => 0,
             'id_groupe'=> $request->groupe
         ]);
         return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');

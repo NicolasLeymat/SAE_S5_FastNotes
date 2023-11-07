@@ -11,7 +11,8 @@ class Enseignement extends Model
 
     public $timestamps = false;
 
-    protected $id = "id";
+    public $incrementing = false;
+    protected $primaryKey = array('code_prof', 'id_groupe', 'code_ressource');
 
     protected $table = "enseignements";
 

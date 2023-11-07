@@ -10,15 +10,16 @@ class Groupe extends Model
     use HasFactory;
 
     public $timestamps = false;
+    public $incrementing = false;
 
-    protected $fillable = ["libelle","semestre","annee", "parcours"];
+    protected $fillable = ["id","libelle","semestre","annee", "parcours"];
 
     protected $id = "id";
 
     protected $table = "groupes";
 
     public function eleves () {
-        return $this->hasMany(Eleve::class,"id_groupe");
+        return $this->hasMany(Eleve::class,"id_groupe","id");
     }
 
     public function ressources() {

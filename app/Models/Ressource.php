@@ -31,10 +31,10 @@ class Ressource extends Model
     }
 
     public function groupe() {
-        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "id_groupe");
+        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "id_groupe")->withPivot("code_prof");
     }
 
     public function professeur() {
-        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "code_prof");
+        return $this->belongsToMany(Professeur::class,"enseignements", "code_ressource", "code_prof");
     }
 }

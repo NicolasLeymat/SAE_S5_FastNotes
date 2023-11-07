@@ -10,7 +10,7 @@ class Competence extends Model
     protected $fillable = ["libelle"];
 
     protected $primaryKey = "code";
-    protected $table = "competence";
+    protected $table = "competences";
     public $incrementing = false;
     public $timestamps = false;
 

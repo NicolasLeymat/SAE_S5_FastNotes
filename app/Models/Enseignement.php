@@ -13,7 +13,7 @@ class Enseignement extends Model
 
     protected $id = "id";
 
-    protected $table = "enseignement";
+    protected $table = "enseignements";
 
     public function professeur () {
         return $this->hasOne(Professeur::class,"code_utilisateur","code");

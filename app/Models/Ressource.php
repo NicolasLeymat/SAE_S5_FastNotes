@@ -9,7 +9,7 @@ class Ressource extends Model
 {
     use HasFactory;
 
-    protected $table = 'ressource';
+    protected $table = 'ressources';
     protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
 

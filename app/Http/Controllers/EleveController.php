@@ -28,7 +28,7 @@ class EleveController extends Controller
 
     public function show(string $id){
         $evaluations = $this->evalsEleve($id);
-        $user = Utilisateur::find($id);
+        $user = Eleve::find($id);
         $evalsnotees = $user->evaluations;
         $tabNotes = [];
         foreach($evalsnotees as $evalnotee){
@@ -62,7 +62,7 @@ class EleveController extends Controller
         }
 
         $eleve = Eleve::find($id);
-        dd($eleve);
+
         $groupe = $eleve->groupe;
         $ressources = $groupe->ressources;
         $evals = [];

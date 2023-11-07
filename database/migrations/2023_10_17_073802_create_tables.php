@@ -103,13 +103,13 @@ return new class extends Migration
         });
         
         Schema::create('enseignements', function (Blueprint $table) {
-            $table->id();
             $table->string('code_prof');
             $table->string('id_groupe');
             $table->string('code_ressource');
             $table->foreign('code_prof')->references('code')->on('professeurs');
             $table->foreign('id_groupe')->references('id')->on('groupes');
             $table->foreign('code_ressource')->references('code')->on('ressources');
+            $table->primary(['id_groupe', 'code_ressource', 'code_prof']);
         });
     }
     

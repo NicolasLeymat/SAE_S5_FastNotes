@@ -30,7 +30,11 @@ class Ressource extends Model
         return $this->belongsToMany(Groupe::class,"ressource_groupe","code_ressource","id_groupe");
     }
 
-    public function enseignement() {
-        return $this->hasMany(Enseignement::class,"code_ressource");
+    public function groupe() {
+        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "id_groupe");
+    }
+
+    public function professeur() {
+        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "code_prof");
     }
 }

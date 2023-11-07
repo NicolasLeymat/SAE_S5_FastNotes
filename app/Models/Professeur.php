@@ -16,7 +16,11 @@ class Professeur extends Utilisateur
         ]
         );
 
-    public function enseignements () {
-        return $this->hasMany(Enseignement::class,"code_prof");
+    public function ressource () {
+        return $this->belongsToMany(Ressource::class,"enseignements", "code_prof", "code_ressource");
+    }
+
+    public function groupe () {
+        return $this->belongsToMany(Groupe::class,"enseignements", "code_prof", "id_groupe");
     }
 }

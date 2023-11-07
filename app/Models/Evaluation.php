@@ -14,7 +14,7 @@ class Evaluation extends Model
     public $timestamps = false;
     protected $table = "evaluations";
 
-    public function eleve () {
+    public function eleves () {
         return $this->belongsToMany(Eleve::class, 'note_evaluation', 'id_evaluation', 'code_eleve')
         ->withPivot('note');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EvaluationImport;
+use App\Models\Eleve;
 use App\Models\Evaluation;
 use App\Models\Utilisateur;
 use DB;
@@ -17,7 +18,7 @@ class EvaluationController extends Controller
      */
     public function index()
     {
-        $results = DB::table('evaluation')->get()->sortBy('libelle');
+        $results = DB::table('evaluations')->get()->sortBy('libelle');
         return view('dashprof')->with('evals', $results);
     }
 
@@ -51,7 +52,7 @@ class EvaluationController extends Controller
         $ressourceEval = $evaluation->ressource; 
         if (! empty($ressourceEval) ) {
             foreach($ressourceEval->groupes as $groupe){
-                foreach($groupe->utilisateurs as $eleve){
+                foreach($groupe->eleves as $eleve){
                     if($eleve->isProf == 0 && $eleve->isAdmin == 0){
                         $pivotData = $eleve
                         ->evaluations()
@@ -88,11 +89,11 @@ class EvaluationController extends Controller
         }
 
         $evaluation = Evaluation::findOrFail($idEval);
-        $eleve = Utilisateur::findOrFail($idEleve);
+        $eleve = Eleve::findOrFail($idEleve);
 
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
-        $evaluation->utilisateurs()->syncWithoutDetaching([
+        $evaluation->eleves()->syncWithoutDetaching([
             $idEleve => ['note' => $note]
         ]);
         }
@@ -106,7 +107,6 @@ class EvaluationController extends Controller
 
         $evalId =$request->input('evaluation_id');
         $notes = $request->input('notes');
-
         foreach ($notes as $eleveID => $note) {
             //return $note;
             if ($note["note"] !== null) {

@@ -65,9 +65,6 @@
         <div class="home_container container full_home">
           <div class="home_content full_home center">
             @auth
-              @if (!Auth::user()->isAdmin)
-                Erreur 405 Vous n'avez pas accès à cette pasge
-              @else
               <div class="items_admin">
                 
                 <div class="flex_forms">
@@ -137,7 +134,6 @@
                 <div class="flex_items items_admin"> <p class="text_admin"> Ajouter une/des Évaluations </p> <a class="button button-admin" href="{{ route('ajoutEval') }}"> Ajout évaluation </a></div>
                 <div class="flex_items items_admin"> <p class="text_admin"> Exporter un bulletin </p> <a class="button button-admin"> Exporter un bulletin </a></div>
               </div>
-              @endif
             @endauth
           </div>
         </div>

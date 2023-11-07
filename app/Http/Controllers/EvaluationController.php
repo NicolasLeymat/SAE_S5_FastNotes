@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Amenadiel\JpGraph\Graph\PieGraph;
+use Amenadiel\JpGraph\Plot\PiePlot;
 use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
 use App\Models\Utilisateur;
@@ -17,6 +19,7 @@ class EvaluationController extends Controller
      */
     public function index()
     {
+        
         $results = DB::table('evaluation')->get()->sortBy('libelle');
         return view('dashprof')->with('evals', $results);
     }
@@ -42,6 +45,21 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
+        $graphique = new PieGraph(350, 250);
+        $graphique->title->Set("A Simple Pie Plot");
+        $graphique->SetBox(true);
+
+        $data = array(40, 21, 17, 14, 23);
+        $p1   = new PiePlot($data);
+        $p1->ShowBorder();
+        $p1->SetColor('black');
+        $p1->SetSliceColors(array('#1E90FF', '#2E8B57', '#ADFF2F', '#DC143C', '#BA55D3'));
+
+        $graphique->Add($p1);
+        if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
+            unlink(public_path().'\images\graph'.$idEval.'.jpg');
+        }
+        $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
 
         $evaluation = Evaluation::find($idEval);
         $eleves = [];

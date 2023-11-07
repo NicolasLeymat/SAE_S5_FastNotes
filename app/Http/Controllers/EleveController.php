@@ -62,6 +62,7 @@ class EleveController extends Controller
         }
 
         $eleve = Eleve::find($id);
+        dd($eleve);
         $groupe = $eleve->groupe;
         $ressources = $groupe->ressources;
         $evals = [];

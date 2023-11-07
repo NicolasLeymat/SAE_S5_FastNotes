@@ -9,10 +9,13 @@ class Admin extends Utilisateur
 {
     use HasFactory;
 
-    protected $fillable = array_merge(
-        parent::fillable,
+    protected $table = 'admins';
+    protected $fillable =
         [
             'isAdmin'
         ]
-        );
+        ;
+    public function utilisateur(){
+        return $this->belongsTo(Utilisateur::class,"code","code");
+    }
 }

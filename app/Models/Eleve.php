@@ -9,13 +9,14 @@ class Eleve extends Utilisateur
 {
     use HasFactory;
 
-    protected $fillable = array_merge(
-        [
-            'identification',
-            'id_groupe'
-        ],
-        parent->getFillable()
-    );
+    protected $table = "eleves";
+
+    protected $fillable = ['identification', 'id_groupe'];
+
+
+    public function utilisateur(){
+        return $this->belongsTo(Utilisateur::class, 'code');
+    }
 
     public function evaluations() {
         return $this->belongsToMany (Evaluation::class, 'note_evaluation', 'code_eleve', 'id_evaluation')

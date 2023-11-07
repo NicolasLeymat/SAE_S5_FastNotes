@@ -48,4 +48,14 @@ class Utilisateur extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function eleves(){
+        return $this->hasMany(Eleve::class, 'code','code');
+    }    
+    public function admin(){
+        return $this->hasMany(Admin::class, 'code','code');
+    }    
+    public function professeur(){
+        return $this->hasMany(Professeur::class, 'code','code');
+    }
 }

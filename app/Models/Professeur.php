@@ -9,12 +9,11 @@ class Professeur extends Utilisateur
 {
     use HasFactory;
 
-    protected $fillable = array_merge(
-        parent::fillable,
+    protected $table = "professeurs";
+    protected $fillable = 
         [
             'isProf'
-        ]
-        );
+        ];
 
     public function ressource () {
         return $this->belongsToMany(Ressource::class,"enseignements", "code_prof", "code_ressource");
@@ -22,5 +21,9 @@ class Professeur extends Utilisateur
 
     public function groupe () {
         return $this->belongsToMany(Groupe::class,"enseignements", "code_prof", "id_groupe");
+    }
+
+    public function utilisateur(){
+        return $this->belongsTo(Utilisateur::class,"code","code");
     }
 }

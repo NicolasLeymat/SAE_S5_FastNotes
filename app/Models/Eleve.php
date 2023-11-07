@@ -10,11 +10,11 @@ class Eleve extends Utilisateur
     use HasFactory;
 
     protected $fillable = array_merge(
-        parent::fillable,
         [
             'identification',
             'id_groupe'
-        ]
+        ],
+        parent->getFillable()
     );
 
     public function evaluations() {

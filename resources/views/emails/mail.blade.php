@@ -14,5 +14,6 @@
 </head>
 <body>
     <h1>Mon super mail</h1>
+    <p>Bonjour {{ $data['name'] }}</p>
 </body>
 </html>

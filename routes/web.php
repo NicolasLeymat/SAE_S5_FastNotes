@@ -84,4 +84,4 @@ Route::middleware('administrateur')->group(function () {
     })->name('dashadmin');
 });
 
-Route::get('/bar', 'App\Http\Controllers\MailController@bar',);
+Route::get('/email', 'App\Http\Controllers\MailController@email_send',);

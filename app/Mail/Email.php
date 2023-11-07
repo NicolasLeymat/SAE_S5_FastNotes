@@ -13,12 +13,13 @@ class Email extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data = [];
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Array $user)
     {
-        //
+        $this->data = $user;
     }
 
     /**

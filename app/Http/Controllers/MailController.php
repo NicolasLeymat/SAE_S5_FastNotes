@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    public function bar() {
-        Mail::to('receiver@test.com')->send(new Email());
+    public function email_send() {
+        $user = ['email' => 'user@test.com', 'name' => 'monsieur truc'];
+        Mail::to($user['email'])->send(new Email($user));
         return view('emails.mail');
     }
 }

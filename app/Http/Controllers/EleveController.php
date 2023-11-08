@@ -7,6 +7,7 @@ use App\Models\Competence;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
+use App\Models\Ressource;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -38,15 +39,19 @@ class EleveController extends Controller
         $tabMoyennesCompetences = [];
         foreach($evaluations as $eval) {
             if (!in_array($eval->code_ressource, $tabressources)){
+                $ressource = Ressource::find($eval->code_ressource);
                 array_push($tabressources, $eval->code_ressource);
-                $tabMoyennesRessources[$eval->code_ressource] = [$this->moyenneParRessource($id, $eval->code_ressource), $eval->ressource->libelle];
+                $tabMoyennesRessources[$eval->code_ressource] = [$this->moyenneParRessource($user, $ressource), $ressource->libelle];
             }
         }
-        foreach($this->listeCompetences($id) as $comp) {
+        
+        foreach($this->listeCompetences($user) as $comp) {
             $competence = Competence::find($comp);
-            $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($id, $competence->code);
+            $tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($user, $competence);
         }
-        $moyenneSemestre = $this->moyenneSemestre($id);
+        
+        //$moyenneSemestre = $this->moyenneSemestre($id);
+        $moyenneSemestre = 4;
         return view('visuNote', compact('evaluations', 'tabNotes', 'tabMoyennesRessources', 'tabMoyennesCompetences', 'moyenneSemestre'));
     }
     
@@ -74,30 +79,29 @@ class EleveController extends Controller
     }
 
     #Retourne toutes les ressources d'un élève
-    public function ressourcesEleve($id){
+    public function ressourcesEleve(Utilisateur $eleve){
 
         if (!Gate::allows('isEleve') && !Gate::allows('isAdmin')) {
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux ressources'));
         }
 
-        $eleve = Utilisateur::find($id);
+        
         if ($eleve->isProf == 1){
             return 'ratio';
         }
         return $eleve->groupe->ressources;
     }
 
-    public function moyenneParRessource(string $idEleve, string $idRessource) {
+    public function moyenneParRessource(Utilisateur $eleve, Ressource $ressource) {
         
         if (!Gate::allows('isEleve') && !Gate::allows('isAdmin')) {
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
         }
 
-        $eleve = Utilisateur::find($idEleve);
         $notes = 0;
         $c = 0;
         foreach($eleve->evaluations as $evaluation) {
-            if($evaluation->code_ressource == $idRessource){
+            if($evaluation->code_ressource == $ressource->code){
                 $notes += $evaluation->pivot->note * $evaluation->coefficient;
                 $c += $evaluation->coefficient;
             }
@@ -108,16 +112,15 @@ class EleveController extends Controller
         return $notes / $c;
     }
 
-    public function moyenneParCompetence(string $idEleve, string $idCompetence) {
-        $competence = Competence::find($idCompetence);
+    public function moyenneParCompetence(Utilisateur $eleve, Competence $competence) {
         $notes = 0;
         $c = 0;
         $ressourcesCoef = [];
         $moyRessources = [];
         foreach($competence->ressources as $ressource) {
             $ressourcesCoef[$ressource->code] = $ressource->pivot->coefficient;
-            if($this->moyenneParRessource($idEleve, $ressource->code) != 'Pas disponible'){
-                $moyRessources[$ressource->code] = $this->moyenneParRessource($idEleve, $ressource->code);
+            if($this->moyenneParRessource($eleve, $ressource) != 'Pas disponible'){
+                $moyRessources[$ressource->code] = $this->moyenneParRessource($eleve, $ressource);
             }
         }
         if(empty($moyRessources)){
@@ -133,7 +136,7 @@ class EleveController extends Controller
         return $notes / $c;
     }
 
-    public function listeCompetences(string $idEleve) {
+    public function listeCompetences(Utilisateur $idEleve) {
         $listeRessources = $this->ressourcesEleve($idEleve);
         $listeCompetences = [];
         $tabRessources = [];
@@ -157,13 +160,16 @@ class EleveController extends Controller
     public function moyenneSemestre(string $idEleve) {
         $notes = 0;
         $c = 0;
-        foreach($this->listeCompetences($idEleve) as $comp){
+        $eleve = Utilisateur::findOrFail($idEleve);
+
+        foreach($this->listeCompetences($eleve) as $comp){
             $competence = Competence::find($comp);
-            if($this->moyenneParCompetence($idEleve, $competence->code) != 'Pas disponible'){
-                $notes += $this->moyenneParCompetence($idEleve, $competence->code);
+            if($this->moyenneParCompetence($eleve, $competence) != 'Pas disponible'){
+                $notes += $this->moyenneParCompetence($eleve, $competence);
                 $c++;
             }
         }
+        
         if($notes == 0) {
             return 'Pas disponible';
         }

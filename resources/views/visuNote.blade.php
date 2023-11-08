@@ -81,13 +81,18 @@
               <tr class="tab-row tab-row-dark">
                 <td class="tab-cell"><b>{{ $key }}</b></td>
                 @if ($valeur==="Pas disponible")
-                  <td style="color:red" class="tab-cell">{{ $valeur }}</td>
+                  <td style="color:red" 
                 @elseif($valeur < 10)
-                <td style="color:red" class="tab-cell">{{ $valeur }}</td>
+                <td style="color:red" 
                 @elseif($valeur > 10 && $valeur < 15)
-                <td style="color:orange" class="tab-cell">{{ $valeur }}</td> 
-                @elseif($valeur > 15)
-                <td style="color:green"class="tab-cell">{{ $valeur }}</td>
+                <td style="color:orange" 
+                @else
+                <td style="color:green"
+                @endif
+                @if ($valeur =="Pas disponible")
+                  class="tab-cell">{{ $valeur }}</td>
+                @else
+                  class="tab-cell">{{ round($valeur,2) }}</td>
                 @endif
               </tr>
               @endforeach
@@ -100,14 +105,19 @@
                     <td class="tab-cell"></td>
                     <td class="tab-cell centered-cell"> 
                       @if($valeur[0] == "Pas disponible") 
-                        <p style="color:red">{{ $valeur[0] }} </p>
+                        <p style="color:red">
                       @elseif($valeur[0] < 10)
-                        <p style="color:red">{{ $valeur[0] }} </p>
+                        <p style="color:red">
                       @elseif($valeur[0] >= 10 && $valeur[0] < 15) 
-                        <p style="color:orange">{{ $valeur[0] }} </p> 
-                      @elseif($valeur[0] >= 15) 
-                        <p style="color:green">{{ $valeur[0] }} </p>
+                        <p style="color:orange">
+                      @else($valeur[0] >= 15) 
+                        <p style="color:green">
                       @endif 
+                      @if ($valeur[0] != "Pas disponible")
+                      {{ round($valeur[0],2) }} 
+                      @else 
+                      {{ $valeur[0] }} </p>
+                      @endif
                       </td>
                   </tr>
                   @foreach ($evaluations as $evaluation)

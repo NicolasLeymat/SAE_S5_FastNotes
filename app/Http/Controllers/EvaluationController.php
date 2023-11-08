@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Amenadiel\JpGraph\Graph\Graph;
 use Amenadiel\JpGraph\Graph\PieGraph;
+use Amenadiel\JpGraph\Plot\BoxPlot;
 use Amenadiel\JpGraph\Plot\PiePlot;
+use Amenadiel\JpGraph\Plot\StockPlot;
 use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
 use App\Models\Utilisateur;
@@ -11,6 +14,7 @@ use DB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 
 class EvaluationController extends Controller
 {
@@ -45,23 +49,6 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
-        $this->boxPlot(1);
-        $graphique = new PieGraph(350, 250);
-        $graphique->title->Set("A Simple Pie Plot");
-        $graphique->SetBox(true);
-
-        $data = array(40, 21, 17, 14, 23);
-        $p1   = new PiePlot($data);
-        $p1->ShowBorder();
-        $p1->SetColor('black');
-        $p1->SetSliceColors(array('#1E90FF', '#2E8B57', '#ADFF2F', '#DC143C', '#BA55D3'));
-
-        $graphique->Add($p1);
-        if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
-            unlink(public_path().'\images\graph'.$idEval.'.jpg');
-        }
-        $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
-
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
 
@@ -172,6 +159,22 @@ class EvaluationController extends Controller
             $pQuartile = $notes[floor($rangPQuartile)];
             $tQuartile = $notes[$rangTQuartile];
         }
+        $stats = [$pQuartile, $tQuartile, $notes[0], end($notes), $mediane];
+
+        $graphique = new Graph(300,200);
+        $graphique->SetScale("textlin");
+        $graphique->SetMarginColor('lightblue');
+        $graphique->title->Set('Stockchart example');
+
+        $p1   = new BoxPlot($stats);
+        $p1->SetColor('black');
+        $p1->SetWidth(9);
+
+        $graphique->Add($p1);
+        if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
+            unlink(public_path().'\images\graph'.$idEval.'.jpg');
+        }
+        $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
         
         
 

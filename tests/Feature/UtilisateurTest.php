@@ -9,6 +9,7 @@ use App\Models\Evaluation;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\EleveController;
 use App\Models\Competence;
+use App\Models\Groupe;
 use App\Models\Ressource;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
@@ -62,10 +63,15 @@ class UtilisateurTest extends TestCase
         $this->actingAs($user);
         $competence = Competence::factory()->create();
         $ressource = Ressource::factory()->create();
+        $groupe = Groupe::factory()->create(['libelle'=>'groupe1']);
         
         $ressource->competences()->syncWithoutDetaching([
             $competence->code => ['coefficient' => 1]
         ]);
+
+        $groupe->ressources()->attach($ressource);
+
+        $user->groupe = $groupe;
         
 
         $eval = Evaluation::factory()->create(['coefficient' => 1, 'code_ressource' => $ressource]);
@@ -82,8 +88,11 @@ class UtilisateurTest extends TestCase
 
          
         $controller = app(EleveController::class);
-        $code = $competence->code;
+        $liste = $controller->listeCompetences($user);
+        $tamereDB = Groupe::findOrFail($groupe->id);
         $moyenne = $controller->moyenneSemestre($user->code);
+        dd($controller->moyenneParCompetence($user->code,$controller->listeCompetences($user)[0]));
+        //dd(Groupe::Find($groupe->id));
         assertEquals(7.5,$moyenne);
         
         

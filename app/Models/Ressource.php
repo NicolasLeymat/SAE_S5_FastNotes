@@ -22,8 +22,8 @@ class Ressource extends Model
         return $this->hasMany(Evaluation::class, 'code_ressource');
     }
 
-    public function competences() {
-        return $this->belongsToMany(Competence::class, "coefficient_ressource", "code_ressource", "code_competence")->withPivot("coefficient");
+    public function ue() {
+        return $this->belongsToMany(UE::class, "coefficient_ue", "code_ressource", "code_ue")->withPivot("coefficient");
     }
 
     public function groupes() {

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('id');
             $table->primary('id');
             $table->string('libelle');
-            $table->string('semestre');
             $table->year('annee');
             $table->string('parcours');
         });
@@ -75,6 +74,19 @@ return new class extends Migration
             $table->string('code_ressource');
             $table->foreign('code_ressource')->references('code')->on('ressources');
         });
+
+        Schema::create('ue', function (Blueprint $table) {
+            $table->string("code");
+            $table->primary("code");
+            $table->string('libelle');
+            $table->string('code_competence');
+            $table->foreign('code_competence')->references('code')->on('competences');
+        });
+
+        Schema::create('semestres', function (Blueprint $table) {
+            $table->id();
+            $table->string('libelle');
+        });
         
         Schema::create('note_evaluation', function (Blueprint $table) {
             $table->string('note');
@@ -85,13 +97,13 @@ return new class extends Migration
             $table->primary(['id_evaluation', 'code_eleve']);
         });
         
-        Schema::create('coefficient_ressource', function (Blueprint $table) {
+        Schema::create('coefficient_ue', function (Blueprint $table) {
             $table->string('code_ressource');
-            $table->string('code_competence');
+            $table->string('code_ue');
             $table->foreign('code_ressource')->references('code')->on('ressources');
-            $table->foreign('code_competence')->references('code')->on('competences');
+            $table->foreign('code_ue')->references('code')->on('ue');
             $table->float('coefficient');
-            $table->primary(['code_competence', 'code_ressource']);
+            $table->primary(['code_ue', 'code_ressource']);
         });
         
         Schema::create('ressource_groupe', function (Blueprint $table) {
@@ -111,6 +123,8 @@ return new class extends Migration
             $table->foreign('code_ressource')->references('code')->on('ressources');
             $table->primary(['id_groupe', 'code_ressource', 'code_prof']);
         });
+
+        
     }
     
     /**

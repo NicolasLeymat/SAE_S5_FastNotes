@@ -14,8 +14,9 @@ class Competence extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    public function ressources() {
-        return $this->belongsToMany(Ressource::class, "coefficient_ressource", "code_competence", "code_ressource")->withPivot("coefficient");
+
+    public function ue(){
+        return $this->hasMany(UE::class, "code", "code");
     }
 
     use HasFactory;

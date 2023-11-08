@@ -45,6 +45,7 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
+        $this->boxPlot(1);
         $graphique = new PieGraph(350, 250);
         $graphique->title->Set("A Simple Pie Plot");
         $graphique->SetBox(true);
@@ -150,6 +151,30 @@ class EvaluationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function boxPlot($idEval){
+        $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
+        sort($notes);
+        $len = count($notes);
+        if ($len%2 == 1) {
+            $rangMediane = ($len+1)/2;
+            $rangPQuartile = ($rangMediane)/2;
+            $rangTQuartile = $rangMediane+($rangMediane)/2;
+            $mediane = $notes[$rangMediane-1];
+            $pQuartile = $notes[$rangPQuartile-1];
+            $tQuartile = $notes[$rangTQuartile-1];
+        } else {
+            $rangMediane = $len/2;
+            $rangPQuartile = $rangMediane/2;
+            $rangTQuartile = $rangMediane+($rangMediane/2);
+            $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
+            $pQuartile = $notes[floor($rangPQuartile)];
+            $tQuartile = $notes[$rangTQuartile];
+        }
+        
+        
+
     }
 
     public function import(Request $request){   

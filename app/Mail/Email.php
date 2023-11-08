@@ -19,18 +19,13 @@ class Email extends Mailable
      */
     public function __construct(Array $user)
     {
-        $this->data = $user;
+    $this->data = $user;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Email',
-        );
-    }
+    
 
     /**
      * Get the message content definition.

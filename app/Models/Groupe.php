@@ -16,7 +16,9 @@ class Groupe extends Model
 
     protected $id = "id";
 
-    protected $table = "groupes";
+    public $incrementing = false;
+
+    protected $table = "groupe";
 
     public function eleves () {
         return $this->hasMany(Eleve::class,"id_groupe","id");

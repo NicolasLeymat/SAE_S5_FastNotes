@@ -6,6 +6,7 @@ use App\Imports\EvaluationImport;
 use App\Models\Eleve;
 use App\Models\Enseignement;
 use App\Models\Evaluation;
+use App\Mail\Notif;
 use App\Models\Professeur;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Mail;
@@ -119,11 +120,15 @@ class EvaluationController extends Controller
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
 
-            $oldnote =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->first()->pivot->note;
-            if ($oldnote != $note) {
+            $exists =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->exists();
+            if ($exists) {
+                $oldnote =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->first()->pivot->note;
+            }
+            if (!$exists || $oldnote != $note ) {
                 $evaluation->eleves()->syncWithoutDetaching([
-                $idEleve => ['note' => $note]
-            ]);
+                $idEleve => ['note' => $note]]);
+                $notif = new Notif($evaluation,$eleve->utilisateur);
+                Mail::to($eleve->utilisateur->email)->send($notif);
         }
     }
     }
@@ -138,7 +143,9 @@ class EvaluationController extends Controller
         $notes = $request->input('notes');
         foreach ($notes as $eleveID => $note) {
             //return $note;
-            if ($note["note"] !== null) {
+            
+            if ($note["note"] != null) {
+                
                 $this->saisirNote($evalId,$eleveID,$note["note"]);
             }
 
@@ -164,7 +171,7 @@ class EvaluationController extends Controller
     }
 
     public function boxPlot($idEval){
-        dd($this->moyenne_ecart_type($idEval));
+        //dd($this->moyenne_ecart_type($idEval));
         $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
         sort($notes);
         $len = count($notes);

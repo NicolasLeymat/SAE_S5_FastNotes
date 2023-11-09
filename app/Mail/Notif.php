@@ -64,7 +64,8 @@ class Notif extends Mailable
 
         return $this
         ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom])
-        ->view('emails.notif_note');
+        ->view('emails.notif_note')
+        ->cc('louis.camborieux@etu.iut-tlse3.fr');
     }
 
 }

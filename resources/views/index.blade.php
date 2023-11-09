@@ -1,3 +1,9 @@
+@php 
+  use App\Models\Admin;
+  use App\Models\Professeur;
+  use App\Models\Eleve;
+
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -38,7 +44,7 @@
               </x-dropdown-link>
             </form>
           </li>
-            @endauth
+          @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
         </div>
@@ -60,14 +66,13 @@
           <div class="home_content-fix">
             @auth
               <h2 class="section_title">Bienvenue sur Fast Notes  </br>M/Mme. {{ Auth::user()->nom }} {{ Auth::user()->prenom }} </h2>
-              @if  (Auth::user()->isAdmin && Auth::user()->isProf)
-              <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
+              @if(Admin::find(Auth::user()->code) != null)
               <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
-              @elseif (Auth::user()->isAdmin)
-              <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
-              @elseif (Auth::user()->isProf)
+              @endif
+              @if (Professeur::find(Auth::user()->code) != null)
               <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
-              @else
+              @endif
+              @if (Eleve::find(Auth::user()->code) != null)
                 <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @endif
             @else

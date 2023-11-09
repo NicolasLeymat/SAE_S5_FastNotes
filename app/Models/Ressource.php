@@ -9,7 +9,7 @@ class Ressource extends Model
 {
     use HasFactory;
 
-    protected $table = 'ressource';
+    protected $table = 'ressources';
     protected $fillable = ["nom","code"];
     protected $primaryKey = "code";
 
@@ -22,11 +22,19 @@ class Ressource extends Model
         return $this->hasMany(Evaluation::class, 'code_ressource');
     }
 
-    public function competences() {
-        return $this->belongsToMany(Competence::class, "coefficient_ressource", "code_ressource", "code_competence")->withPivot("coefficient");
+    public function ue() {
+        return $this->belongsToMany(UE::class, "coefficient_ue", "code_ressource", "code_ue")->withPivot("coefficient");
     }
 
     public function groupes() {
         return $this->belongsToMany(Groupe::class,"ressource_groupe","code_ressource","id_groupe");
+    }
+
+    public function groupe() {
+        return $this->belongsToMany(Groupe::class,"enseignements", "code_ressource", "id_groupe")->withPivot("code_prof");
+    }
+
+    public function professeur() {
+        return $this->belongsToMany(Professeur::class,"enseignements", "code_ressource", "code_prof");
     }
 }

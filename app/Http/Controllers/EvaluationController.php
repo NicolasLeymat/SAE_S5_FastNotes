@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Amenadiel\JpGraph\Graph\Graph;
-use Amenadiel\JpGraph\Graph\PieGraph;
-use Amenadiel\JpGraph\Plot\BoxPlot;
-use Amenadiel\JpGraph\Plot\PiePlot;
-use Amenadiel\JpGraph\Plot\StockPlot;
 use App\Imports\EvaluationImport;
 use App\Models\Evaluation;
 use App\Models\Utilisateur;
+use BoxPlot;
 use DB;
+use Graph;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
@@ -49,6 +46,7 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
+        $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
 
@@ -159,22 +157,47 @@ class EvaluationController extends Controller
             $pQuartile = $notes[floor($rangPQuartile)];
             $tQuartile = $notes[$rangTQuartile];
         }
-        $stats = [$pQuartile, $tQuartile, $notes[0], end($notes), $mediane];
+        $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
 
-        $graphique = new Graph(300,200);
-        $graphique->SetScale("textlin");
-        $graphique->SetMarginColor('lightblue');
-        $graphique->title->Set('Stockchart example');
+        // $graphique = new PieGraph(300,200);
+        // $graphique->SetScale("textlin");
+        // $graphique->SetMarginColor('lightblue');
+        // $graphique->title->Set('Stockchart example');
 
-        $p1   = new BoxPlot($stats);
-        $p1->SetColor('black');
+        // $p1   = new PiePlot($stats);
+        // $p1->SetColor('black');
+        // $p1->SetWidth(9);
+
+        // $graphique->Add($p1);
+        // if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
+        //     unlink(public_path().'\images\graph'.$idEval.'.jpg');
+        // }
+        // $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+
+        require_once(base_path().'\libraries\jpgraph\src\jpgraph.php');
+        require_once (base_path().'\libraries\jpgraph\src\jpgraph_stock.php');
+
+        // Setup a simple graph
+        $graph = new Graph(300,200);
+        $graph->SetScale('textlin');
+        $graph->xaxis->
+        $graph->SetMarginColor('lightblue');
+        $graph->title->Set('Box Stock chart example');
+
+        // Create a new stock plot
+        $p1 = new BoxPlot($stats);
+         
+        // Width of the bars (in pixels)
         $p1->SetWidth(9);
-
-        $graphique->Add($p1);
+        
+         
+        // Add the plot to the graph and send it back to the browser
+      //  $graph->Add($p1);
         if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
             unlink(public_path().'\images\graph'.$idEval.'.jpg');
         }
-        $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        $p1->Stroke(public_path().'\images\graph'.$idEval.'.jpg') ;
+       // $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
         
         
 

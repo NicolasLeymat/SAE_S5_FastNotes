@@ -65,6 +65,7 @@ class EvaluationController extends Controller
         $eleves_prof = [];
         
         $this->getNotes($idEval, $code_user);
+        $groupes=[];
 
         $ressourceEval = $evaluation->ressource; 
 
@@ -79,6 +80,7 @@ class EvaluationController extends Controller
             }
             foreach($eleves_prof as $eleve_prof){
                 foreach($eleve_prof as $eleve_prof){
+                    array_push($groupes, $eleve_prof->id_groupe);
                     $pivotData = $eleve_prof
                     ->evaluations()
                     ->where('id_evaluation', $idEval)->first();
@@ -94,8 +96,9 @@ class EvaluationController extends Controller
                     array_push($eleves, $infosEleve);
                 }
             }
+            $groupe= array_unique($groupes);
         }
-        return view('evaluation',compact('evaluation','eleves','stats'));        
+        return view('evaluation',compact('evaluation','eleves','groupe','stats'));        
     }
 
     /**

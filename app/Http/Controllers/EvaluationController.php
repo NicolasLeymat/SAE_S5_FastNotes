@@ -10,10 +10,13 @@ use App\Models\Professeur;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Mail;
 use Auth;
+use BoxPlot;
 use DB;
+use Graph;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 
 class EvaluationController extends Controller
 {
@@ -21,7 +24,8 @@ class EvaluationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {        
+        $results = DB::table('evaluations')->get()->sortBy('libelle');
         $user = Professeur::find(Auth::user()->code);
         $ressources = $user->ressource->unique();
         $results = [];
@@ -55,12 +59,14 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
-
+        $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
         $eleves_prof = [];
         
+        $this->getNotes($idEval, $code_user);
+
         $ressourceEval = $evaluation->ressource; 
 
         if (! empty($ressourceEval) ) {        
@@ -155,6 +161,79 @@ class EvaluationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function boxPlot($idEval){
+        dd($this->moyenne_ecart_type($idEval));
+        $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
+        sort($notes);
+        $len = count($notes);
+        if ($len%2 == 1) {
+            $rangMediane = ($len+1)/2;
+            $rangPQuartile = ($rangMediane)/2;
+            $rangTQuartile = $rangMediane+($rangMediane)/2;
+            $mediane = $notes[$rangMediane-1];
+            $pQuartile = $notes[$rangPQuartile-1];
+            $tQuartile = $notes[$rangTQuartile-1];
+        } else {
+            $rangMediane = $len/2;
+            $rangPQuartile = $rangMediane/2;
+            $rangTQuartile = $rangMediane+($rangMediane/2);
+            $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
+            $pQuartile = $notes[floor($rangPQuartile)];
+            $tQuartile = $notes[$rangTQuartile];
+        }
+        $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
+
+        require_once(base_path().'\libraries\jpgraph\src\jpgraph.php');
+        require_once (base_path().'\libraries\jpgraph\src\jpgraph_stock.php');
+
+        // Setup a simple graph
+        $graph = new Graph(250,200);
+        $graph->SetScale('textlin');
+        $graph->SetMarginColor('lightblue');
+        $graph->xaxis->SetColor('white');
+        $graph->title->Set('Box Stock chart example');
+
+        // Create a new stock plot
+        $p1 = new BoxPlot($stats,array(0.5,0.5));
+         
+        // Width of the bars (in pixels)
+        $p1->SetWidth(9);
+        
+         
+        // Add the plot to the graph and send it back to the browser
+        $graph->Add($p1);
+        if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
+            unlink(public_path().'\images\graph'.$idEval.'.jpg');
+        }
+        $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        
+        
+
+    }
+
+    public function getNotes(string $idEval, string $idProf){
+        $eval = Evaluation::find($idEval);
+        $notes = [];
+        foreach($eval->eleves as $eleve) {
+            array_push($notes, $eleve->pivot->note);            
+        }
+        return $notes;
+    }
+
+    function moyenne_ecart_type(string $idEval) {
+        $notes = $this->getNotes($idEval, Auth::user()->code);
+        $moyenne = array_sum($notes)/count($notes);
+        $fVariance = 0.0;
+        foreach ($notes as $i) {
+            $fVariance += pow($i - $moyenne, 2);
+        }     
+        $size = count($notes) - 1;
+        $res = [];
+        $res['moyenne'] = $moyenne;
+        $res['ecart_type'] = (float) sqrt($fVariance)/sqrt($size);
+        return $res;
     }
 
     public function import(Request $request){   

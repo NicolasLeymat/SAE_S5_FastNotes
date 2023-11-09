@@ -1,6 +1,7 @@
 @php 
   use App\Models\Admin;
   use App\Models\Professeur;
+  use App\Models\Eleve;
 
 @endphp
 <!DOCTYPE html>
@@ -67,9 +68,11 @@
               <h2 class="section_title">Bienvenue sur Fast Notes  </br>M/Mme. {{ Auth::user()->nom }} {{ Auth::user()->prenom }} </h2>
               @if(Admin::find(Auth::user()->code) != null)
               <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
-              @elseif (Professeur::find(Auth::user()->code) != null)
+              @endif
+              @if (Professeur::find(Auth::user()->code) != null)
               <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
-              @else
+              @endif
+              @if (Eleve::find(Auth::user()->code) != null)
                 <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @endif
             @else

@@ -12,7 +12,7 @@ class Professeur extends Utilisateur
     protected $table = "professeurs";
     protected $fillable = 
         [
-            'isProf'
+            'code','isProf'
         ];
 
     public function ressource () {

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Utilisateur
 {
@@ -12,7 +11,7 @@ class Admin extends Utilisateur
     protected $table = 'admins';
     protected $fillable =
         [
-            'isAdmin'
+            'code','isAdmin'
         ]
         ;
     public function utilisateur(){

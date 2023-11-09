@@ -11,12 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {       
+        Schema::create('semestres', function (Blueprint $table) {
+            $table->id();
+            $table->string('libelle');
+        });
+
         Schema::create('groupes', function (Blueprint $table) {
             $table->string('id');
             $table->primary('id');
             $table->string('libelle');
             $table->year('annee');
             $table->string('parcours');
+            $table->unsignedBigInteger('id_semestre');
+            $table->foreign('id_semestre')->references('id')->on('semestres');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -83,10 +90,6 @@ return new class extends Migration
             $table->foreign('code_competence')->references('code')->on('competences');
         });
 
-        Schema::create('semestres', function (Blueprint $table) {
-            $table->id();
-            $table->string('libelle');
-        });
         
         Schema::create('note_evaluation', function (Blueprint $table) {
             $table->string('note');
@@ -132,16 +135,19 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('note_evaluation');
-        Schema::dropIfExists('coefficient_ressource');
-        Schema::dropIfExists('competences');
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('semestres');
         Schema::dropIfExists('groupes');
-        Schema::dropIfExists('ressource_groupe');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('professeurs');
         Schema::dropIfExists('admins');
         Schema::dropIfExists('eleves');
+        Schema::dropIfExists('ressource');
+        Schema::dropIfExists('competences');
+        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('ue');
+        Schema::dropIfExists('note_evaluation');
+        Schema::dropIfExists('coefficient_ue');
+        Schema::dropIfExists('ressource_groupe');
         Schema::dropIfExists('enseignements');
     }
 };

@@ -9,7 +9,7 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","coefficient","type","date_epreuve","date_rattrapage"];
+    protected $fillable = ["libelle","coefficient","type","date_epreuve","date_fin_epreuve","date_rattrapage"];
 
     public $timestamps = false;
     protected $table = "evaluations";

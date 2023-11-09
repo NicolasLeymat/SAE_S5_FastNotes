@@ -8,15 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Semestre extends Model
 {
     use HasFactory;
-
     protected $table = "semestres";
     protected $fillable = [
-        "libelle"
+        "id","libelle"
     ];
-
     public $timestamps = false;
-
     public $primaryKey = "id";
+    public $incrementing = false;
 
     public function ue(){
         return $this->hasMany(UE::class, 'code', 'id');

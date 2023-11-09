@@ -60,7 +60,7 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
-        $this->boxPlot($idEval);
+        $stats = $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
@@ -97,7 +97,7 @@ class EvaluationController extends Controller
                 }
             }
         }
-        return view('evaluation',compact('evaluation','eleves'));        
+        return view('evaluation',compact('evaluation','eleves','stats'));        
     }
 
     /**
@@ -171,8 +171,7 @@ class EvaluationController extends Controller
     }
 
     public function boxPlot($idEval){
-        //dd($this->moyenne_ecart_type($idEval));
-        $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
+        $notes = $this->getNotes($idEval, 'a');
         sort($notes);
         $len = count($notes);
         if ($len%2 == 1) {
@@ -197,10 +196,10 @@ class EvaluationController extends Controller
 
         // Setup a simple graph
         $graph = new Graph(250,200);
-        $graph->SetScale('textlin');
+        $graph->SetScale('textlin',0,20.2);
         $graph->SetMarginColor('lightblue');
         $graph->xaxis->SetColor('white');
-        $graph->title->Set('Box Stock chart example');
+        $graph->title->Set('Notes de l\'évaluation');
 
         // Create a new stock plot
         $p1 = new BoxPlot($stats,array(0.5,0.5));
@@ -215,6 +214,7 @@ class EvaluationController extends Controller
             unlink(public_path().'\images\graph'.$idEval.'.jpg');
         }
         $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        return $this->moyenne_ecart_type($idEval);
         
         
 
@@ -239,7 +239,7 @@ class EvaluationController extends Controller
         $size = count($notes) - 1;
         $res = [];
         $res['moyenne'] = $moyenne;
-        $res['ecart_type'] = (float) sqrt($fVariance)/sqrt($size);
+        $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
         return $res;
     }
 

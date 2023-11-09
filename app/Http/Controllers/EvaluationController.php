@@ -59,6 +59,7 @@ class EvaluationController extends Controller
         $eleves = [];
         $code_user = Auth::user()->code;
         $eleves_prof = [];
+        $groupes=[];
         
         $ressourceEval = $evaluation->ressource; 
 
@@ -73,6 +74,7 @@ class EvaluationController extends Controller
             }
             foreach($eleves_prof as $eleve_prof){
                 foreach($eleve_prof as $eleve_prof){
+                    array_push($groupes, $eleve_prof->id_groupe);
                     $pivotData = $eleve_prof
                     ->evaluations()
                     ->where('id_evaluation', $idEval)->first();
@@ -88,8 +90,9 @@ class EvaluationController extends Controller
                     array_push($eleves, $infosEleve);
                 }
             }
+            $groupe= array_unique($groupes);
         }
-        return view('evaluation',compact('evaluation','eleves'));        
+        return view('evaluation',compact('evaluation','eleves','groupe'));        
     }
 
     /**

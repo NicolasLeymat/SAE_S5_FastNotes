@@ -96,7 +96,6 @@ class EleveController extends Controller
         $notes = 0;
         $c = 0;
         foreach($eleve->evaluations as $evaluation) {
-            dd($evaluation);
             if($evaluation->code_ressource == $idRessource){
                 $notes += $evaluation->pivot->note * $evaluation->coefficient;
                 $c += $evaluation->coefficient;

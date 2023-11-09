@@ -14,6 +14,14 @@
 </head>
 <body>
     <h1>Mon super mail</h1>
-    <p>Bonjour {{ $data['name'] }}</p>
+    <form action="{{ route('envoyerNotif') }}" method="POST">
+        @csrf
+        <input type="hidden" name="idUtilisateur" value="eleveA">
+        <input type="hidden" name="idEvaluation" value="572">
+        <button type="submit" class="btn btn-link">Envoyer un e-mail</button>
+    </form>
+    
+    
+    
 </body>
 </html>

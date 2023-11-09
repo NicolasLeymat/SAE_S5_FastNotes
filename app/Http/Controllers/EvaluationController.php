@@ -8,6 +8,7 @@ use App\Models\Enseignement;
 use App\Models\Evaluation;
 use App\Models\Professeur;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -111,10 +112,14 @@ class EvaluationController extends Controller
 
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
-        $evaluation->eleves()->syncWithoutDetaching([
-            $idEleve => ['note' => $note]
-        ]);
+
+            $oldnote =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->first()->pivot->note;
+            if ($oldnote != $note) {
+                $evaluation->eleves()->syncWithoutDetaching([
+                $idEleve => ['note' => $note]
+            ]);
         }
+    }
     }
 
     public function saisirNotes (Request $request) {

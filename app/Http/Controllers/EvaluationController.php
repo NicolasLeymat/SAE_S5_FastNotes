@@ -23,7 +23,8 @@ class EvaluationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {        
+        $results = DB::table('evaluations')->get()->sortBy('libelle');
         $user = Professeur::find(Auth::user()->code);
         $ressources = $user->ressource->unique();
         $results = [];
@@ -63,6 +64,8 @@ class EvaluationController extends Controller
         $code_user = Auth::user()->code;
         $eleves_prof = [];
         
+        $this->getNotes($idEval, $code_user);
+
         $ressourceEval = $evaluation->ressource; 
 
         if (! empty($ressourceEval) ) {        
@@ -212,6 +215,29 @@ class EvaluationController extends Controller
         
         
 
+    }
+
+    public function getNotes(string $idEval, string $idProf){
+        $eval = Evaluation::find($idEval);
+        $notes = [];
+        foreach($eval->eleves as $eleve) {
+            array_push($notes, $eleve->pivot->note);            
+        }
+        return $notes;
+    }
+
+    function moyenne_ecart_type(string $idEval) {
+        $notes = $this->getNotes($idEval, Auth::user()->code);
+        $moyenne = array_sum($notes)/count($notes);
+        $fVariance = 0.0;
+        foreach ($notes as $i) {
+            $fVariance += pow($i - $moyenne, 2);
+        }     
+        $size = count($notes) - 1;
+        $res = [];
+        $res['moyenne'] = $moyenne;
+        $res['ecart_type'] = (float) sqrt($fVariance)/sqrt($size);
+        return $res;
     }
 
     public function import(Request $request){   

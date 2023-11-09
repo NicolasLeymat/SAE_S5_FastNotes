@@ -27,13 +27,16 @@ class EleveController extends Controller
     }
 
     public function show(string $id){
+        setlocale(LC_ALL, 'fr_FR.utf8');
+
+
+
         $evaluations = $this->evalsEleve($id);
         $user = Utilisateur::find($id);
         $tabNotes = [];
         $tabressources = [];
         $tabMoyennesRessources = [];
         $tabCoefsRessources = [];
-        $testDD = [];
         foreach($evaluations as $evalnotee){
             $coefficient = $evalnotee->coefficient;
             
@@ -45,7 +48,6 @@ class EleveController extends Controller
             $noteExists = $user->evaluations()->wherePivot('id_evaluation', $evalnotee->id)->exists();
             if ($noteExists) {
                 $note = $user->evaluations()->wherePivot('id_evaluation', $evalnotee->id)->first()->pivot->note;
-                $testDD[$evalnotee->id] = ["libelle" =>$evalnotee->libelle, "note"=>$note, "coef"=>$coefficient, "ressource"=>$evalnotee->code_ressource];
                 $tabMoyennesRessources[$evalnotee->code_ressource][1] += $note * $coefficient; 
                 $tabCoefsRessources[ $evalnotee->code_ressource] += $evalnotee->coefficient;
             }
@@ -54,8 +56,7 @@ class EleveController extends Controller
             }
             $tabNotes[$evalnotee->id] = [ "code_ressource"=>$evalnotee->code_ressource, "libelle"=>$evalnotee->libelle, "type"=>$evalnotee->type, "note"=>$note ];
         }
-        
-        
+         
         foreach ($tabMoyennesRessources as $ressource=>$valeur) {
             
             $coef = $tabCoefsRessources[$ressource];
@@ -69,6 +70,7 @@ class EleveController extends Controller
         }
         $tabMoyennesCompetences = [];
         $nbComp = 0;
+        //dd ($this->listeCompetences($user));
         foreach($this->listeCompetences($user) as $comp) {
             $competence = Competence::find($comp);
             $hasNote = false;
@@ -77,7 +79,7 @@ class EleveController extends Controller
             $ressourcesConcernes = $competence->ressources;
             foreach ($ressourcesConcernes as $ressource) {
                 $coefRessourceCompetence = $ressource->pivot->coefficient;
-                if ($tabMoyennesRessources[$ressource->code][1] != "Pas disponible" && $coefRessourceCompetence!=0 ) {
+                if (!empty($tabMoyennesRessources[$ressource->code]) && $tabMoyennesRessources[$ressource->code][1] != "Pas disponible" && $coefRessourceCompetence!=0 ) {
                 $coefTotal += $coefRessourceCompetence;
                 $moyenneCompetences += $tabMoyennesRessources[$ressource->code][1] * $coefRessourceCompetence;
                 $hasNote = true;
@@ -85,15 +87,14 @@ class EleveController extends Controller
             }
             if ($hasNote) {
                 $moyenneCompetences/=$coefTotal;
-                $tabMoyennesCompetences[$comp] = $moyenneCompetences;
+                $tabMoyennesCompetences[$competence->libelle] = $moyenneCompetences;
                 $nbComp++;
             }
             else {
-                $tabMoyennesCompetences[$comp] ="Pas disponible";
+                $tabMoyennesCompetences[$competence->libelle] ="Pas disponible";
             }
         }
         
-        //$moyenneSemestre = $this->moyenneSemestre($id);
         if ($nbComp != 0) {
             $moyenneSemestre = array_sum($tabMoyennesCompetences)/$nbComp;
         }

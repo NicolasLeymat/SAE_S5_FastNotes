@@ -23,14 +23,8 @@ class EvaluationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        
-        $results = DB::table('evaluation')->get()->sortBy('libelle');
-=======
-=======
->>>>>>> f15a61fd58f1ad7c11c561ced262a8c4f95a7497
+    {        
+        $results = DB::table('evaluations')->get()->sortBy('libelle');
         $user = Professeur::find(Auth::user()->code);
         $ressources = $user->ressource->unique();
         $results = [];
@@ -40,10 +34,6 @@ class EvaluationController extends Controller
                 array_push($results, $eval);
             }
         }
-<<<<<<< HEAD
->>>>>>> cf7e4a9ebe9909a80843bcdbfa35b72b81b1bd71
-=======
->>>>>>> f15a61fd58f1ad7c11c561ced262a8c4f95a7497
         return view('dashprof')->with('evals', $results);
     }
 
@@ -74,6 +64,8 @@ class EvaluationController extends Controller
         $code_user = Auth::user()->code;
         $eleves_prof = [];
         
+        $this->getNotes($idEval, $code_user);
+
         $ressourceEval = $evaluation->ressource; 
 
         if (! empty($ressourceEval) ) {        
@@ -167,6 +159,7 @@ class EvaluationController extends Controller
     }
 
     public function boxPlot($idEval){
+        dd($this->moyenne_ecart_type($idEval));
         $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
         sort($notes);
         $len = count($notes);
@@ -213,6 +206,29 @@ class EvaluationController extends Controller
         
         
 
+    }
+
+    public function getNotes(string $idEval, string $idProf){
+        $eval = Evaluation::find($idEval);
+        $notes = [];
+        foreach($eval->eleves as $eleve) {
+            array_push($notes, $eleve->pivot->note);            
+        }
+        return $notes;
+    }
+
+    function moyenne_ecart_type(string $idEval) {
+        $notes = $this->getNotes($idEval, Auth::user()->code);
+        $moyenne = array_sum($notes)/count($notes);
+        $fVariance = 0.0;
+        foreach ($notes as $i) {
+            $fVariance += pow($i - $moyenne, 2);
+        }     
+        $size = count($notes) - 1;
+        $res = [];
+        $res['moyenne'] = $moyenne;
+        $res['ecart_type'] = (float) sqrt($fVariance)/sqrt($size);
+        return $res;
     }
 
     public function import(Request $request){   

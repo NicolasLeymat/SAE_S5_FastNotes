@@ -87,6 +87,7 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
+        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}" alt="pipi caca">
         <div class="home_content">
         <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes" class="saissi_notes_form">
             @csrf

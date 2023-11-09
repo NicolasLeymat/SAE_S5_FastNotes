@@ -16,8 +16,6 @@ class Groupe extends Model
 
     protected $id = "id";
 
-    public $incrementing = false;
-
     protected $table = "groupe";
 
     public function eleves () {

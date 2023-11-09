@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Imports\ElevesImport;
 use App\Models\Competence;
-use App\Models\Eleve;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
@@ -29,12 +28,8 @@ class EleveController extends Controller
 
     public function show(string $id){
         setlocale(LC_ALL, 'fr_FR.utf8');
-
-
-
         $evaluations = $this->evalsEleve($id);
-        $user = Eleve::find($id);
-        $evalsnotees = $user->evaluations;
+        $user = Utilisateur::find($id);
         $tabNotes = [];
         $tabressources = [];
         $tabMoyennesRessources = [];
@@ -58,7 +53,7 @@ class EleveController extends Controller
             }
             $tabNotes[$evalnotee->id] = [ "code_ressource"=>$evalnotee->code_ressource, "libelle"=>$evalnotee->libelle, "type"=>$evalnotee->type, "note"=>$note ];
         }
-         
+        
         foreach ($tabMoyennesRessources as $ressource=>$valeur) {
             
             $coef = $tabCoefsRessources[$ressource];
@@ -117,8 +112,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez regarder que vos notes'));
         }
 
-        $eleve = Eleve::find($id);
-
+        $eleve = Utilisateur::find($id);
         $groupe = $eleve->groupe;
         $ressources = $groupe->ressources;
         ([$groupe->id,$ressources]);
@@ -139,7 +133,10 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux ressources'));
         }
 
-        $eleve = Eleve::find($id);
+        
+        if ($eleve->isProf == 1){
+            return 'ratio';
+        }
         return $eleve->groupe->ressources;
     }
 
@@ -149,7 +146,6 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
         }
 
-        $eleve = Eleve::find($idEleve);
         $notes = 0;
         $c = 0;
         foreach($eleve->evaluations as $evaluation) {
@@ -244,13 +240,15 @@ class EleveController extends Controller
 
     public function addOneStudent(Request $request){
         //dd($request->groupe);
-        Eleve::create([
+        Utilisateur::create([
             'code'=> $request->code,
             'identification'=>$request->identifiant,
             'nom'=>$request->nom,
             'prenom'=>$request->prenom,
             'email'=>$request->email,
             'password'=> Hash::make($request->nom.$request->prenom.$request->groupe),
+            'isProf' => 0,
+            'isAdmin' => 0,
             'id_groupe'=> $request->groupe
         ]);
         return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');

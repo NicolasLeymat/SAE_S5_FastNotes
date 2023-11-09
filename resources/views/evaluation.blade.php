@@ -87,7 +87,8 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}" alt="pipi caca">
+        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}">
+        <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
         <div class="home_content">
         <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes" class="saissi_notes_form">
             @csrf

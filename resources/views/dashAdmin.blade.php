@@ -65,9 +65,6 @@
         <div class="home_container container full_home">
           <div class="home_content full_home center">
             @auth
-              @if (!Auth::user()->isAdmin)
-                Erreur 405 Vous n'avez pas accès à cette pasge
-              @else
               <div class="items_admin">
                 
                 <div class="flex_forms">
@@ -100,7 +97,7 @@
 
               <div class="center">
                 <div class="flex_forms">
-                  <form action="" class="ajoutEleves flex_form" method="post">
+                  <form action="{{ route('importEval') }}" class="ajoutEleves flex_form" method="post">
                     @csrf
                     <h3> Ajout évaluation via formulaire : </h3>
                     <label for="code_apogee">Code Apogée : </label></br><input type="text" name="code_apogee" id="code_apogee" required></br>
@@ -119,7 +116,7 @@
                     </datalist>
                     <input type="submit" value="Ajouter une évaluation" class="button button-admin-dash">
                   </form>
-                  <form action="" class="ajoutEleves flex_form">
+                  <form action="{{ route('importEvals') }}" class="ajoutEleves flex_form">
                     @csrf
                     <h3> Ajout évaluations via fichier excel : </h3>
                     <label for="file"> Selectionner un fichier : </label> </br>
@@ -137,7 +134,6 @@
                 <div class="flex_items items_admin"> <p class="text_admin"> Ajouter une/des Évaluations </p> <a class="button button-admin" href="{{ route('ajoutEval') }}"> Ajout évaluation </a></div>
                 <div class="flex_items items_admin"> <p class="text_admin"> Exporter un bulletin </p> <a class="button button-admin"> Exporter un bulletin </a></div>
               </div>
-              @endif
             @endauth
           </div>
         </div>

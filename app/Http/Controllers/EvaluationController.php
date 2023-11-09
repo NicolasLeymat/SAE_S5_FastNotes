@@ -58,7 +58,7 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
-        $this->boxPlot($idEval);
+        $stats = $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
@@ -95,7 +95,7 @@ class EvaluationController extends Controller
                 }
             }
         }
-        return view('evaluation',compact('evaluation','eleves'));        
+        return view('evaluation',compact('evaluation','eleves','stats'));        
     }
 
     /**
@@ -158,18 +158,8 @@ class EvaluationController extends Controller
         //
     }
 
-    public function getNotes($idEval){
-        $eval = Evaluation::find( $idEval );
-        $notes = [];
-        foreach($eval->eleves as $eleve){
-            array_push($notes, $eleve->pivot->note);
-        };
-        return $notes;
-    }
-
     public function boxPlot($idEval){
-        $notes = $this->getNotes($idEval);
-        $this->moyenneEcartType($notes);
+        $notes = $this->getNotes($idEval, 'a');
         sort($notes);
         $len = count($notes);
         if ($len%2 == 1) {
@@ -212,6 +202,7 @@ class EvaluationController extends Controller
             unlink(public_path().'\images\graph'.$idEval.'.jpg');
         }
         $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        return $this->moyenne_ecart_type($idEval);
         
         
 
@@ -236,7 +227,7 @@ class EvaluationController extends Controller
         $size = count($notes) - 1;
         $res = [];
         $res['moyenne'] = $moyenne;
-        $res['ecart_type'] = (float) sqrt($fVariance)/sqrt($size);
+        $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
         return $res;
     }
 

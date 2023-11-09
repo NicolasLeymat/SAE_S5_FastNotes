@@ -65,16 +65,12 @@
         <div class="home_container container grid">
           <div class="home_content">
             @auth
-              @if (!Auth::user()->isAdmin)
-                Erreur 405 Vous n'avez pas accès à cette pasge
-              @else
               <form action="{{ route('importEvals') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="file"> Selectionner un fichier : </label>
                 <input type="file" name="file" id="file">
                 <button class="Entreprise button button-order" type="submit"> Ajouter des évaluations </button>
               </form>
-              @endif
             @endauth
           </div>
         </div>

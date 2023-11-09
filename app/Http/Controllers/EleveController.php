@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Imports\ElevesImport;
 use App\Models\Competence;
+use App\Models\Eleve;
+use App\Models\UE;
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
@@ -28,11 +30,8 @@ class EleveController extends Controller
 
     public function show(string $id){
         setlocale(LC_ALL, 'fr_FR.utf8');
-
-
-
         $evaluations = $this->evalsEleve($id);
-        $user = Utilisateur::find($id);
+        $user = Eleve::find($id);
         $tabNotes = [];
         $tabressources = [];
         $tabMoyennesRessources = [];
@@ -56,7 +55,7 @@ class EleveController extends Controller
             }
             $tabNotes[$evalnotee->id] = [ "code_ressource"=>$evalnotee->code_ressource, "libelle"=>$evalnotee->libelle, "type"=>$evalnotee->type, "note"=>$note ];
         }
-         
+        
         foreach ($tabMoyennesRessources as $ressource=>$valeur) {
             
             $coef = $tabCoefsRessources[$ressource];
@@ -72,7 +71,7 @@ class EleveController extends Controller
         $nbComp = 0;
         //dd ($this->listeCompetences($user));
         foreach($this->listeCompetences($user) as $comp) {
-            $competence = Competence::find($comp);
+            $competence = UE::find($comp);
             $hasNote = false;
             $moyenneCompetences = 0;
             $coefTotal = 0;
@@ -115,7 +114,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez regarder que vos notes'));
         }
 
-        $eleve = Utilisateur::find($id);
+        $eleve = Eleve::find($id);
         $groupe = $eleve->groupe;
         $ressources = $groupe->ressources;
         ([$groupe->id,$ressources]);
@@ -187,7 +186,7 @@ class EleveController extends Controller
         return $notes / $c;
     }
 
-    public function listeCompetences(Utilisateur $idEleve) {
+    public function listeCompetences(Eleve $idEleve) {
         $listeRessources = $this->ressourcesEleve($idEleve);
         $listeCompetences = [];
         $tabRessources = [];
@@ -195,11 +194,11 @@ class EleveController extends Controller
             array_push($tabRessources, $ressource->code);
         }
         foreach($listeRessources as $ressource) {
-            foreach($ressource->competences as $competence) {
+            foreach($ressource->ue as $competence) {
                 if($competence->pivot->code_ressource != 'BFTM5S01' && $competence->pivot->code_ressource != 'BFTM5R01' && $competence->pivot->code_ressource != 'BFTM5R02' && $competence->pivot->code_ressource != 'BFTM5R03') {
-                    if (!in_array($competence->pivot->code_competence, $listeCompetences)){
+                    if (!in_array($competence->pivot->code_ue, $listeCompetences)){
                         if(in_array($competence->pivot->code_ressource, $tabRessources)){
-                            array_push($listeCompetences, $competence->pivot->code_competence);
+                            array_push($listeCompetences, $competence->pivot->code_ue);
                         }
                     }
                 }
@@ -211,7 +210,7 @@ class EleveController extends Controller
     public function moyenneSemestre(string $idEleve) {
         $notes = 0;
         $c = 0;
-        $eleve = Utilisateur::findOrFail($idEleve);
+        $eleve = Eleve::findOrFail($idEleve);
 
         foreach($this->listeCompetences($eleve) as $comp){
             $competence = Competence::find($comp);

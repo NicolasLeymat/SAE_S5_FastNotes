@@ -10,20 +10,27 @@ class Groupe extends Model
     use HasFactory;
 
     public $timestamps = false;
+    public $incrementing = false;
 
-    protected $fillable = ["libelle","semestre","annee", "parcours"];
+    protected $fillable = ["id","libelle","semestre","annee", "parcours"];
 
     protected $id = "id";
 
-    public $incrementing = false;
+    protected $table = "groupes";
 
-    protected $table = "groupe";
-
-    public function utilisateurs () {
-        return $this->hasMany(Utilisateur::class,"id_groupe");
+    public function eleves () {
+        return $this->hasMany(Eleve::class,"id_groupe","id");
     }
 
     public function ressources() {
         return $this->belongsToMany(Ressource::class,"ressource_groupe","id_groupe","code_ressource");
+    }
+
+    public function ressource(){
+        return $this->belongsToMany(ressource::class,"enseignements", "id_groupe", "code_ressource");
+    }
+
+    public function professeurs(){
+        return $this->belongsToMany(ressource::class,"enseignements", "id_groupe", "code_prof");
     }
 }

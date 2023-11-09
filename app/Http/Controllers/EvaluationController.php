@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EvaluationImport;
+use App\Models\Eleve;
+use App\Models\Enseignement;
 use App\Models\Evaluation;
+use App\Models\Professeur;
 use App\Models\Utilisateur;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,7 +21,15 @@ class EvaluationController extends Controller
      */
     public function index()
     {
-        $results = DB::table('evaluation')->get()->sortBy('libelle');
+        $user = Professeur::find(Auth::user()->code);
+        $ressources = $user->ressource->unique();
+        $results = [];
+        foreach ($ressources as $ressource){
+            $evals = DB::table('evaluations')->distinct()->where('code_ressource',$ressource->code)->get();
+            foreach($evals as $eval){
+                array_push($results, $eval);
+            }
+        }
         return view('dashprof')->with('evals', $results);
     }
 
@@ -45,28 +57,35 @@ class EvaluationController extends Controller
 
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
-
-
+        $code_user = Auth::user()->code;
+        $eleves_prof = [];
         
         $ressourceEval = $evaluation->ressource; 
-        if (! empty($ressourceEval) ) {
-            foreach($ressourceEval->groupes as $groupe){
-                foreach($groupe->utilisateurs as $eleve){
-                    if($eleve->isProf == 0 && $eleve->isAdmin == 0){
-                        $pivotData = $eleve
-                        ->evaluations()
-                        ->where('id_evaluation', $idEval)->first();
 
-                        if ($pivotData) {
-                            $note = $pivotData->pivot->note;
-                        } else {
-                            $note = '';
-                        }
-                        
-                        $infosEleve = ['nom'=>$eleve->nom, 'identification'=>$eleve->identification, 'prenom'=>$eleve->prenom,'id_groupe'=>$eleve->id_groupe, 'note'=>$note,'code'=>$eleve->code];
-                        array_push($eleves, $infosEleve);
+        if (! empty($ressourceEval) ) {        
+            $ratio = 0;
+            foreach($ressourceEval->groupe as $groupe_prof){
+                
+                if($groupe_prof->pivot->code_prof == $code_user) {
+                    $ratio +=1;
+                    array_push($eleves_prof, $groupe_prof->eleves);
+                }
+            }
+            foreach($eleves_prof as $eleve_prof){
+                foreach($eleve_prof as $eleve_prof){
+                    $pivotData = $eleve_prof
+                    ->evaluations()
+                    ->where('id_evaluation', $idEval)->first();
+        
+                    if ($pivotData) {
+                        $note = $pivotData->pivot->note;
+                    } else {
+                        $note = '';
                     }
                     
+                    $infosEleve = ['nom'=>$eleve_prof->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
+                    
+                    array_push($eleves, $infosEleve);
                 }
             }
         }
@@ -88,11 +107,11 @@ class EvaluationController extends Controller
         }
 
         $evaluation = Evaluation::findOrFail($idEval);
-        $eleve = Utilisateur::findOrFail($idEleve);
+        $eleve = Eleve::findOrFail($idEleve);
 
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
-        $evaluation->utilisateurs()->syncWithoutDetaching([
+        $evaluation->eleves()->syncWithoutDetaching([
             $idEleve => ['note' => $note]
         ]);
         }
@@ -106,7 +125,6 @@ class EvaluationController extends Controller
 
         $evalId =$request->input('evaluation_id');
         $notes = $request->input('notes');
-
         foreach ($notes as $eleveID => $note) {
             //return $note;
             if ($note["note"] !== null) {

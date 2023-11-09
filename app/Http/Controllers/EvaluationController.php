@@ -22,10 +22,10 @@ class EvaluationController extends Controller
     public function index()
     {
         $user = Professeur::find(Auth::user()->code);
-        $ressources = $user->ressource;
+        $ressources = $user->ressource->unique();
         $results = [];
         foreach ($ressources as $ressource){
-            $evals = DB::table('evaluations')->where('code_ressource',$ressource->code)->get();
+            $evals = DB::table('evaluations')->distinct()->where('code_ressource',$ressource->code)->get();
             foreach($evals as $eval){
                 array_push($results, $eval);
             }

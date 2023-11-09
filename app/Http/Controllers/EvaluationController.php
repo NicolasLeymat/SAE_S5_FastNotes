@@ -176,45 +176,29 @@ class EvaluationController extends Controller
         }
         $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
 
-        // $graphique = new PieGraph(300,200);
-        // $graphique->SetScale("textlin");
-        // $graphique->SetMarginColor('lightblue');
-        // $graphique->title->Set('Stockchart example');
-
-        // $p1   = new PiePlot($stats);
-        // $p1->SetColor('black');
-        // $p1->SetWidth(9);
-
-        // $graphique->Add($p1);
-        // if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
-        //     unlink(public_path().'\images\graph'.$idEval.'.jpg');
-        // }
-        // $graph = $graphique->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
-
         require_once(base_path().'\libraries\jpgraph\src\jpgraph.php');
         require_once (base_path().'\libraries\jpgraph\src\jpgraph_stock.php');
 
         // Setup a simple graph
-        $graph = new Graph(300,200);
+        $graph = new Graph(250,200);
         $graph->SetScale('textlin');
-        $graph->xaxis->
         $graph->SetMarginColor('lightblue');
+        $graph->xaxis->SetColor('white');
         $graph->title->Set('Box Stock chart example');
 
         // Create a new stock plot
-        $p1 = new BoxPlot($stats);
+        $p1 = new BoxPlot($stats,array(0.5,0.5));
          
         // Width of the bars (in pixels)
         $p1->SetWidth(9);
         
          
         // Add the plot to the graph and send it back to the browser
-      //  $graph->Add($p1);
+        $graph->Add($p1);
         if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
             unlink(public_path().'\images\graph'.$idEval.'.jpg');
         }
-        $p1->Stroke(public_path().'\images\graph'.$idEval.'.jpg') ;
-       // $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
         
         
 

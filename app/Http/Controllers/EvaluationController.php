@@ -155,8 +155,18 @@ class EvaluationController extends Controller
         //
     }
 
+    public function getNotes($idEval){
+        $eval = Evaluation::find( $idEval );
+        $notes = [];
+        foreach($eval->eleves as $eleve){
+            array_push($notes, $eleve->pivot->note);
+        };
+        return $notes;
+    }
+
     public function boxPlot($idEval){
-        $notes = [6, 47, 49, 15, 43, 40, 39, 45, 41, 36];//recuperer les notes d'une eval sous forme de liste
+        $notes = $this->getNotes($idEval);
+        $this->moyenneEcartType($notes);
         sort($notes);
         $len = count($notes);
         if ($len%2 == 1) {
@@ -181,10 +191,10 @@ class EvaluationController extends Controller
 
         // Setup a simple graph
         $graph = new Graph(250,200);
-        $graph->SetScale('textlin');
+        $graph->SetScale('textlin',0,20.2);
         $graph->SetMarginColor('lightblue');
         $graph->xaxis->SetColor('white');
-        $graph->title->Set('Box Stock chart example');
+        $graph->title->Set('Notes de l\'évaluation');
 
         // Create a new stock plot
         $p1 = new BoxPlot($stats,array(0.5,0.5));

@@ -189,8 +189,8 @@ class EvaluationController extends Controller
             $rangPQuartile = $rangMediane/2;
             $rangTQuartile = $rangMediane+($rangMediane/2);
             $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
-            $pQuartile = $notes[floor($rangPQuartile)];
-            $tQuartile = $notes[$rangTQuartile];
+            $pQuartile = ($notes[$rangPQuartile-1]+$notes[$rangPQuartile])/2;
+            $tQuartile = ($notes[$rangTQuartile-1]+$notes[$rangTQuartile])/2;
         }
         $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
 

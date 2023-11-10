@@ -4,6 +4,8 @@ use App\Http\Controllers\EleveController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\NotifController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +72,10 @@ Route::middleware('professeur')->group(function () {
     Route::post('saisir_note',[EvaluationController::class, 'saisirNote'])->name('saisir_note');
     Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');
 });
-Route::post('importEval', [EvaluationController::class, 'import'])->name("importEvals");
-Route::post('importEleves', [EleveController::class, 'import'])->name("importEleves");
+Route::post('importEval', [EvaluationController::class, 'import'])->name("importEval");
+Route::post('importEvals', [EvaluationController::class, 'import'])->name("importEvals");
+Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
+Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
 
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
@@ -82,3 +86,8 @@ Route::middleware('administrateur')->group(function () {
         return view('dashAdmin');
     })->name('dashadmin');
 });
+
+
+Route::get('email', [NotifController::class, 'getRouteMail']);
+
+Route::post('/envoyerNotif', [NotifController::class, 'envoyerEmail'])->name('envoyerNotif');

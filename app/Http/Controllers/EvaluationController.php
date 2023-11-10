@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EvaluationImport;
+use App\Models\Eleve;
+use App\Models\Enseignement;
 use App\Models\Evaluation;
+use App\Mail\Notif;
+use App\Models\Professeur;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Mail;
+use Auth;
+use BoxPlot;
 use DB;
+use Graph;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 
 class EvaluationController extends Controller
 {
@@ -16,8 +25,17 @@ class EvaluationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $results = DB::table('evaluation')->get()->sortBy('libelle');
+    {        
+        $results = DB::table('evaluations')->get()->sortBy('libelle');
+        $user = Professeur::find(Auth::user()->code);
+        $ressources = $user->ressource->unique();
+        $results = [];
+        foreach ($ressources as $ressource){
+            $evals = DB::table('evaluations')->distinct()->where('code_ressource',$ressource->code)->get();
+            foreach($evals as $eval){
+                array_push($results, $eval);
+            }
+        }
         return view('dashprof')->with('evals', $results);
     }
 
@@ -42,35 +60,47 @@ class EvaluationController extends Controller
      */
     public function show(string $idEval)
     {
-
+        $stats = $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
         $eleves = [];
-
-
+        $code_user = Auth::user()->code;
+        $eleves_prof = [];
         
-        $ressourceEval = $evaluation->ressource; 
-        if (! empty($ressourceEval) ) {
-            foreach($ressourceEval->groupes as $groupe){
-                foreach($groupe->utilisateurs as $eleve){
-                    if($eleve->isProf == 0 && $eleve->isAdmin == 0){
-                        $pivotData = $eleve
-                        ->evaluations()
-                        ->where('id_evaluation', $idEval)->first();
+        $this->getNotes($idEval, $code_user);
+        $groupes=[];
 
-                        if ($pivotData) {
-                            $note = $pivotData->pivot->note;
-                        } else {
-                            $note = '';
-                        }
-                        
-                        $infosEleve = ['nom'=>$eleve->nom, 'identification'=>$eleve->identification, 'prenom'=>$eleve->prenom, 'note'=>$note,'code'=>$eleve->code];
-                        array_push($eleves, $infosEleve);
-                    }
-                    
+        $ressourceEval = $evaluation->ressource; 
+
+        if (! empty($ressourceEval) ) {        
+            $ratio = 0;
+            foreach($ressourceEval->groupe as $groupe_prof){
+                
+                if($groupe_prof->pivot->code_prof == $code_user) {
+                    $ratio +=1;
+                    array_push($eleves_prof, $groupe_prof->eleves);
                 }
             }
+            foreach($eleves_prof as $eleve_prof){
+                foreach($eleve_prof as $eleve_prof){
+                    array_push($groupes, $eleve_prof->id_groupe);
+                    $pivotData = $eleve_prof
+                    ->evaluations()
+                    ->where('id_evaluation', $idEval)->first();
+        
+                    if ($pivotData) {
+                        $note = $pivotData->pivot->note;
+                    } else {
+                        $note = '';
+                    }
+                    
+                    $infosEleve = ['nom'=>$eleve_prof->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
+                    
+                    array_push($eleves, $infosEleve);
+                }
+            }
+            $groupe= array_unique($groupes);
         }
-        return view('evaluation',compact('evaluation','eleves'));        
+        return view('evaluation',compact('evaluation','eleves','groupe','stats'));        
     }
 
     /**
@@ -88,14 +118,22 @@ class EvaluationController extends Controller
         }
 
         $evaluation = Evaluation::findOrFail($idEval);
-        $eleve = Utilisateur::findOrFail($idEleve);
+        $eleve = Eleve::findOrFail($idEleve);
 
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
-        $evaluation->utilisateurs()->syncWithoutDetaching([
-            $idEleve => ['note' => $note]
-        ]);
+
+            $exists =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->exists();
+            if ($exists) {
+                $oldnote =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->first()->pivot->note;
+            }
+            if (!$exists || $oldnote != $note ) {
+                $evaluation->eleves()->syncWithoutDetaching([
+                $idEleve => ['note' => $note]]);
+                $notif = new Notif($evaluation,$eleve->utilisateur);
+                Mail::to($eleve->utilisateur->email)->send($notif);
         }
+    }
     }
 
     public function saisirNotes (Request $request) {
@@ -106,10 +144,11 @@ class EvaluationController extends Controller
 
         $evalId =$request->input('evaluation_id');
         $notes = $request->input('notes');
-
         foreach ($notes as $eleveID => $note) {
             //return $note;
-            if ($note["note"] !== null) {
+            
+            if ($note["note"] != null) {
+                
                 $this->saisirNote($evalId,$eleveID,$note["note"]);
             }
 
@@ -132,6 +171,83 @@ class EvaluationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function boxPlot($idEval){
+        $notes = $this->getNotes($idEval, 'a');
+        sort($notes);
+        $len = count($notes);
+        if ($len%2 == 1) {
+            $rangMediane = ($len+1)/2;
+            $rangPQuartile = ($rangMediane)/2;
+            $rangTQuartile = $rangMediane+($rangMediane)/2;
+            $mediane = $notes[$rangMediane-1];
+            $pQuartile = $notes[$rangPQuartile-1];
+            $tQuartile = $notes[$rangTQuartile-1];
+        } else {
+            $rangMediane = $len/2;
+            $rangPQuartile = $rangMediane/2;
+            $rangTQuartile = $rangMediane+($rangMediane/2);
+            $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
+            $pQuartile = $notes[floor($rangPQuartile)];
+            $tQuartile = $notes[$rangTQuartile];
+        }
+        $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
+
+        require_once(base_path().'\libraries\jpgraph\src\jpgraph.php');
+        require_once (base_path().'\libraries\jpgraph\src\jpgraph_stock.php');
+
+        // Setup a simple graph
+        $graph = new Graph(250,200);
+        $graph->SetScale('textlin',0,20.2);
+        $graph->SetMarginColor('lightblue');
+        $graph->xaxis->SetColor('white');
+        $graph->title->Set('Notes de l\'évaluation');
+
+        // Create a new stock plot
+        $p1 = new BoxPlot($stats,array(0.5,0.5));
+         
+        // Width of the bars (in pixels)
+        $p1->SetWidth(9);
+        
+         
+        // Add the plot to the graph and send it back to the browser
+        $graph->Add($p1);
+        if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
+            unlink(public_path().'\images\graph'.$idEval.'.jpg');
+        }
+        $graph->Stroke(public_path().'\images\graph'.$idEval.'.jpg');
+        return $this->moyenne_ecart_type($idEval);
+        
+        
+
+    }
+
+    public function getNotes(string $idEval, string $idProf){
+        $eval = Evaluation::find($idEval);
+        $notes = [];
+        foreach($eval->eleves as $eleve) {
+            array_push($notes, $eleve->pivot->note);            
+        }
+        return $notes;
+    }
+
+    function moyenne_ecart_type(string $idEval) {
+        $notes = $this->getNotes($idEval, Auth::user()->code);
+        $moyenne = array_sum($notes)/count($notes);
+        $fVariance = 0.0;
+        foreach ($notes as $i) {
+            $fVariance += pow($i - $moyenne, 2);
+        }     
+        $size = count($notes) - 1;
+        $res = [];
+        $res['moyenne'] = $moyenne;
+        if ($size == 0){
+            $res['ecart_type'] = 0;
+        } else {
+            $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
+        }
+        return $res;
     }
 
     public function import(Request $request){   

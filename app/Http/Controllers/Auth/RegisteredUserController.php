@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Eleve;
 use App\Models\Utilisateur;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -52,7 +53,6 @@ class RegisteredUserController extends Controller
             'isAdmin' => $request->isAdmin,
             'idGroupe' => $request->idGroupe
         ]);
-        
 
         event(new Registered($user));
 

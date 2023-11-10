@@ -6,6 +6,12 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Utilisateur;
+use App\Models\Admin;
+use App\Models\Eleve;
+use App\Models\Professeur;
+
+
+
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -28,15 +34,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('isAdmin', function(Utilisateur $user){
-            return $user->isAdmin == 1;
+            return Admin::find($user->code) != null;
         });
 
         Gate::define('isProf', function(Utilisateur $user){
-            return $user->isProf == 1;
+            return Professeur::find($user->code) != null;
         });
 
         Gate::define('isEleve', function(Utilisateur $user){
-            return $user->isProf == 0;
+            return Eleve::find($user->code) != null;
         });
 
         Gate::define('matchId', function (Utilisateur $user, $id) {

@@ -93,7 +93,7 @@ class EvaluationController extends Controller
                         $note = '';
                     }
                     
-                    $infosEleve = ['nom'=>$eleve_prof->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
+                    $infosEleve = ['nom'=>$eleve_prof->utilisateur->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->utilisateur->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
                     
                     array_push($eleves, $infosEleve);
                 }

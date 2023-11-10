@@ -107,8 +107,27 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}">
+        <div>
+        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
+        <?php
+        if(isset($_GET["dl"])){
+            $file='./images/graph'.$evaluation->id.'.jpg';
+            header('Content-Description: File Transfer');
+            header('Content-Type: image/jpeg');
+            ob_clean();
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+        }
+        ?>
+        <form method="GET">
+            <button type="submit" name="dl">Télécharger l'image</button>
+        </form>
         <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
+        </div>
         <div class="home_content">
         <select name="groupe_select" id="groupe_select" onchange="changertab()">
             <option value="Tous">Tous</option>

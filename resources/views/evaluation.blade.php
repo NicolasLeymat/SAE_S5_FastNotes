@@ -53,15 +53,18 @@
             var tab = document.getElementById("saissi_note_tab");
             var rows = tab.getElementsByTagName("tr");
             var groupeCell = document.querySelectorAll("#groupe_Cell");
-            groupeCell.forEach(function(cell){
-                console.log(valeurSelectionnee);
+            var note_input = document.querySelectorAll("#note_input");
+            groupeCell.forEach(function(cell, index){
                 if(valeurSelectionnee === "Tous"){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled= false;
                 }
                 else if(cell.innerText === valeurSelectionnee){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled = false;
                 }else{
                     cell.parentElement.style.display = "none";
+                    note_input[index].disabled = true;
                 }
             });
         }
@@ -136,7 +139,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input id="note_input"class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach

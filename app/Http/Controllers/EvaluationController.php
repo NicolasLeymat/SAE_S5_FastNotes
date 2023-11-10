@@ -6,8 +6,10 @@ use App\Imports\EvaluationImport;
 use App\Models\Eleve;
 use App\Models\Enseignement;
 use App\Models\Evaluation;
+use App\Mail\Notif;
 use App\Models\Professeur;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 use BoxPlot;
 use DB;
@@ -65,6 +67,7 @@ class EvaluationController extends Controller
         $eleves_prof = [];
         
         $this->getNotes($idEval, $code_user);
+        $groupes=[];
 
         $ressourceEval = $evaluation->ressource; 
 
@@ -79,6 +82,7 @@ class EvaluationController extends Controller
             }
             foreach($eleves_prof as $eleve_prof){
                 foreach($eleve_prof as $eleve_prof){
+                    array_push($groupes, $eleve_prof->id_groupe);
                     $pivotData = $eleve_prof
                     ->evaluations()
                     ->where('id_evaluation', $idEval)->first();
@@ -94,8 +98,9 @@ class EvaluationController extends Controller
                     array_push($eleves, $infosEleve);
                 }
             }
+            $groupe= array_unique($groupes);
         }
-        return view('evaluation',compact('evaluation','eleves','stats'));        
+        return view('evaluation',compact('evaluation','eleves','groupe','stats'));        
     }
 
     /**
@@ -117,10 +122,18 @@ class EvaluationController extends Controller
 
 
         if ($note >=0 && $note <=20 && $evaluation && $eleve) {
-        $evaluation->eleves()->syncWithoutDetaching([
-            $idEleve => ['note' => $note]
-        ]);
+
+            $exists =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->exists();
+            if ($exists) {
+                $oldnote =  $evaluation->eleves()->wherePivot('code_eleve', $idEleve)->first()->pivot->note;
+            }
+            if (!$exists || $oldnote != $note ) {
+                $evaluation->eleves()->syncWithoutDetaching([
+                $idEleve => ['note' => $note]]);
+                $notif = new Notif($evaluation,$eleve->utilisateur);
+                Mail::to($eleve->utilisateur->email)->send($notif);
         }
+    }
     }
 
     public function saisirNotes (Request $request) {
@@ -133,7 +146,9 @@ class EvaluationController extends Controller
         $notes = $request->input('notes');
         foreach ($notes as $eleveID => $note) {
             //return $note;
-            if ($note["note"] !== null) {
+            
+            if ($note["note"] != null) {
+                
                 $this->saisirNote($evalId,$eleveID,$note["note"]);
             }
 
@@ -227,7 +242,11 @@ class EvaluationController extends Controller
         $size = count($notes) - 1;
         $res = [];
         $res['moyenne'] = $moyenne;
-        $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
+        if ($size == 0){
+            $res['ecart_type'] = 0;
+        } else {
+            $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
+        }
         return $res;
     }
 

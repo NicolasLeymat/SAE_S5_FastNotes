@@ -239,7 +239,11 @@ class EvaluationController extends Controller
         $size = count($notes) - 1;
         $res = [];
         $res['moyenne'] = $moyenne;
+        if ($size > 0 ) {
         $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
+        } else {
+            $res['ecart_type'] = "Pas assez de notes";
+        }
         return $res;
     }
 

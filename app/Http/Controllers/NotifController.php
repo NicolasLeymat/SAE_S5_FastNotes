@@ -24,9 +24,9 @@ class NotifController extends Controller
     #$destinataire = $utilisateur->email;    
     $destinataire = Config::get('mail.to.address');
 
-    $email = new Notif($evaluation);
+    $email = new Notif($evaluation, $utilisateur);
 
-    Mail::to("nicolas.leymat@etu.iut-tlse3.fr")->send($email);
+    Mail::to("lucas.thibaud@hotmail.com")->send($email);
 
     return 'Nice';
 }

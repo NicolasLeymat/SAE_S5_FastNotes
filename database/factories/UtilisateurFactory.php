@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 use App\Models\Groupe;
-
+use App\Models\Semestre;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,13 +20,9 @@ class UtilisateurFactory extends Factory
         return [
             'code' => fake()->unique()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'identification' => fake()->unique()->name(),
             'password' => 'password',
             'nom' => fake()->name(),
             'prenom' => fake()->name(),
-            'isProf' => 0,
-            'isAdmin' => 0,
-            'id_groupe' => Groupe::factory()
-        ];
+            ];
     }
 }

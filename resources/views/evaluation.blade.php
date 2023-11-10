@@ -53,18 +53,18 @@
             var tab = document.getElementById("saissi_note_tab");
             var rows = tab.getElementsByTagName("tr");
             var groupeCell = document.querySelectorAll("#groupe_Cell");
-            var notes_input = document.querySelectorAll("#notes_input");
+            var note_input = document.querySelectorAll("#note_input");
             groupeCell.forEach(function(cell, index){
                 if(valeurSelectionnee === "Tous"){
                     cell.parentElement.style.display = "table-row";
-                    notes_input[index].disabled = false;
+                    note_input[index].disabled= false;
                 }
                 else if(cell.innerText === valeurSelectionnee){
                     cell.parentElement.style.display = "table-row";
-                    notes_input[index].disabled = false;
+                    note_input[index].disabled = false;
                 }else{
                     cell.parentElement.style.display = "none";
-                    notes_input[index].disabled = true;
+                    note_input[index].disabled = true;
                 }
             });
         }
@@ -110,6 +110,8 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
+        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}">
+        <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
         <div class="home_content">
         <select name="groupe_select" id="groupe_select" onchange="changertab()">
             <option value="Tous">Tous</option>
@@ -137,7 +139,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input id="notes_input" class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input id="note_input"class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach

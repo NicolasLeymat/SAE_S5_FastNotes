@@ -15,12 +15,14 @@ class Notif extends Mailable
     use Queueable, SerializesModels;
 
     public $eval;
+    public $user;
     /**
      * Create a new message instance.
      */
-    public function __construct($evaluation)
+    public function __construct($evaluation, $utilisateur)
     {
         $this->eval = $evaluation;
+        $this->user = $utilisateur;
     }
 
     /**
@@ -61,8 +63,9 @@ class Notif extends Mailable
         $destinataire = Config::get('mail.to.address');
 
         return $this
-        ->with(['contenu' => "Une nouvelle note a été ajoutée en $nomEval"])
-        ->view('emails.notif_note');
+        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom])
+        ->view('emails.notif_note')
+        ->cc('louis.camborieux@etu.iut-tlse3.fr');
     }
 
 }

@@ -45,6 +45,26 @@
                 }
             }
         }
+
+        function changertab(){
+            var selection = document.getElementById("groupe_select");
+            var valeurSelectionnee = selection.value;
+            console.log(valeurSelectionnee);
+            var tab = document.getElementById("saissi_note_tab");
+            var rows = tab.getElementsByTagName("tr");
+            var groupeCell = document.querySelectorAll("#groupe_Cell");
+            groupeCell.forEach(function(cell){
+                console.log(valeurSelectionnee);
+                if(valeurSelectionnee === "Tous"){
+                    cell.parentElement.style.display = "table-row";
+                }
+                else if(cell.innerText === valeurSelectionnee){
+                    cell.parentElement.style.display = "table-row";
+                }else{
+                    cell.parentElement.style.display = "none";
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -90,10 +110,16 @@
         <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}">
         <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
         <div class="home_content">
+        <select name="groupe_select" id="groupe_select" onchange="changertab()">
+            <option value="Tous">Tous</option>
+            @foreach($groupe as $groupe_eleve)
+            <option value="{{ $groupe_eleve }}">{{ $groupe_eleve }}</option>
+            @endforeach
+        </select>
         <form action="{{ route('saisir_notes') }}" method="POST" name="formulaire" id="formulaireNotes" class="saissi_notes_form">
             @csrf
             <input type="hidden" name="evaluation_id" value="{{ $evaluation->id }}"> 
-            <table class="saissi_note_tab">
+            <table class="saissi_note_tab" id="saissi_note_tab">
                 <thead>
                     <tr class="tab-row-dark">
                         <th class="tab-cell">Numéro étudiant</th>
@@ -109,7 +135,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['identification']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
-                    <td class="tab-cell clear-cell">{{$eleve['id_groupe']}}</td>
+                    <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
                     <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>

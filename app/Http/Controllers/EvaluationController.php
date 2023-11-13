@@ -93,7 +93,7 @@ class EvaluationController extends Controller
                         $note = '';
                     }
                     
-                    $infosEleve = ['nom'=>$eleve_prof->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
+                    $infosEleve = ['nom'=>$eleve_prof->utilisateur->nom, 'identification'=>$eleve_prof->identification, 'prenom'=>$eleve_prof->utilisateur->prenom,'id_groupe'=>$eleve_prof->id_groupe, 'note'=>$note,'code'=>$eleve_prof->code];
                     
                     array_push($eleves, $infosEleve);
                 }
@@ -189,8 +189,8 @@ class EvaluationController extends Controller
             $rangPQuartile = $rangMediane/2;
             $rangTQuartile = $rangMediane+($rangMediane/2);
             $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
-            $pQuartile = $notes[floor($rangPQuartile)];
-            $tQuartile = $notes[$rangTQuartile];
+            $pQuartile = ($notes[$rangPQuartile-1]+$notes[$rangPQuartile])/2;
+            $tQuartile = ($notes[$rangTQuartile-1]+$notes[$rangTQuartile])/2;
         }
         $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
 
@@ -242,10 +242,10 @@ class EvaluationController extends Controller
         $size = count($notes) - 1;
         $res = [];
         $res['moyenne'] = $moyenne;
-        if ($size > 0 ) {
-        $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
+        if ($size == 0){
+            $res['ecart_type'] = 0;
         } else {
-            $res['ecart_type'] = "Pas assez de notes";
+            $res['ecart_type'] = round((float) sqrt($fVariance)/sqrt($size),3);
         }
         return $res;
     }

@@ -73,7 +73,12 @@
             @else
               <p style="color:green">
             @endif
-            {{ round($moyenneSemestre,2) }}</p>
+            @if ($moyenneSemestre !=="Pas Disponible")
+              {{ round($moyenneSemestre,2) }}
+            @else
+            {{ $moyenneSemestre }}
+            @endif
+            </p>
             </b>             
             <table class="table-moyenne" >
               @foreach ($tabMoyennesCompetences as $key => $valeur)

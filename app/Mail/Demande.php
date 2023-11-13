@@ -10,19 +10,21 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
 
-class Notif extends Mailable
+class Demande extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $eleve;
+    public $prof;
     public $eval;
-    public $user;
     /**
      * Create a new message instance.
      */
-    public function __construct($evaluation, $utilisateur)
+    public function __construct($eleve, $prof, $evaluation)
     {
+        $this->eleve = $eleve;
+        $this->prof = $prof;
         $this->eval = $evaluation;
-        $this->user = $utilisateur;
     }
 
     /**
@@ -30,10 +32,12 @@ class Notif extends Mailable
      */
     public function envelope(): Envelope
     {
-        $nomMatiere = $this->eval->ressource->libelle;
+        $nomEval = $this->eval->libelle;
+        $prenom = $this->eleve->utilisateur->prenom;
+        $nom = $this->eleve->utilisateur->nom;
 
         return new Envelope(
-            subject: "Nouvelle Note en $nomMatiere",
+            subject: "Demande de consultation de copie de $prenom $nom en $nomEval",
         );
     }
 
@@ -60,8 +64,10 @@ class Notif extends Mailable
     public function build()
     {
         return $this
-        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom])
-        ->view('emails.notif_note')
+        ->with(['libelle_eval' => $this->eval->libelle, 'prenom_eleve' => $this->eleve->utilisateur->prenom, 'email_eleve' => $this->eleve->utilisateur->email, 
+                'nom_eleve' => $this->eleve->utilisateur->nom, 'prenom_prof' => $this->prof->utilisateur->prenom,
+                'nom_prof' => $this->prof->utilisateur->nom])
+        ->view('emails.demande_consultation')
         ->cc('nicolas.leymat@etu.iut-tlse3.fr');
     }
 

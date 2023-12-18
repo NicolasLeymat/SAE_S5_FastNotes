@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Annee extends Model
 {
     use HasFactory;
-    protected $table = "Annee";
+    protected $table = "annee";
     protected $fillable = [
-        "id","Anne_Debut", "Annee_Fin"
+        "id","annee_debut", "annee_fin"
     ];
     public $timestamps = false;
     public $primaryKey = "id";

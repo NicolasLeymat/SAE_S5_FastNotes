@@ -11,19 +11,46 @@ return new class extends Migration
      */
     public function up(): void
     {       
-        Schema::create('semestres', function (Blueprint $table) {
-            $table->id();
+
+        Schema::create('annee', function (Blueprint $table) {
+            $table->string('id_annee');
+            $table->primary('id_annee');
+            $table->integer('annee_debut');
+            $table->integer('annee_fin');
+        });
+        
+        Schema::create('competences', function (Blueprint $table) {
+            $table->string('code');
+            $table->primary('code');
             $table->string('libelle');
+        });
+        
+        Schema::create('ressources', function (Blueprint $table) {
+            $table->string('code');
+            $table->primary('code');
+            $table->string('libelle');
+        });
+
+        
+        Schema::create('semestres', function (Blueprint $table) {
+            $table->string('id_semestre');
+            $table->primary('id_semestre');
+            $table->string('libelle');
+        });
+
+        Schema::create('parcours', function (Blueprint $table) {
+            $table->string('id_parcour');
+            $table->primary('id_parcour');
+            $table->string('id_semestre');
+            $table->foreign('id_semestre')->references('id_semestre')->on('semestres');
         });
 
         Schema::create('groupes', function (Blueprint $table) {
             $table->string('id');
             $table->primary('id');
             $table->string('libelle');
-            $table->year('annee');
             $table->string('parcours');
-            $table->unsignedBigInteger('id_semestre');
-            $table->foreign('id_semestre')->references('id')->on('semestres');
+            $table->foreign('id_parcour')->references('id')->on('parcours');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -58,19 +85,6 @@ return new class extends Migration
             $table->foreign('code')->references('code')->on('users');
         });
         
-        
-        Schema::create('competences', function (Blueprint $table) {
-            $table->string('code');
-            $table->primary('code');
-            $table->string('libelle');
-        });
-        
-        Schema::create('ressources', function (Blueprint $table) {
-            $table->string('code');
-            $table->primary('code');
-            $table->string('libelle');
-        });
-        
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
@@ -87,9 +101,10 @@ return new class extends Migration
             $table->primary("code");
             $table->string('libelle');
             $table->string('code_competence');
+            $table->string('id_semestre');
             $table->foreign('code_competence')->references('code')->on('competences');
+            $table->foreign('id_semestre')->references('id_semestre')->on('semestres');
         });
-
         
         Schema::create('note_evaluation', function (Blueprint $table) {
             $table->string('note');

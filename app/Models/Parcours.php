@@ -12,19 +12,19 @@ class Parcours extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ["id","libelle"];
+    protected $fillable = ["id_parcour"];
 
-    protected $id = "id";
+    protected $id = "id_parcour";
 
     protected $table = "Parcours";
 
 
     public function groupes (){
-        return $this->hasMany(Groupe::class, "id", "id_groupe");
+        return $this->hasMany(Groupe::class, "id_parcour", "id_groupe");
     }
 
     public function semestre(){
-        return $this->hasOne(Semestre::class, "id", "id_semestre");
+        return $this->hasOne(Semestre::class, "id_parcour", "id_semestre");
     }
 
 }

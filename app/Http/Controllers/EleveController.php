@@ -78,7 +78,7 @@ class EleveController extends Controller
             $ressourcesConcernes = $competence->ressources;
             foreach ($ressourcesConcernes as $ressource) {
                 $coefRessourceCompetence = $ressource->pivot->coefficient;
-                if (!empty($tabMoyennesRessources[$ressource->code]) && $tabMoyennesRessources[$ressource->code][1] != "Pas disponible" && $coefRessourceCompetence!=0 ) {
+                if (!empty($tabMoyennesRessources[$ressource->code]) && $tabMoyennesRessources[$ressource->code][1] != "Pas disponible") {
                 $coefTotal += $coefRessourceCompetence;
                 $moyenneCompetences += $tabMoyennesRessources[$ressource->code][1] * $coefRessourceCompetence;
                 $hasNote = true;

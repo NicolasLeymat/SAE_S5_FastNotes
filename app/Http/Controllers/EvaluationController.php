@@ -206,11 +206,11 @@ class EvaluationController extends Controller
 
         // Create a new stock plot
         $p1 = new BoxPlot($stats,array(0.5,0.5));
-         
+        
         // Width of the bars (in pixels)
         $p1->SetWidth(9);
         
-         
+        
         // Add the plot to the graph and send it back to the browser
         $graph->Add($p1);
         if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {

@@ -55,15 +55,18 @@
             var tab = document.getElementById("saissi_note_tab");
             var rows = tab.getElementsByTagName("tr");
             var groupeCell = document.querySelectorAll("#groupe_Cell");
-            groupeCell.forEach(function(cell){
-                console.log(valeurSelectionnee);
+            var note_input = document.querySelectorAll("#note_input");
+            groupeCell.forEach(function(cell, index){
                 if(valeurSelectionnee === "Tous"){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled= false;
                 }
                 else if(cell.innerText === valeurSelectionnee){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled = false;
                 }else{
                     cell.parentElement.style.display = "none";
+                    note_input[index].disabled = true;
                 }
             });
         }

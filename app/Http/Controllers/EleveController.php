@@ -21,7 +21,7 @@ class EleveController extends Controller
     private $tabNotes;
     private $tabCompetences = [];
     private $tabMoyennesCompetences = [];
-    private $tabMoyennesRessources;
+    private $tabMoyennesRessources = [];
     private $tabCoefsRessources;
     private $user;
     private $tabEvaluations = [];
@@ -36,6 +36,10 @@ class EleveController extends Controller
         setlocale(LC_ALL, 'fr_FR.utf8');
         $this->user = Eleve::find($id);
         $this->initializeInfosEleves();
+        foreach($this->tabRessources as $ressource){
+            $this->tabMoyennesRessources[$ressource->code][1]=$this->moyenneParRessource($ressource);
+        }
+        dd($this->tabMoyennesRessources);
         foreach($this->tabEvaluations as $eval){
             $coefficient = $eval->coefficient;
             if ($this->user->evaluations()->wherePivot('id_evaluation', $eval->id)->exists()) {

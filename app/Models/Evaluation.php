@@ -9,13 +9,13 @@ class Evaluation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["libelle","coefficient","type"];
+    protected $fillable = ["libelle","coefficient","type","date_epreuve","date_fin_epreuve","date_rattrapage"];
 
     public $timestamps = false;
     protected $table = "evaluations";
 
-    public function utilisateurs () {
-        return $this->belongsToMany(Utilisateur::class, 'note_evaluation', 'id_evaluation', 'code_eleve')
+    public function eleves () {
+        return $this->belongsToMany(Eleve::class, 'note_evaluation', 'id_evaluation', 'code_eleve')
         ->withPivot('note');
     }
 

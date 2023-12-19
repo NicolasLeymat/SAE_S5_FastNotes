@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
 use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
+use App\Mail\Rappel;
 
 class EvaluationController extends Controller
 {
@@ -259,4 +260,33 @@ class EvaluationController extends Controller
             return redirect()->back()->with('error', 'Please upload a file.');
         }
     }
+
+    public function checkAllNotesByEvalId(Evaluation $eval){
+        foreach($eval->eleves as $eleve) {
+            if ($eleve->pivot->note == null){
+                return False;
+            }         
+        }
+        return True;
+    }
+
+    public function checkAllNotesEval(){
+        $evals = Evaluation::all();
+        foreach($evals as $eval) {
+            $res = $this->checkAllNotesByEvalId($eval);
+            $profs = $eval->ressource->professeur;
+            syslog(1,"aaaaaa");
+            foreach($profs as $prof) {
+                $rappel = new Rappel($eval,$prof->utilisateur);
+                //Mail::to($eval->ressource->professeur->utilisateur->email)->send($rappel);
+                Mail::to("lucas.veslin@etu.iut-tlse3.fr")->send($rappel);
+            }
+            if ($res != False){
+                
+            }
+        }
+    }
+
+
+
 }

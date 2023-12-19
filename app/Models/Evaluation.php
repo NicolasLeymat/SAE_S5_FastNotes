@@ -12,7 +12,7 @@ class Evaluation extends Model
     protected $fillable = ["libelle","coefficient","type"];
 
     public $timestamps = false;
-    protected $table = "evaluation";
+    protected $table = "evaluations";
 
     public function utilisateurs () {
         return $this->belongsToMany(Utilisateur::class, 'note_evaluation', 'id_evaluation', 'code_eleve')

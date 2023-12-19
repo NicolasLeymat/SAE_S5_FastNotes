@@ -4,6 +4,8 @@ use App\Http\Controllers\EleveController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\NotifController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +86,10 @@ Route::middleware('administrateur')->group(function () {
     })->name('dashadmin');
 });
 
-Route::get('/email', 'App\Http\Controllers\MailController@email_send',);
+
+Route::get('email', [NotifController::class, 'getRouteMail']);
+
+Route::post('/envoyerNotif', [NotifController::class, 'envoyerEmail'])->name('envoyerNotif');
 
 Route::get('/votre-page', [YourController::class, 'index'])->name('votre-page');
 Route::post('/afficherEleves', [YourController::class, 'afficherEleves'])->name('afficherEleves');

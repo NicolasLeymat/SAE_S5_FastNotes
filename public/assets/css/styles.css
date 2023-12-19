@@ -134,6 +134,25 @@ body {
   color: var(--text-color);
 }
 
+.dl-button {
+    height: 40px;
+    font-family: var(--body-font);
+    padding-right: 10px;
+    border: none;
+    transition: 0.35s;
+}
+
+.dl-button:hover {
+  background-color: #bebabaf7;
+}
+
+.dl-button i {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+
+
 h1,
 h2,
 h3,
@@ -355,14 +374,17 @@ img {
   border-collapse: collapse;
 }
 
-.button-modifier-note{
-  background-color: var(--input-color) !important;
+.button-modifier-note.button{
+  background-color: var(--input-color) ;
+  color: var(--text-color);
   border: none;
   border-radius: 0px !important;
+  transition: 0.35s;
 }
 
 .button-modifier-note:hover{
   cursor: pointer;
+  background-color: var(--input-color-darker);
 }
 
 .saissi_note_tab{
@@ -443,7 +465,7 @@ input::-webkit-inner-spin-button {
   font-weight: var(--font-medium);
 }
 
-.button:hover {
+.button-index:hover {
   background-color: var(--first-color-alt);
 }
 

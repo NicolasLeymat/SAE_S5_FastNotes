@@ -85,3 +85,7 @@ Route::middleware('administrateur')->group(function () {
 });
 
 Route::get('/email', 'App\Http\Controllers\MailController@email_send',);
+
+Route::get('/votre-page', [YourController::class, 'index'])->name('votre-page');
+Route::post('/afficherEleves', [YourController::class, 'afficherEleves'])->name('afficherEleves');
+Route::post('/afficherEvals', [YourController::class, 'afficherEvaluations'])->name('afficherEvals');

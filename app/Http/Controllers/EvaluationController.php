@@ -143,4 +143,9 @@ class EvaluationController extends Controller
             return redirect()->back()->with('error', 'Please upload a file.');
         }
     }
+
+    public function afficherEvaluations() {
+    $evaluations = $Evaluation::all();
+    return view('liste-evaluations', ['evaluations' => $evaluations]);
+    }
 }

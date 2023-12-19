@@ -199,4 +199,10 @@ class EleveController extends Controller
         ]);
         return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');
     }
+
+    public function afficherEleves() {
+        $eleves = $Utilisateur::where('type', 'eleve')->get();
+        return view('liste-eleves', ['eleves' => $eleves]);
+    }
+
 }

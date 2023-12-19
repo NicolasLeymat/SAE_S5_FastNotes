@@ -106,7 +106,9 @@
     <main class="main">
     <!-- HOME -->
     <section class="home section" id="home">
+
         <div class="home_container container grid">
+        <h2> {{$evaluation['libelle']}} </h2>
         <div>
         <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
         <?php
@@ -155,7 +157,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach

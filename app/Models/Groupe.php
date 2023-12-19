@@ -35,6 +35,6 @@ class Groupe extends Model
     }
 
     public function parcours(){
-        return $this->hasOne(Parcours::class, "id", "id_groupe");
+        return $this->hasOne(Parcours::class, "id_parcour", "id_groupe");
     }
 }

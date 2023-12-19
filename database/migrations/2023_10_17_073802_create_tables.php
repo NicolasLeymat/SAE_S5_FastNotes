@@ -11,8 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {       
-
-        Schema::create('annee', function (Blueprint $table) {
+        Schema::create('annees', function (Blueprint $table) {
             $table->string('id_annee');
             $table->primary('id_annee');
             $table->integer('annee_debut');
@@ -31,11 +30,12 @@ return new class extends Migration
             $table->string('libelle');
         });
 
-        
         Schema::create('semestres', function (Blueprint $table) {
             $table->string('id_semestre');
             $table->primary('id_semestre');
             $table->string('libelle');
+            $table->string('id_annee');
+            $table->foreign('id_annee')->references('id_annee')->on('annees');
         });
 
         Schema::create('parcours', function (Blueprint $table) {
@@ -50,7 +50,7 @@ return new class extends Migration
             $table->primary('id');
             $table->string('libelle');
             $table->string('parcours');
-            $table->foreign('id_parcour')->references('id')->on('parcours');
+            $table->foreign('parcours')->references('id_parcour')->on('parcours');
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -164,5 +164,7 @@ return new class extends Migration
         Schema::dropIfExists('coefficient_ue');
         Schema::dropIfExists('ressource_groupe');
         Schema::dropIfExists('enseignements');
+        Schema::dropIfExists('annee');
+        Schema::dropIfExists('parcours');
     }
 };

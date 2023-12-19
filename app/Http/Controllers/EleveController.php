@@ -18,11 +18,10 @@ class EleveController extends Controller
 {
 
     private $tabRessources;
-    private $tabNotes;
+    private $tabNotes = [];
     private $tabCompetences = [];
     private $tabMoyennesCompetences = [];
     private $tabMoyennesRessources = [];
-    private $tabCoefsRessources;
     private $user;
     private $tabEvaluations = [];
 
@@ -39,61 +38,11 @@ class EleveController extends Controller
         foreach($this->tabRessources as $ressource){
             $this->tabMoyennesRessources[$ressource->code][1]=$this->moyenneParRessource($ressource);
         }
-        dd($this->tabMoyennesRessources);
-        foreach($this->tabEvaluations as $eval){
-            $coefficient = $eval->coefficient;
-            if ($this->user->evaluations()->wherePivot('id_evaluation', $eval->id)->exists()) {
-                $note = $this->user->evaluations()->wherePivot('id_evaluation', $eval->id)->first()->pivot->note;
-                $this->tabMoyennesRessources[$eval->code_ressource][1] += $note * $coefficient; 
-                $this->tabCoefsRessources[ $eval->code_ressource] += $eval->coefficient;
-            }
-            else {
-                $note = "Pas disponible";
-            }
-            $this->tabNotes[$eval->id] = [ "code_ressource"=>$eval->code_ressource, "libelle"=>$eval->libelle, "type"=>$eval->type, "note"=>$note ];
+        foreach($this->tabCompetences as $competence){
+            $this->tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($competence);
         }
-        
-        foreach ($this->tabMoyennesRessources as $ressource=>$valeur) {
-            
-            $coef = $this->tabCoefsRessources[$ressource];
-            
-            if ($coef == 0) {
-                $this->tabMoyennesRessources[$ressource][1] = "Pas disponible";
-            }
-            else {
-                $this->tabMoyennesRessources[$ressource][1] /= $this->tabCoefsRessources[$ressource];
-            }
-        }
-        $nbComp = 0;
-        foreach($this->tabCompetences as $competence) {
-            $hasNote = false;
-            $moyenneCompetences = 0;
-            $coefTotal = 0;
-            $ressourcesConcernes = $competence->ressources;
-            foreach ($ressourcesConcernes as $ressource) {
-                $coefRessourceCompetence = $ressource->pivot->coefficient;
-                if (!empty($this->tabMoyennesRessources[$ressource->code]) && $this->tabMoyennesRessources[$ressource->code][1] != "Pas disponible" && $coefRessourceCompetence!=0 ) {
-                $coefTotal += $coefRessourceCompetence;
-                $moyenneCompetences += $this->tabMoyennesRessources[$ressource->code][1] * $coefRessourceCompetence;
-                $hasNote = true;
-                }
-            }
-            if ($hasNote) {
-                $moyenneCompetences/=$coefTotal;
-                $this->tabMoyennesCompetences[$competence->libelle] = $moyenneCompetences;
-                $nbComp++;
-            }
-            else {
-                $this->tabMoyennesCompetences[$competence->libelle] ="Pas disponible";
-            }
-        }
-        
-        if ($nbComp != 0) {
-            $moyenneSemestre = array_sum($this->tabMoyennesCompetences)/$nbComp;
-        }
-        else {
-            $moyenneSemestre = "Pas Disponible";
-        }
+        $moyenneSemestre = $this->moyenneSemestre();
+
         return view('visuNote')->with('tabEvaluations',$this->tabEvaluations)->with('tabNotes',$this->tabNotes)->with('tabMoyennesRessources',$this->tabMoyennesRessources)->with('tabMoyennesCompetences',$this->tabMoyennesCompetences)->with('moyenneSemestre',$moyenneSemestre);
     }
     
@@ -139,23 +88,18 @@ class EleveController extends Controller
         return $notes / $c;
     }
 
-    public function moyenneParCompetence(Competence $competence) {
+    public function moyenneParCompetence($competence) {
         $notes = 0;
         $c = 0;
         $ressourcesCoef = [];
-        $moyRessources = [];
         foreach($competence->ressources as $ressource) {
             $ressourcesCoef[$ressource->code] = $ressource->pivot->coefficient;
-            if($this->moyenneParRessource($ressource) != 'Pas disponible'){
-                $moyRessources[$ressource->code] = $this->moyenneParRessource($ressource);
+        }
+        foreach($ressourcesCoef as $key => $valeur){
+            if($this->tabMoyennesRessources[$key][1] != "Pas disponible"){
+                $notes += $valeur * $this->tabMoyennesRessources[$key][1];
+                $c += $valeur;
             }
-        }
-        if(empty($moyRessources)){
-            return 'Pas disponible';
-        }
-        foreach($moyRessources as $key => $valeur){
-            $notes += $valeur * $ressourcesCoef[$key];
-            $c += $ressourcesCoef[$key];
         }
         if($notes == 0){
             return 'Pas disponible';
@@ -164,12 +108,14 @@ class EleveController extends Controller
     }
 
     public function listeCompetences() {
+        $ueCompta = [];
         foreach($this->tabRessources as $ressource) {
             foreach($ressource->ue as $competence) {
                 if($competence->pivot->code_ressource != 'BFTM5S01' && $competence->pivot->code_ressource != 'BFTM5R01' && $competence->pivot->code_ressource != 'BFTM5R02' && $competence->pivot->code_ressource != 'BFTM5R03') {
-                    if (!in_array($competence->pivot->code_ue, $this->tabCompetences)){
+                    if (!in_array($competence->code, $ueCompta)){
                         if($this->tabRessources->contains($competence->pivot->code_ressource)){
                             array_push($this->tabCompetences, $competence);
+                            array_push($ueCompta, $competence->code);
                         }
                     }
                 }
@@ -181,10 +127,9 @@ class EleveController extends Controller
         $notes = 0;
         $c = 0;
 
-        foreach($this->tabCompetences as $comp){
-            $competence = Competence::find($comp);
-            if($this->moyenneParCompetence($competence) != 'Pas disponible'){
-                $notes += $this->moyenneParCompetence($competence);
+        foreach($this->tabCompetences as $competence){
+            if($this->tabMoyennesCompetences[$competence->libelle] != 'Pas disponible'){
+                $notes += $this->tabMoyennesCompetences[$competence->libelle];
                 $c++;
             }
         }
@@ -200,8 +145,14 @@ class EleveController extends Controller
         $this->evalsEleve();
         $this->listeCompetences();
         foreach($this->tabRessources as $ressource){
-            $this->tabCoefsRessources[$ressource->code]= 0;
             $this->tabMoyennesRessources[$ressource->code] = [$ressource->nom,0];
+        }
+        foreach($this->user->evaluations as $eval){
+            if($eval->pivot->note == null){
+                $this->tabNotes[$eval->id] = [ "code_ressource"=>$eval->code_ressource, "libelle"=>$eval->libelle, "type"=>$eval->type, "note"=>"Pas disponible"];
+            }else{
+                $this->tabNotes[$eval->id] = [ "code_ressource"=>$eval->code_ressource, "libelle"=>$eval->libelle, "type"=>$eval->type, "note"=>$eval->pivot->note ];
+            }
         }
     }
 

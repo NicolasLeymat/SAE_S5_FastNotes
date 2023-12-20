@@ -260,8 +260,8 @@ class EvaluationController extends Controller
         }
     }
 
-    public function afficherEvaluations() {
-    $evaluations = Evaluation::all();
-    return view('afficherEvals', ['evaluations' => $evaluations]);
+    public function afficherEvals(){
+        $tabEvals = Evaluation::paginate(10);
+        return view('afficherEvals', compact('tabEvals'));
     }
 }

@@ -65,12 +65,67 @@
         <div class="home_container container full_home">
           <div class="home_content full_home center">
             @auth
-              <div class="items_admin">
-                <div>Ajouter un élève</div>
-                <div>Ajouter un élève</div>
-                <div>Ajouter un élève</div>
-                <div>Ajouter un élève</div>
-                <div>Ajouter un élève</div>
+              <div class="items_admin flex_forms">
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des années</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les années</button><br>
+                  <button class="tab-cell button button-admins">Ajouter une années</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des années</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des semestres</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les semestres</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un semestre</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des semestres</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des parcours</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les parcours</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un parcour</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des parcours</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des groupes</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les groupes</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un groupe</button><br>
+                  <button class="tab-cell button button-admins">Ajouter de groupes</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des élèves</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les élèves</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un élève</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des élèves</button>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des UE</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les UE</button><br>
+                  <button class="tab-cell button button-admins">Ajouter une UE</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des UE</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des ressources</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les ressources</button><br>
+                  <button class="tab-cell button button-admins">Ajouter une ressource</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des ressources</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des évaluations</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les évaluations</button><br>
+                  <button class="tab-cell button button-admins">Ajouter une évaluations</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des évaluations</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des profésseurs</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les profésseurs</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un profésseur</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des profésseurs</button><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des enseignements</p> <br>
+                  <button class="tab-cell button button-admins">Afficher les enseignements</button><br>
+                  <button class="tab-cell button button-admins">Ajouter un enseignement</button><br>
+                  <button class="tab-cell button button-admins">Ajouter des enseignements</button><br>
+                </div>
               </div>
             @endauth
           </div>
@@ -81,7 +136,7 @@
     <!-- MAIN FIN -->
 
     <!-- FOOTER -->
-    <footer class="footer footer-index">
+    <footer class="footer">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>

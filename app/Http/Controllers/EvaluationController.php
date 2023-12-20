@@ -259,4 +259,10 @@ class EvaluationController extends Controller
             return redirect()->back()->with('error', 'Please upload a file.');
         }
     }
+
+    public function showStats(string $idEval){
+        $stats = $this->boxPlot($idEval);
+        $evaluation = Evaluation::find($idEval);
+        return view('stats',compact('stats','evaluation'));
+    }
 }

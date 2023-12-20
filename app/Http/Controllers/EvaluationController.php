@@ -261,7 +261,7 @@ class EvaluationController extends Controller
     }
 
     public function afficherEvaluations() {
-    $evaluations = $Evaluation::all();
-    return view('liste-evaluations', ['evaluations' => $evaluations]);
+    $evaluations = Evaluation::all();
+    return view('afficherEvals', ['evaluations' => $evaluations]);
     }
 }

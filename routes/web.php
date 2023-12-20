@@ -93,5 +93,5 @@ Route::get('email', [NotifController::class, 'getRouteMail']);
 Route::post('/envoyerNotif', [NotifController::class, 'envoyerEmail'])->name('envoyerNotif');
 
 Route::get('/votre-page', [YourController::class, 'index'])->name('votre-page');
-Route::post('/afficherEleves', [YourController::class, 'afficherEleves'])->name('afficherEleves');
-Route::post('/afficherEvals', [YourController::class, 'afficherEvaluations'])->name('afficherEvals');
+Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
+Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvaluations'])->name('afficherEvals');

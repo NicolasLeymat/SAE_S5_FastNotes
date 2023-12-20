@@ -1,4 +1,6 @@
-<form method="post" action="{{ route('afficherEleves') }}">
-    @csrf
-    <button type="submit">Afficher la liste des élèves</button>
-</form>
+<h2>Tableau des élèves</h2>
+<ul>
+    @foreach($eleves as $eleve)
+        <li>{{ $eleve->nom }} {{ $eleve->prenom }}</li>
+    @endforeach
+</ul>

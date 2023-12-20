@@ -257,8 +257,8 @@ class EleveController extends Controller
     }
 
     public function afficherEleves() {
-        $eleves = $Utilisateur::where('type', 'eleve')->get();
-        return view('liste-eleves', ['eleves' => $eleves]);
+        $eleves = Eleve::all();
+        return view('afficherEleves', ['eleves' => $eleves]);
     }
 
 }

@@ -66,73 +66,11 @@
           <div class="home_content full_home center">
             @auth
               <div class="items_admin">
-                
-                <div class="flex_forms">
-                  <form action="{{ route('importEleve') }}" class="ajoutEleves flex_form" method="post">
-                    @if(session()->has('successOneEleves'))
-                    <p>{{ session()->get('successOneEleves') }}</p>
-                    @endif
-                    @csrf
-                    <h3> Ajout élèves via formulaire : </h3>
-                    <label for="code">Code : </label></br><input type="text" name="code" id="code" required></br>
-                    <label for="identifiant"> Identifiant :</label></br><input type="text" name="identifiant" id="identifiant" required></br>
-                    <label for="nom"> Nom : </label></br><input type="text" name="nom" id="nom" required></br>
-                    <label for="prenom"> Prenom : </label></br><input type="text" name="prenom" id="prenom" required></br>
-                    <label for="email"> Email : </label></br><input type="email" name="email" id="email" required></br>
-                    <label for="groupe"> Groupe </br>(Exemple grp B S 5 = inS5_B) : </label></br><input type="text" name="groupe" id="groupe" pattern="^inS[1-6]_[A-Z]$" required></br>
-                    <input type="submit" value="Ajouter un élève" class="button button-admin-dash">
-                  </form>
-                  <form action="{{ route('importEleves') }}" class="ajoutEleves flex_form" method="post">
-                    @if(session()->has('successManyEleves'))
-                      <p>{{ session()->get('successManyEleves') }}</p>
-                    @endif
-                    @csrf
-                    <h3> Ajout élèves via fichier excel : </h3>
-                    <label for="file"> Selectionner un fichier : </label> </br>
-                    <input type="file" name="file" id="file"></br>
-                    <input type="submit" value="Ajouter des élèves" class="button button-admin-dash">
-                  </form>
-                </div>
-              </div>
-
-              <div class="center">
-                <div class="flex_forms">
-                  <form action="{{ route('importEval') }}" class="ajoutEleves flex_form" method="post">
-                    @csrf
-                    <h3> Ajout évaluation via formulaire : </h3>
-                    <label for="code_apogee">Code Apogée : </label></br><input type="text" name="code_apogee" id="code_apogee" required></br>
-                    <label for="semestre"> Semestre :</label></br><input type="text" name="semestre" id="semestre" required></br>
-                    <label for="libelle"> Nom de l'évaluation : </label></br><input type="text" name="libelle" id="libelle" required></br>
-                    <label for="coef"> Coefficient : </label></br><input type="text" name="coef" id="coef" required></br>
-                    <label for="type"> Type : </label></br><input type="text" name="type" id="type" list="type_eval" required></br>
-                    <datalist id="type_eval">
-                      <option value="Ecrit"></option>
-                      <option value="Oral"></option>
-                      <option value="Compte-rendu"></option>
-                      <option value="Travaux Pratiques"></option>
-                      <option value="Soutenance"></option>
-                      <option value="Memoire"></option>
-                      <option value="Projet"></option>
-                    </datalist>
-                    <input type="submit" value="Ajouter une évaluation" class="button button-admin-dash">
-                  </form>
-                  <form action="{{ route('importEvals') }}" class="ajoutEleves flex_form">
-                    @csrf
-                    <h3> Ajout évaluations via fichier excel : </h3>
-                    <label for="file"> Selectionner un fichier : </label> </br>
-                    <input type="file" name="file" id="file"></br>
-                    <input type="submit" value="Ajouter des évaluations" class="button button-admin-dash">
-                  </form>
-                </div>
-              </div>
-
-              <div class="center">
-                <form action="" class="exportBulletin flex_items">
-
-                </form>
-                <div class="flex_items items_admin"> <p class="text_admin"> Ajouter un/des élèves </p> <a class="button button-admin" href="{{ route('ajoutEleve') }}"> Ajout élève </a></div>
-                <div class="flex_items items_admin"> <p class="text_admin"> Ajouter une/des Évaluations </p> <a class="button button-admin" href="{{ route('ajoutEval') }}"> Ajout évaluation </a></div>
-                <div class="flex_items items_admin"> <p class="text_admin"> Exporter un bulletin </p> <a class="button button-admin"> Exporter un bulletin </a></div>
+                <div>Ajouter un élève</div>
+                <div>Ajouter un élève</div>
+                <div>Ajouter un élève</div>
+                <div>Ajouter un élève</div>
+                <div>Ajouter un élève</div>
               </div>
             @endauth
           </div>

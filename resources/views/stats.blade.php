@@ -60,6 +60,9 @@
         <div class="home_container container grid">
         <div class="home_content">
         <div style="display:flex; justify-content: center; align-items: center;">
+        <h1>Statistiques de l'évaluation</h1>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center;">
         <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
         <?php
         if(isset($_GET["dl"])){
@@ -78,7 +81,7 @@
         </div>
         <div style="display:flex; justify-content: center; align-items: center;">
         <form method="GET">
-            <button type="submit" name="dl">Télécharger l'image</button>
+            <button type="submit" class="button "name="dl">Télécharger le graphique</button>
         </form>
         </div>
         <div style="display:flex; justify-content: center; align-items: center;">

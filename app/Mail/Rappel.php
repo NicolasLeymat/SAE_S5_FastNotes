@@ -16,13 +16,15 @@ class Rappel extends Mailable
 
     public $eval;
     public $user;
+    public $groupe;
     /**
      * Create a new message instance.
      */
-    public function __construct($evaluation, $utilisateur)
+    public function __construct($evaluation, $utilisateur, $groupe)
     {
         $this->eval = $evaluation;
         $this->user = $utilisateur;
+        $this->groupe = $groupe;
     }
 
     /**
@@ -60,7 +62,8 @@ class Rappel extends Mailable
     public function build()
     {
         return $this
-        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom])
+        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom, 
+        'nom_groupe' => $this->groupe->libelle])
         ->view('emails.rappel_note')
         ->cc('lucas.veslin@etu.iut-tlse3.fr');
     }

@@ -73,7 +73,7 @@
             @else
               <p style="color:green">
             @endif
-            @if ($moyenneSemestre !=="Pas Disponible")
+            @if ($moyenneSemestre !=="Pas disponible")
               {{ round($moyenneSemestre,2) }}
             @else
             {{ $moyenneSemestre }}

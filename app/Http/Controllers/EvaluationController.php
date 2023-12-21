@@ -294,4 +294,10 @@ class EvaluationController extends Controller
         $tabEvals = Evaluation::paginate(10);
         return view('afficherEvals', compact('tabEvals'));
     }
+
+    public function showStats(string $idEval){
+        $stats = $this->boxPlot($idEval);
+        $evaluation = Evaluation::find($idEval);
+        return view('stats',compact('stats','evaluation'));
+    }
 }

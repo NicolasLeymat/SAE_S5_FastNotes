@@ -59,28 +59,37 @@
     <section class="home section" id="home">
         <div class="home_container container grid">
         <div class="home_content">
-            <table class="eval_tab">
-                <thead class="tab-row-dark">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Type</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($evals as $evaluation)
-                    <tr >
-                        <td class="tab-cell clear-cell">{{$evaluation -> libelle}}</td>
-                        <td class="tab-cell clear-cell">{{ $evaluation -> type }}</td>
-                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
-                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button></td>
-                    </tr>
-                    
-                    @endforeach
-                </tbody>
-            </table>
-
+        <div style="display:flex; justify-content: center; align-items: center;">
+        <h1>Statistiques de l'évaluation</h1>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center;">
+        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
+        <?php
+        if(isset($_GET["dl"])){
+            $file='./images/graph'.$evaluation->id.'.jpg';
+            header('Content-Description: File Transfer');
+            header('Content-Type: image/jpeg');
+            ob_clean();
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+        }
+        ?>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center;">
+        <form method="GET">
+            <button type="submit" class="button "name="dl">Télécharger le graphique</button>
+        </form>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center;">
+        <p>Moyenne : {{$stats['moyenne']}}</p>
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center;">
+        <p>Ecart type : {{$stats['ecart_type']}}</p>
+        </div>
         </div>
         </div>
     </section>

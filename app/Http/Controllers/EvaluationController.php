@@ -289,4 +289,9 @@ class EvaluationController extends Controller
 
 
 
+
+    public function afficherEvals(){
+        $tabEvals = Evaluation::paginate(10);
+        return view('afficherEvals', compact('tabEvals'));
+    }
 }

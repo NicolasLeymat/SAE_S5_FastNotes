@@ -186,5 +186,18 @@
     <!--  MAIN JS  -->
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+
+
+    <form method="post" action="{{ route('afficherEleves') }}">
+    @csrf
+      <button type="submit">Afficher la liste des élèves</button>
+    </form>
+
+    <form method="post" action="{{ route('afficherEvals') }}">
+    @csrf
+      <button type="submit">Afficher la liste des évaluations</button>
+    </form>
+
+
 </body>
 </html>

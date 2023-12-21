@@ -943,12 +943,12 @@ input::-webkit-inner-spin-button {
 }
 
 .flex_divs{
-  width: 20% !important;
+  width: 265px;
   aspect-ratio : 1 / 1;
   text-align: center;
   background-color: var(--container-color);
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   border: transparent;
   border-radius: 15px;
   box-shadow: 5px 5px 5px var(--container-color-shadow);

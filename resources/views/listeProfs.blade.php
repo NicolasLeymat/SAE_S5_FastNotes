@@ -80,8 +80,9 @@
                     <td class="tab-cell" >{{ $prof["prenom"] }}</td>
                     <td class="tab-cell "> {{ $prof["email"] }} </td>
                     <td class="tab-cell">
-    <button class="tab-cell clear-cell del-button" onclick="window.location.href='{{ route('profs.show', $prof['code']) }}'">Afficher informations</button>
-</td>                    <td class="tab-cell "><button class="tab-cell clear-cell del-button " onclick="window.location.href='#'">Supprimer </button> </td>
+                    <button class="tab-cell clear-cell del-button" onclick="window.location.href='{{ route('profs.show', $prof['code']) }}'">Afficher informations</button>
+                    </td>                    
+                    <td class="tab-cell "><button class="tab-cell clear-cell del-button " onclick="window.location.href='#'">Supprimer </button> </td>
                   </tr>
                 @endforeach
             </table>
@@ -93,7 +94,7 @@
     <!-- MAIN FIN -->
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer-index">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>

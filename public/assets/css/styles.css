@@ -996,6 +996,8 @@ input::-webkit-inner-spin-button {
 }
 
 .button-admins{
+  cursor: pointer;
   margin-top: 10px !important;
-  width: 200px;
+  width: 220px;
+  font-size: 0.8rem;
 }

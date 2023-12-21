@@ -88,12 +88,11 @@ Route::middleware('administrateur')->group(function () {
     })->name('dashadmin');
     Route::resource('profs', ProfController::class);
     Route::resource('ue', UEController::class);
+    Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
+    Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
 });
 
 
 Route::get('email', [NotifController::class, 'getRouteMail']);
 
 Route::post('/envoyerNotif', [NotifController::class, 'envoyerEmail'])->name('envoyerNotif');
-
-Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
-Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');

@@ -65,9 +65,12 @@ Route::middleware('professeur')->group(function () {
     Route::resource('evaluation', EvaluationController::class);
     Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
 
+
     Route::get('/dashprof', function () {
         return view('dashprof');
     })->name('dashprof');
+
+    Route::get('/evaluation/{id}/stats', [EvaluationController::class, 'showStats'])->name('evaluation.stats');
 
     Route::post('saisir_note',[EvaluationController::class, 'saisirNote'])->name('saisir_note');
     Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');

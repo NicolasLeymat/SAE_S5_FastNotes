@@ -10,7 +10,7 @@ class UE extends Model
     use HasFactory;
 
     protected $table = "ue";
-    protected $fillable = ["code", "libele"];
+    protected $fillable = ["code", "libelle"];
 
     public $primaryKey = "code";
 
@@ -19,7 +19,7 @@ class UE extends Model
     public $incrementing = false;
 
     public function semestre(){
-        return $this->belongsTo(Semestre::class, 'id', 'code');
+        return $this->belongsTo(Semestre::class, 'id_semestre', 'id_semestre');
     }
 
     public function ressources() {
@@ -27,7 +27,7 @@ class UE extends Model
     }
 
     public function competence(){
-        return $this->hasOne(Competence::class, "code", "code");
+        return $this->hasOne(Competence::class, "code", "code_competence");
     }
 
 }

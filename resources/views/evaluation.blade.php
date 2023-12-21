@@ -9,6 +9,8 @@
     rel="stylesheet"
     href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <!--  SWIPER CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
@@ -137,7 +139,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input id="note_input"class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach

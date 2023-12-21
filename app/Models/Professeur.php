@@ -19,11 +19,17 @@ class Professeur extends Utilisateur
         return $this->belongsToMany(Ressource::class,"enseignements", "code_prof", "code_ressource");
     }
 
-    public function groupe () {
+    public function groupes () {
         return $this->belongsToMany(Groupe::class,"enseignements", "code_prof", "id_groupe");
     }
 
     public function utilisateur(){
         return $this->belongsTo(Utilisateur::class,"code","code");
+    }
+
+    public function enseignements()
+    {
+        return $this->belongsToMany(Ressource::class, 'enseignements', 'code_prof', 'code_ressource')
+            ->withPivot('id_groupe'); 
     }
 }

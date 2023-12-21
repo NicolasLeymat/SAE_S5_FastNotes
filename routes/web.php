@@ -5,7 +5,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotifController;
-
+use App\Http\Controllers\ProfController;
+use App\Http\Controllers\UEController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,8 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/dashadmin', function () {
         return view('dashAdmin');
     })->name('dashadmin');
+    Route::resource('profs', ProfController::class);
+    Route::resource('ue', UEController::class);
 });
 
 

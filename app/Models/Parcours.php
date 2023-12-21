@@ -11,12 +11,13 @@ class Parcours extends Model
 
     public $timestamps = false;
     public $incrementing = false;
+    public $primaryKey = "id_parcour";
 
     protected $fillable = ["id_parcour"];
 
     protected $id = "id_parcour";
 
-    protected $table = "Parcours";
+    protected $table = "parcours";
 
 
     public function groupes (){
@@ -24,7 +25,7 @@ class Parcours extends Model
     }
 
     public function semestre(){
-        return $this->hasOne(Semestre::class, "id_semestre", "id_parcour");
+        return $this->hasOne(Semestre::class, "id_semestre", "id_semestre");
     }
 
 }

@@ -62,7 +62,7 @@ class EvaluationController extends Controller
     public function show(string $idEval)
     {
         $stats = $this->boxPlot($idEval);
-        $evaluation = Evaluation::find($idEval);
+        $evaluation = Evaluation::findOrFail($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
         $eleves_prof = [];
@@ -225,7 +225,7 @@ class EvaluationController extends Controller
     }
 
     public function getNotes(string $idEval, string $idProf){
-        $eval = Evaluation::find($idEval);
+        $eval = Evaluation::findOrFail($idEval);
         $notes = [];
         foreach($eval->eleves as $eleve) {
             array_push($notes, $eleve->pivot->note);            

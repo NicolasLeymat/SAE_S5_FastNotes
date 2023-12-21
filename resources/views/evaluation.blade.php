@@ -9,6 +9,8 @@
     rel="stylesheet"
     href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <!--  SWIPER CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
@@ -53,15 +55,18 @@
             var tab = document.getElementById("saissi_note_tab");
             var rows = tab.getElementsByTagName("tr");
             var groupeCell = document.querySelectorAll("#groupe_Cell");
-            groupeCell.forEach(function(cell){
-                console.log(valeurSelectionnee);
+            var note_input = document.querySelectorAll("#note_input");
+            groupeCell.forEach(function(cell, index){
                 if(valeurSelectionnee === "Tous"){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled= false;
                 }
                 else if(cell.innerText === valeurSelectionnee){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled = false;
                 }else{
                     cell.parentElement.style.display = "none";
+                    note_input[index].disabled = true;
                 }
             });
         }
@@ -106,7 +111,9 @@
     <main class="main">
     <!-- HOME -->
     <section class="home section" id="home">
+
         <div class="home_container container grid">
+        <h2> {{$evaluation['libelle']}} </h2>
         <div>
         <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
         <?php
@@ -124,7 +131,7 @@
         }
         ?>
         <form method="GET">
-            <button type="submit" name="dl">Télécharger l'image</button>
+            <button type="submit" name="dl" class="dl-button"><i class="fa fa-download"></i>Télécharger l'image</button>
         </form>
         <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
         </div>
@@ -155,7 +162,7 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach

@@ -271,9 +271,11 @@ class EvaluationController extends Controller
             $dateEval = $dateEval->addDays(15);
             Log::info($dateEval);
             Log::info($dateNow);
+            Log::info($eval->libelle);
             if ($dateEval->isSameDay($dateNow)){
                 Log::info('c bon');
                 $prof =  $eleve->evaluations->find($eval->id);
+                Log::info($prof);
                 if ($prof === null){
                     return False;
                 }
@@ -291,8 +293,10 @@ class EvaluationController extends Controller
         foreach($evals as $eval) {
             $groupes = $eval->ressource->groupe;
             foreach($groupes as $groupe) {
+                Log::info("check");
                 $res = $this->checkAllNotesByEvalId($eval, $groupe);
                 if ($res == False){
+                    Log::info("ça arrive fort");
                     $prof = Professeur::find($groupe->pivot->code_prof);
                     $rappel = new Rappel($eval,$prof->utilisateur, $groupe);
                     Mail::to($prof->utilisateur->email)->send($rappel);

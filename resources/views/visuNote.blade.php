@@ -1,6 +1,6 @@
 @extends('layouts.fn')
 
-@section('title', 'Liste UEs ')
+@section('title', 'Mes notes')
 
 @section('content')
         <div class="home_container container grid">

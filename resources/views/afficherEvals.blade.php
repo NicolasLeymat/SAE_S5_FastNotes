@@ -10,13 +10,12 @@
     href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
 
-    
     <!--  SWIPER CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
     <!--  CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
 
-    <title>Notes Iut</title>
+    <title>Liste des élèves</title>
 </head>
 <body>
     <!--  HEADER  -->
@@ -28,18 +27,24 @@
         >
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">
-        @auth 
-        <li class="nav_item">
+          @auth 
+          <li class="nav_item">
             <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-dropdown-link :href="route('logout')"
-                onclick="event.preventDefault();
+              @csrf
+              <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault();
                     this.closest('form').submit();">
                 <p class="nav_link">{{ __('Se déconnecter') }}</p>
-            </x-dropdown-link>
+              </x-dropdown-link>
             </form>
-        </li>
-        @endauth
+          </li>
+            @else
+              <li class="nav_item">
+              <a href="{{ route('login') }}" class="nav_link">
+                  <i class="uil uil-message nav_icon"></i> Log in
+              </a>
+              </li>
+            @endauth
         </ul>
         <i class="uil uil-times nav_close" id="nav-close"></i>
         </div>
@@ -58,38 +63,39 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
-        <div class="home_content">
-            <table class="eval_tab">
-                <thead class="tab-row-dark">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Type</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($evals as $evaluation)
-                    <tr >
-                        <td class="tab-cell clear-cell">{{$evaluation -> libelle}}</td>
-                        <td class="tab-cell clear-cell">{{ $evaluation -> type }}</td>
-                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}';" >Modifier les notes</button></td>
-                        <td><button class="tab-cell clear-cell button button-modifier-note" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button></td>
-                    </tr>
+          <div class="home_content">
+         
+            <table class="prof-tab note-tab">
+                <tr>
+                    <th>Evaluation</th>
+                    <th>Coefficient</th>
+                    <th>Type</th>
+                    <th>Date epreuve</th>
+                    <th>Date rattrapage</th>
+                    <th>Code resource</th>
                     
-                    @endforeach
-                </tbody>
+                </tr>
+                @for ($i = 0; $i < count($tabEvals); $i++)
+                  <tr class="tab-row tab-row-clear">
+                    <td class="tab-cell" >{{ $tabEvals[$i]->libelle}}</td>
+                    <td class="tab-cell" >{{ $tabEvals[$i]->coefficient }}</td>
+                    <td class="tab-cell "> {{ $tabEvals[$i]->type }} </td>
+                    <td class="tab-cell" >{{ $tabEvals[$i]->date_epreuve }}</td>
+                    <td class="tab-cell" >{{ $tabEvals[$i]->date_rattrapage }}</td>
+                    <td class="tab-cell" >{{ $tabEvals[$i]->code_resource }}</td>
+                    <td class="tab-cell "><button class="tab-cell clear-cell del-button " onclick="window.location.href='#'">Supprimer </button> </td>
+                  </tr>
+                @endfor
             </table>
-
+          </div>
         </div>
-        </div>
-    </section>
-    <!-- HOME FIN -->
+      </section>
+      <!-- HOME FIN -->
     </main>
     <!-- MAIN FIN -->
 
-        <!-- FOOTER -->
-        <footer class="footer">
+    <!-- FOOTER -->
+    <footer class="footer">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>
@@ -127,7 +133,7 @@
     </div>
     </footer>
     <!-- FOOTER FIN -->
-    
+
     <!-- SCROLL TOP  -->
     <a href="#" class="scrollup" id="scroll-up">
     <i class="uil uil-arrow-up scrollup_icon"></i>
@@ -138,5 +144,6 @@
     <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
     <!--  MAIN JS  -->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

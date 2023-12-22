@@ -65,74 +65,67 @@
         <div class="home_container container full_home">
           <div class="home_content full_home center">
             @auth
-              <div class="items_admin">
-                
-                <div class="flex_forms">
-                  <form action="{{ route('importEleve') }}" class="ajoutEleves flex_form" method="post">
-                    @if(session()->has('successOneEleves'))
-                    <p>{{ session()->get('successOneEleves') }}</p>
-                    @endif
-                    @csrf
-                    <h3> Ajout élèves via formulaire : </h3>
-                    <label for="code">Code : </label></br><input type="text" name="code" id="code" required></br>
-                    <label for="identifiant"> Identifiant :</label></br><input type="text" name="identifiant" id="identifiant" required></br>
-                    <label for="nom"> Nom : </label></br><input type="text" name="nom" id="nom" required></br>
-                    <label for="prenom"> Prenom : </label></br><input type="text" name="prenom" id="prenom" required></br>
-                    <label for="email"> Email : </label></br><input type="email" name="email" id="email" required></br>
-                    <label for="groupe"> Groupe </br>(Exemple grp B S 5 = inS5_B) : </label></br><input type="text" name="groupe" id="groupe" pattern="^inS[1-6]_[A-Z]$" required></br>
-                    <input type="submit" value="Ajouter un élève" class="button button-admin-dash">
-                  </form>
-                  <form action="{{ route('importEleves') }}" class="ajoutEleves flex_form" method="post">
-                    @if(session()->has('successManyEleves'))
-                      <p>{{ session()->get('successManyEleves') }}</p>
-                    @endif
-                    @csrf
-                    <h3> Ajout élèves via fichier excel : </h3>
-                    <label for="file"> Selectionner un fichier : </label> </br>
-                    <input type="file" name="file" id="file"></br>
-                    <input type="submit" value="Ajouter des élèves" class="button button-admin-dash">
-                  </form>
+              <div class="items_admin flex_forms">
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des années</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les années</a><br>
+                  <a class="tab-cell button button-admins">Ajouter une années</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des années</a><br>
                 </div>
-              </div>
-
-              <div class="center">
-                <div class="flex_forms">
-                  <form action="{{ route('importEval') }}" class="ajoutEleves flex_form" method="post">
-                    @csrf
-                    <h3> Ajout évaluation via formulaire : </h3>
-                    <label for="code_apogee">Code Apogée : </label></br><input type="text" name="code_apogee" id="code_apogee" required></br>
-                    <label for="semestre"> Semestre :</label></br><input type="text" name="semestre" id="semestre" required></br>
-                    <label for="libelle"> Nom de l'évaluation : </label></br><input type="text" name="libelle" id="libelle" required></br>
-                    <label for="coef"> Coefficient : </label></br><input type="text" name="coef" id="coef" required></br>
-                    <label for="type"> Type : </label></br><input type="text" name="type" id="type" list="type_eval" required></br>
-                    <datalist id="type_eval">
-                      <option value="Ecrit"></option>
-                      <option value="Oral"></option>
-                      <option value="Compte-rendu"></option>
-                      <option value="Travaux Pratiques"></option>
-                      <option value="Soutenance"></option>
-                      <option value="Memoire"></option>
-                      <option value="Projet"></option>
-                    </datalist>
-                    <input type="submit" value="Ajouter une évaluation" class="button button-admin-dash">
-                  </form>
-                  <form action="{{ route('importEvals') }}" class="ajoutEleves flex_form">
-                    @csrf
-                    <h3> Ajout évaluations via fichier excel : </h3>
-                    <label for="file"> Selectionner un fichier : </label> </br>
-                    <input type="file" name="file" id="file"></br>
-                    <input type="submit" value="Ajouter des évaluations" class="button button-admin-dash">
-                  </form>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des semestres</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les semestres</a><br>
+                  <a class="tab-cell button button-admins">Ajouter un semestre</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des semestres</a><br>
                 </div>
-              </div>
-
-              <div class="center">
-                <form action="" class="exportBulletin flex_items">
-
-                </form>
-                <div class="flex_items items_admin"> <p class="text_admin"> Ajouter un/des élèves </p> <a class="button button-admin" href="{{ route('ajoutEleve') }}"> Ajout élève </a></div>
-                <div class="flex_items items_admin"> <p class="text_admin"> Ajouter une/des Évaluations </p> <a class="button button-admin" href="{{ route('ajoutEval') }}"> Ajout évaluation </a></div>
-                <div class="flex_items items_admin"> <p class="text_admin"> Exporter un bulletin </p> <a class="button button-admin"> Exporter un bulletin </a></div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des parcours</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les parcours</a><br>
+                  <a class="tab-cell button button-admins">Ajouter un parcour</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des parcours</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des groupes</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les groupes</a><br>
+                  <a class="tab-cell button button-admins">Ajouter un groupe</a><br>
+                  <a class="tab-cell button button-admins">Ajouter de groupes</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des élèves</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherEleves') }}">Afficher les élèves</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutEleve') }}">Ajouter un élève</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutEleve') }}">Ajouter des élèves</a>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des UE</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('ue.index') }}">Afficher les UE</a><br>
+                  <a class="tab-cell button button-admins">Ajouter une UE</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des UE</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des ressources</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les ressources</a><br>
+                  <a class="tab-cell button button-admins">Ajouter une ressource</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des ressources</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des évaluations</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherEvals') }}">Afficher les évaluations</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter une évaluations</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter des évaluations</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des profésseurs</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('profs.index') }}">Afficher les profésseurs</a><br>
+                  <a class="tab-cell button button-admins">Ajouter un profésseur</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des profésseurs</a><br>
+                </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;">Gestion des enseignements</p> <br>
+                  <a class="tab-cell button button-admins">Afficher les enseignements</a><br>
+                  <a class="tab-cell button button-admins">Ajouter un enseignement</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des enseignements</a><br>
+                </div>
               </div>
             @endauth
           </div>
@@ -143,7 +136,7 @@
     <!-- MAIN FIN -->
 
     <!-- FOOTER -->
-    <footer class="footer footer-index">
+    <footer class="footer">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>

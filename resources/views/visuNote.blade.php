@@ -22,8 +22,7 @@
     <header class="header" id="header">
     <nav class="nav container">
         <a href="{{ route('index') }}" class="nav_logo"
-        >Fast <br />
-        Notes</a
+        >Fast Notes</a
         >
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">
@@ -73,7 +72,7 @@
             @else
               <p style="color:green">
             @endif
-            @if ($moyenneSemestre !=="Pas Disponible")
+            @if ($moyenneSemestre !=="Pas disponible")
               {{ round($moyenneSemestre,2) }}
             @else
             {{ $moyenneSemestre }}

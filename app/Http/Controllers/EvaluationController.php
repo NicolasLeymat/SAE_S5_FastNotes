@@ -65,7 +65,7 @@ class EvaluationController extends Controller
     public function show(string $idEval)
     {
         $stats = $this->boxPlot($idEval);
-        $evaluation = Evaluation::find($idEval);
+        $evaluation = Evaluation::findOrFail($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
         $eleves_prof = [];
@@ -210,11 +210,11 @@ class EvaluationController extends Controller
 
         // Create a new stock plot
         $p1 = new BoxPlot($stats,array(0.5,0.5));
-         
+        
         // Width of the bars (in pixels)
         $p1->SetWidth(9);
         
-         
+        
         // Add the plot to the graph and send it back to the browser
         $graph->Add($p1);
         if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
@@ -228,7 +228,7 @@ class EvaluationController extends Controller
     }
 
     public function getNotes(string $idEval, string $idProf){
-        $eval = Evaluation::find($idEval);
+        $eval = Evaluation::findOrFail($idEval);
         $notes = [];
         foreach($eval->eleves as $eleve) {
             array_push($notes, $eleve->pivot->note);            
@@ -317,4 +317,15 @@ class EvaluationController extends Controller
 
 
 
+
+    public function afficherEvals(){
+        $tabEvals = Evaluation::paginate(10);
+        return view('afficherEvals', compact('tabEvals'));
+    }
+
+    public function showStats(string $idEval){
+        $stats = $this->boxPlot($idEval);
+        $evaluation = Evaluation::find($idEval);
+        return view('stats',compact('stats','evaluation'));
+    }
 }

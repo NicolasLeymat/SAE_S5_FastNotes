@@ -19,9 +19,10 @@
   --text-color: hsl(var(--hue-color), 8%, 45%);
   --text-color-light: hsl(var(--hue-color), 8%, 65%);
   --text-color-dark: hsl(var(--hue-color), 8%, 75%);
+  --text-color-input: hsl(0, 4%, 12%);
   --text-color-darker: hsl(var(--hue-color), 100%, 100%);
   --input-color: hsl(var(--hue-color), 70%, 96%);
-  --input-color-darker: hsl(var(--hue-color), 80%, 96%);
+  --input-color-darker: hsl(var(--hue-color), 35%, 70%);
   --body-color: hsl(var(--hue-color), 60%, 99%);
   --container-color: #fff;
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
@@ -87,6 +88,7 @@ body.dark-theme {
   --container-color: hsl(var(--hue-color), 29%, 16%);
   --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+  --text-color-input: hsl(0, 26%, 93%);
 }
 
 /*========== Button Dark/Light ==========*/
@@ -103,7 +105,13 @@ body.dark-theme {
   cursor: pointer;
 }
 
+
 .change-theme:hover {
+  color: var(--first-color);
+
+}
+
+.change-theme:focus {
   color: var(--first-color);
 }
 
@@ -125,6 +133,25 @@ body {
   background-color: var(--body-color);
   color: var(--text-color);
 }
+
+.dl-button {
+    height: 40px;
+    font-family: var(--body-font);
+    padding-right: 10px;
+    border: none;
+    transition: 0.35s;
+}
+
+.dl-button:hover {
+  background-color: #bebabaf7;
+}
+
+.dl-button i {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+
 
 h1,
 h2,
@@ -263,6 +290,8 @@ img {
   color: var(--first-color-alt);
 }
 
+
+
 .show-menu {
   bottom: 0;
 }
@@ -311,6 +340,8 @@ img {
   flex-wrap: wrap;
 }
 
+
+
 .flex_items{
   flex: 1 0 100%;
 }
@@ -343,14 +374,17 @@ img {
   border-collapse: collapse;
 }
 
-.button-modifier-note{
-  background-color: var(--input-color) !important;
+.button-modifier-note.button{
+  background-color: var(--input-color) ;
+  color: var(--text-color);
   border: none;
   border-radius: 0px !important;
+  transition: 0.35s;
 }
 
 .button-modifier-note:hover{
   cursor: pointer;
+  background-color: var(--input-color-darker);
 }
 
 .saissi_note_tab{
@@ -378,12 +412,21 @@ img {
   width: 100%;
   height: 45px;
   background-color: var(--input-color);
-  color:var(--text-color-dark);
+  color:var(--text-color-input-black);
   text-align: center;
   border: none;
+  transition: 0.35s;
+}
+
+input.checkbox_missing {
+  transform: scale(1.5);
 }
 
 .input:hover{
+  background-color: var(--input-color-darker);
+}
+
+.input:focus{
   background-color: var(--input-color-darker);
 }
 
@@ -404,7 +447,6 @@ input::-webkit-inner-spin-button {
 
 .home_content {
   grid-template-columns: 0.5fr 3fr;
-  padding-top: 3.5rem;
   align-items: center;
 }
 
@@ -423,7 +465,7 @@ input::-webkit-inner-spin-button {
   font-weight: var(--font-medium);
 }
 
-.button:hover {
+.button-index:hover {
   background-color: var(--first-color-alt);
 }
 
@@ -697,11 +739,10 @@ input::-webkit-inner-spin-button {
   }
 
   .home_container {
-    row-gap: 5rem;
+    row-gap: 1rem;
   }
 
   .home_content {
-    padding-top: 5.5rem;
     column-gap: 2rem;
   }
 

@@ -7,6 +7,7 @@ use App\Models\Eleve;
 use App\Models\Enseignement;
 use App\Models\Evaluation;
 use App\Mail\Notif;
+use App\Models\Groupe;
 use App\Models\Professeur;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Mail;
@@ -15,9 +16,12 @@ use BoxPlot;
 use DB;
 use Graph;
 use Illuminate\Http\Request;
+use Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
 use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
+use App\Mail\Rappel;
+use Carbon\Carbon;
 
 class EvaluationController extends Controller
 {
@@ -61,7 +65,7 @@ class EvaluationController extends Controller
     public function show(string $idEval)
     {
         $stats = $this->boxPlot($idEval);
-        $evaluation = Evaluation::find($idEval);
+        $evaluation = Evaluation::findOrFail($idEval);
         $eleves = [];
         $code_user = Auth::user()->code;
         $eleves_prof = [];
@@ -206,11 +210,11 @@ class EvaluationController extends Controller
 
         // Create a new stock plot
         $p1 = new BoxPlot($stats,array(0.5,0.5));
-         
+        
         // Width of the bars (in pixels)
         $p1->SetWidth(9);
         
-         
+        
         // Add the plot to the graph and send it back to the browser
         $graph->Add($p1);
         if(file_exists(public_path().'\images\graph'.$idEval.'.jpg')) {
@@ -224,7 +228,7 @@ class EvaluationController extends Controller
     }
 
     public function getNotes(string $idEval, string $idProf){
-        $eval = Evaluation::find($idEval);
+        $eval = Evaluation::findOrFail($idEval);
         $notes = [];
         foreach($eval->eleves as $eleve) {
             array_push($notes, $eleve->pivot->note);            
@@ -258,5 +262,70 @@ class EvaluationController extends Controller
         }else{
             return redirect()->back()->with('error', 'Please upload a file.');
         }
+    }
+
+    public function checkAllNotesByEvalId(Evaluation $eval, Groupe $groupe){
+        foreach($groupe->eleves as $eleve) {
+            $dateEval1 = Carbon::parse($eval->date_epreuve);
+            $dateEval2 = Carbon::parse($eval->date_epreuve);
+            $dateNow = Carbon::now();
+            $dateEval1->addDays(15);
+            $dateEval2->addMonth();
+            $dateEval2->subDays(7);
+            //
+            Log::info($dateEval1);
+            Log::info($dateNow);
+            Log::info($eval->libelle);
+            if ($dateEval1->isSameDay($dateNow) || $dateEval2->isSameDay($dateNow)){
+                Log::info('c bon');
+                $prof =  $eleve->evaluations->find($eval->id);
+                Log::info($prof);
+                if ($prof === null){
+                    return False;
+                }
+                $note = optional($prof->pivot)->note;
+                if ($note === null){
+                    return False;
+                } 
+            }        
+        }
+        return True;
+    }
+
+    public function checkAllNotesEval(){
+        $evals = Evaluation::all();
+        foreach($evals as $eval) {
+            $groupes = $eval->ressource->groupe;
+            foreach($groupes as $groupe) {
+                Log::info("check");
+                $res = $this->checkAllNotesByEvalId($eval, $groupe);
+                if ($res == False){
+                    Log::info("ça arrive fort");
+                    $prof = Professeur::find($groupe->pivot->code_prof);
+                    $rappel = new Rappel($eval,$prof->utilisateur, $groupe);
+                    Mail::to($prof->utilisateur->email)->send($rappel);
+                }
+            }
+        }
+    }
+
+                    // $profs = $eval->ressource->professeur;
+                    // foreach($profs as $prof) {
+                    //     $rappel = new Rappel($eval,$prof->utilisateur, $groupe);
+                    //     Mail::to($prof->utilisateur->email)->send($rappel);
+
+
+
+
+
+    public function afficherEvals(){
+        $tabEvals = Evaluation::paginate(10);
+        return view('afficherEvals', compact('tabEvals'));
+    }
+
+    public function showStats(string $idEval){
+        $stats = $this->boxPlot($idEval);
+        $evaluation = Evaluation::find($idEval);
+        return view('stats',compact('stats','evaluation'));
     }
 }

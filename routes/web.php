@@ -5,7 +5,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotifController;
-
+use App\Http\Controllers\ProfController;
+use App\Http\Controllers\UEController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,9 +66,12 @@ Route::middleware('professeur')->group(function () {
     Route::resource('evaluation', EvaluationController::class);
     Route::resource('evaluation', EvaluationController::class)->name("index","evaluations");
 
+
     Route::get('/dashprof', function () {
         return view('dashprof');
     })->name('dashprof');
+
+    Route::get('/evaluation/{id}/stats', [EvaluationController::class, 'showStats'])->name('evaluation.stats');
 
     Route::post('saisir_note',[EvaluationController::class, 'saisirNote'])->name('saisir_note');
     Route::post('saisir_notes',[EvaluationController::class, 'saisirNotes'])->name('saisir_notes');
@@ -85,6 +89,10 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/dashadmin', function () {
         return view('dashAdmin');
     })->name('dashadmin');
+    Route::resource('profs', ProfController::class);
+    Route::resource('ue', UEController::class);
+    Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
+    Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
 });
 
 

@@ -9,6 +9,8 @@
     rel="stylesheet"
     href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <!--  SWIPER CSS  -->
     <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
@@ -53,15 +55,18 @@
             var tab = document.getElementById("saissi_note_tab");
             var rows = tab.getElementsByTagName("tr");
             var groupeCell = document.querySelectorAll("#groupe_Cell");
-            groupeCell.forEach(function(cell){
-                console.log(valeurSelectionnee);
+            var note_input = document.querySelectorAll("#note_input");
+            groupeCell.forEach(function(cell, index){
                 if(valeurSelectionnee === "Tous"){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled= false;
                 }
                 else if(cell.innerText === valeurSelectionnee){
                     cell.parentElement.style.display = "table-row";
+                    note_input[index].disabled = false;
                 }else{
                     cell.parentElement.style.display = "none";
+                    note_input[index].disabled = true;
                 }
             });
         }
@@ -106,28 +111,9 @@
     <main class="main">
     <!-- HOME -->
     <section class="home section" id="home">
+
         <div class="home_container container grid">
-        <div>
-        <img src="{{URL('./images/graph'.$evaluation->id.'.jpg')}}"><br>
-        <?php
-        if(isset($_GET["dl"])){
-            $file='./images/graph'.$evaluation->id.'.jpg';
-            header('Content-Description: File Transfer');
-            header('Content-Type: image/jpeg');
-            ob_clean();
-            header('Content-Disposition: attachment; filename="'.basename($file).'"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
-        }
-        ?>
-        <form method="GET">
-            <button type="submit" name="dl">Télécharger l'image</button>
-        </form>
-        <p>Moyenne : {{$stats['moyenne']}}      Ecart type : {{$stats['ecart_type']}}</p>
-        </div>
+        <h2> {{$evaluation['libelle']}} </h2>
         <div class="home_content">
         <select name="groupe_select" id="groupe_select" onchange="changertab()">
             <option value="Tous">Tous</option>
@@ -155,13 +141,14 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20></td>
+                    <td class="clear-cell"><input class="input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
                     <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
                 </tr>
             @endforeach
             </table>
             <input class="button button_save_notes" type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
         </form>
+        <button class="button" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button>
         </div>
         </div>
     </section>

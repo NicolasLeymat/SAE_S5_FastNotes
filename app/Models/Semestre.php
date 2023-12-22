@@ -23,4 +23,12 @@ class Semestre extends Model
     public function groupe(){
         return $this->hasMany(Groupe::class, 'id', 'id');
     }
+
+    public function parcours(){
+        return $this->hasMany(Parcours::class, "id", "id");
+    }
+
+    public function annee(){
+        return $this->hasMany(Annee::class, "id", "id");
+    }
 }

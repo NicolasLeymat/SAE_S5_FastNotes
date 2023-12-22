@@ -266,13 +266,17 @@ class EvaluationController extends Controller
 
     public function checkAllNotesByEvalId(Evaluation $eval, Groupe $groupe){
         foreach($groupe->eleves as $eleve) {
-            $dateEval = Carbon::parse($eval->date_epreuve);
+            $dateEval1 = Carbon::parse($eval->date_epreuve);
+            $dateEval2 = Carbon::parse($eval->date_epreuve);
             $dateNow = Carbon::now();
-            $dateEval = $dateEval->addDays(15);
-            Log::info($dateEval);
+            $dateEval1->addDays(15);
+            $dateEval2->addMonth();
+            $dateEval2->subDays(7);
+            //
+            Log::info($dateEval1);
             Log::info($dateNow);
             Log::info($eval->libelle);
-            if ($dateEval->isSameDay($dateNow)){
+            if ($dateEval1->isSameDay($dateNow) || $dateEval2->isSameDay($dateNow)){
                 Log::info('c bon');
                 $prof =  $eleve->evaluations->find($eval->id);
                 Log::info($prof);

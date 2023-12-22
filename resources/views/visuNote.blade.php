@@ -22,8 +22,7 @@
     <header class="header" id="header">
     <nav class="nav container">
         <a href="{{ route('index') }}" class="nav_logo"
-        >Fast <br />
-        Notes</a
+        >Fast Notes</a
         >
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">

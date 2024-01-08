@@ -1,117 +1,58 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!--  UNICONS  -->
-    <link
-    rel="stylesheet"
-    href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-    <!--  SWIPER CSS  -->
-    <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
-    <!--  CSS  -->
-    <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
-
-    <title>Notes Iut</title>
-
-    <script>
-        function confirmerSaisie(){
-            var nbNotes = 0;
-            var nbNotesNonSaisies = 0;
-            var saisies = document.querySelectorAll('#formulaireNotes table tr');
-            saisies.forEach(function(inputElement, index) {
-                if(index!=0){
-                    var isAbsent = inputElement.querySelector('input[type="checkbox"]').checked;
-                    var noteInput = inputElement.querySelector('input[type="number"]').value;
-                    nbNotes+=1;
-                    if (noteInput == "" && !isAbsent) {
-                        nbNotesNonSaisies+=1;
-                    }
-                }
-            });
-
-            if (nbNotesNonSaisies==0) {
-                document.getElementById('formulaireNotes').submit();
-            } else if(nbNotesNonSaisies>1){
-                if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
-                    document.getElementById('formulaireNotes').submit();
-                }
-            } else {
-                if(confirm(nbNotesNonSaisies+' note n\'a pas été saisie. Voulez-vous tout de même enregistrer les notes saisies ?')){
-                    document.getElementById('formulaireNotes').submit();
+<script>
+    function confirmerSaisie(){
+        var nbNotes = 0;
+        var nbNotesNonSaisies = 0;
+        var saisies = document.querySelectorAll('#formulaireNotes table tr');
+        saisies.forEach(function(inputElement, index) {
+            if(index!=0){
+                var isAbsent = inputElement.querySelector('input[type="checkbox"]').checked;
+                var noteInput = inputElement.querySelector('input[type="number"]').value;
+                nbNotes+=1;
+                if (noteInput == "" && !isAbsent) {
+                    nbNotesNonSaisies+=1;
                 }
             }
+        });
+
+        if (nbNotesNonSaisies==0) {
+            document.getElementById('formulaireNotes').submit();
+        } else if(nbNotesNonSaisies>1){
+            if(confirm(nbNotesNonSaisies+' notes n\'ont pas été saisies. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                document.getElementById('formulaireNotes').submit();
+            }
+        } else {
+            if(confirm(nbNotesNonSaisies+' note n\'a pas été saisie. Voulez-vous tout de même enregistrer les notes saisies ?')){
+                document.getElementById('formulaireNotes').submit();
+            }
         }
+    }
 
-        function changertab(){
-            var selection = document.getElementById("groupe_select");
-            var valeurSelectionnee = selection.value;
-            console.log(valeurSelectionnee);
-            var tab = document.getElementById("saissi_note_tab");
-            var rows = tab.getElementsByTagName("tr");
-            var groupeCell = document.querySelectorAll("#groupe_Cell");
-            var note_input = document.querySelectorAll("#note_input");
-            groupeCell.forEach(function(cell, index){
-                if(valeurSelectionnee === "Tous"){
-                    cell.parentElement.style.display = "table-row";
-                    note_input[index].disabled= false;
-                }
-                else if(cell.innerText === valeurSelectionnee){
-                    cell.parentElement.style.display = "table-row";
-                    note_input[index].disabled = false;
-                }else{
-                    cell.parentElement.style.display = "none";
-                    note_input[index].disabled = true;
-                }
-            });
-        }
-    </script>
-</head>
-<body>
-    <!--  HEADER  -->
-    <header class="header" id="header">
-    <nav class="nav container">
-        <a href="{{ route('index') }}" class="nav_logo"
-        >Fast <br />
-        Notes</a
-        >
-        <div class="nav_menu" id="nav-menu">
-        <ul class="nav_list grid">
-        @auth 
-        <li class="nav_item">
-            <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-dropdown-link :href="route('logout')"
-                onclick="event.preventDefault();
-                    this.closest('form').submit();">
-                <p class="nav_link">{{ __('Se déconnecter') }}</p>
-            </x-dropdown-link>
-            </form>
-        </li>
-        @endauth
-        </ul>
-        <i class="uil uil-times nav_close" id="nav-close"></i>
-        </div>
-        <div class="nav_btns">
-        <i class="uil uil-moon change-theme" id="theme-button"></i>
-        <div class="nav_toggle" id="nav-toggle">
-            <i class="uil uil-apps"></i>
-        </div>
-        </div>
-    </nav>
-    </header>
-    <!--  HEADER FIN  -->
-
-    <!--  MAIN   -->
-    <main class="main">
-    <!-- HOME -->
-    <section class="home section" id="home">
-
+    function changertab(){
+        var selection = document.getElementById("groupe_select");
+        var valeurSelectionnee = selection.value;
+        console.log(valeurSelectionnee);
+        var tab = document.getElementById("saissi_note_tab");
+        var rows = tab.getElementsByTagName("tr");
+        var groupeCell = document.querySelectorAll("#groupe_Cell");
+        var note_input = document.querySelectorAll("#note_input");
+        groupeCell.forEach(function(cell, index){
+            if(valeurSelectionnee === "Tous"){
+                cell.parentElement.style.display = "table-row";
+                note_input[index].disabled= false;
+            }
+            else if(cell.innerText === valeurSelectionnee){
+                cell.parentElement.style.display = "table-row";
+                note_input[index].disabled = false;
+            }else{
+                cell.parentElement.style.display = "none";
+                note_input[index].disabled = true;
+            }
+        });
+    }
+</script>
+@extends('layouts.fn')
+@section('title', 'Fast Notes')
+@section('content')
         <div class="home_container container grid">
         <h2> {{$evaluation['libelle']}} </h2>
         <div class="home_content">
@@ -151,60 +92,4 @@
         <button class="button" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button>
         </div>
         </div>
-    </section>
-    <!-- HOME FIN -->
-    </main>
-    <!-- MAIN FIN -->
-
-    <!-- FOOTER -->
-    <footer class="footer">
-    <div class="footer_bg">
-        <div class="footer_container container grid">
-        <div>
-            <h1 class="footer_title">Fast</h1>
-            <span class="footer_subtitle">Notes</span>
-        </div>
-
-        <ul class="footer_links">
-            <li>
-            <a href="" class="footer_link">Leymat Nicolas</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Mederic Demailly</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Noa Despaux</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">David Pacuraru</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Lucas Veslin</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Louis Camborieux</a>
-            </li>
-        </ul>
-        </div>
-        <p class="footer_copy">&#169; Code F. All rights reserved.</p>
-    </div>
-    </footer>
-    <!-- FOOTER FIN -->
-    
-    <!-- SCROLL TOP  -->
-    <a href="#" class="scrollup" id="scroll-up">
-    <i class="uil uil-arrow-up scrollup_icon"></i>
-    </a>
-    <!-- SCROLL TOP FIN -->
-
-    <!--  SWIPER JS  -->
-    <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
-    <!--  MAIN JS  -->
-    <script src="{{asset('assets/js/main.js')}}"></script>
-</body>
-</html>
+@endsection

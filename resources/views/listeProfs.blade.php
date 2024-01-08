@@ -5,7 +5,6 @@
 @section('content')
         <div class="home_container container grid">
           <div class="home_content">
-         
             <table class="prof-tab note-tab">
                 <tr>
                     <th>Code</th>
@@ -29,4 +28,5 @@
             </table>
           </div>
         </div>
+@endsection
 @endsection

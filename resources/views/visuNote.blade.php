@@ -1,7 +1,5 @@
 @extends('layouts.fn')
-
-@section('title', 'Mes notes')
-
+@section('title', 'Fast Notes')
 @section('content')
         <div class="home_container container grid">
           <div class="home_content">
@@ -92,10 +90,4 @@
             </table>
           </div>
         </div>
-      </section>
-      <!-- HOME FIN -->
-    </main>
-    <!-- MAIN FIN -->
-
-
-    @endsection
+@endsection

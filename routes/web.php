@@ -93,6 +93,12 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('ue', UEController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
+    
+    Route::get('/ajouterProf',function () {
+        return view('ajoutProf');
+    })->name("ajouterProf");
+    Route::post('/ajouter_prof',[ProfController::class, 'store'])->name('ajouter_prof');
+    Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
 });
 
 

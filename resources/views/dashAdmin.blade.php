@@ -54,10 +54,10 @@
                   <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter des évaluations</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des profésseurs</p> <br>
-                  <a class="tab-cell button button-admins" href="{{ route('profs.index') }}">Afficher les profésseurs</a><br>
-                  <a class="tab-cell button button-admins">Ajouter un profésseur</a><br>
-                  <a class="tab-cell button button-admins">Ajouter des profésseurs</a><br>
+                  <p style="margin-top:10px;">Gestion des professeurs</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('profs.index') }}">Afficher les professeurs</a><br>
+                  <a class="tab-cell button button-admins" href="{{route ('ajouterProf') }}">Ajouter un professeur</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des professeurs</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des enseignements</p> <br>

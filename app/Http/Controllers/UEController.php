@@ -12,8 +12,8 @@ class UEController extends Controller
         $listeCompetences = [];
         $listeSemestres = [];
         foreach ($tabUE as $UE) {
-           array_push($listeCompetences,$UE->competence) ;
-           array_push($listeSemestres,$UE->semestre);
+            array_push($listeCompetences,$UE->competence) ;
+            array_push($listeSemestres,$UE->semestre);
         }
         
         return view('listeUE', compact('tabUE','listeCompetences','listeSemestres'));

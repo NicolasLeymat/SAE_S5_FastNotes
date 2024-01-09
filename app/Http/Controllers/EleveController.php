@@ -26,6 +26,7 @@ class EleveController extends Controller
     private $tabEvaluations = [];
 
     #Retourne toutes les évaluations d'un élève
+    
     public function index(){
         $result = Utilisateur::paginate(10);
         return view('visuNote', $result);
@@ -185,4 +186,17 @@ class EleveController extends Controller
         ]);
         return redirect()->back()->with('successOneEleves','L\'élève a été ajouté avec succés');
     }
+
+    public function afficherEleves(){
+        $tabEleves = Eleve::paginate(10);
+        $listeGroupes = [];
+        foreach ($tabEleves as $Eleves) {
+           array_push($listeGroupes,$Eleves->groupe) ;
+        }
+        
+        return view('afficherEleves', compact('tabEleves','listeGroupes'));
+    }
+
+
+
 }

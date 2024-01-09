@@ -112,6 +112,7 @@
     <!-- HOME -->
     <section class="home section" id="home">
         <div class="home_container container grid">
+        <h2> {{$evaluation['libelle']}} </h2>
         <div class="home_content">
         <select name="groupe_select" id="groupe_select" onchange="changertab()">
             <option value="Tous">Tous</option>
@@ -146,6 +147,7 @@
             </table>
             <input class="button button_save_notes" type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
         </form>
+        <button class="button" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button>
         </div>
         </div>
     </section>

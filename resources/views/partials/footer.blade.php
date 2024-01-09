@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer-index">
     <div class="footer_bg">
         <div class="footer_container container grid">
         <div>

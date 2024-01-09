@@ -8,6 +8,7 @@ use App\Models\Groupe;
 use App\Models\Parcours;
 use App\Models\Semestre;
 use App\Models\Utilisateur;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -30,6 +31,7 @@ class ProfController extends Controller
             'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
             'regex' => 'Le champ :attribute doit contenir au moins une majuscule et un chiffre.',
             'same' => 'Les mots de passe doivent être identiques',
+            'unique' => 'Ce code est déja utilisé'
         ];
         
 
@@ -37,7 +39,7 @@ class ProfController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'password' => ['required','string','min:8','regex:/[A-Z]/','regex:/[0-9]/'],
-            'code' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:users',
             'confirm_password'=>'required|same:password',
             'email'=>'required|string|max:255'],$customErrorMessages
         );

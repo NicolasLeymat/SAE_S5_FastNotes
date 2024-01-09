@@ -2,7 +2,9 @@
   use App\Models\Admin;
   use App\Models\Professeur;
   use App\Models\Eleve;
-  use App\Models\Parcours
+  use App\Models\Parcours;
+  use App\Models\Historique_Groupes;
+  use App\Models\Groupe;
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -74,8 +76,15 @@
               @endif
               @if (Eleve::find(Auth::user()->code) != null)
                 @php 
-                $parcour = Eleve::find(Auth::user()->code)->groupe->parcour->semestre;
-                echo $parcour; @endphp
+                  $allGroupe = Historique_Groupes::all()->where('code_etudiant', Auth::user()->code);
+                  foreach($allGroupe as $groupe){
+                    $id_groupe = $groupe->id_groupe;
+                    echo Groupe::find($id_groupe)->parcour->semestre;
+                  }
+                  $parcour = Eleve::find(Auth::user()->code)->groupe->parcour->semestre;
+                  echo $parcour; 
+                @endphp
+                
                 <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @endif
             @else

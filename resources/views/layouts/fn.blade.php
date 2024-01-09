@@ -18,32 +18,32 @@
     <title>@yield('title')</title>
 </head>
 <body>
-    <!--  HEADER  -->
-    @include ('partials.header')
+        <!--  HEADER  -->
+        @include ('partials.header')
 
 
-    <!--  MAIN   -->
-    <main class="main">
-    <section class="home section" id="home">
-        @yield('content')
-    </section>
-    </main>
-    <!-- MAIN FIN -->
+        <!--  MAIN   -->
+        <main class="main">
+        <section class="home section" id="home">
+            @yield('content')
+        </section>
+        </main>
+        <!-- MAIN FIN -->
 
-    <!-- FOOTER -->
-    @include('partials.footer')
-    <!-- FOOTER FIN -->
+        <!-- FOOTER -->
+        @include('partials.footer')
+        <!-- FOOTER FIN -->
 
-    <!-- SCROLL TOP  -->
-    <a href="#" class="scrollup" id="scroll-up">
-    <i class="uil uil-arrow-up scrollup_icon"></i>
-    </a>
-    <!-- SCROLL TOP FIN -->
+        <!-- SCROLL TOP  -->
+        <a href="#" class="scrollup" id="scroll-up">
+        <i class="uil uil-arrow-up scrollup_icon"></i>
+        </a>
+        <!-- SCROLL TOP FIN -->
 
-    <!--  SWIPER JS  -->
-    <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
-    <!--  MAIN JS  -->
-    <script src="{{asset('assets/js/main.js')}}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+        <!--  SWIPER JS  -->
+        <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
+        <!--  MAIN JS  -->
+        <script src="{{asset('assets/js/main.js')}}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

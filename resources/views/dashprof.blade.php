@@ -2,7 +2,7 @@
 @section('title', 'Fast Notes')
 @section('content')
         <div class="home_container container grid">
-            <div class="home_content">
+            <div class="home_content dashprof_content">
                 <table class="eval_tab">
                     <thead class="tab-row-dark">
                         <tr>

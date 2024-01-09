@@ -2,7 +2,7 @@
   use App\Models\Admin;
   use App\Models\Professeur;
   use App\Models\Eleve;
-
+  use App\Models\Parcours
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -73,6 +73,9 @@
               <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
               @endif
               @if (Eleve::find(Auth::user()->code) != null)
+                @php 
+                $parcour = Eleve::find(Auth::user()->code)->groupe->parcour->semestre;
+                echo $parcour; @endphp
                 <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
               @endif
             @else

@@ -306,4 +306,12 @@ class EvaluationController extends Controller
         $stats = $this->boxPlot($idEval);
         return view('stats',compact('stats','evaluation'));
     }
+
+    public function initializeInfosEvaluation($idEval){
+        $this->eval = Evaluation::find($idEval);
+        foreach($this->eval->eleves as $eleve) {
+            array_push($this->notes, $eleve->pivot->note);            
+        }
+    }
+
 }

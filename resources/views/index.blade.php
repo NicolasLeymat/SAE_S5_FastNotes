@@ -6,6 +6,7 @@
   use App\Models\Historique_Groupes;
   use App\Models\Groupe;
 @endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -26,6 +27,14 @@
     <title>Notes Iut</title>
 </head>
 <body>
+    <script>
+      function changerLink(){
+        let comboElement = document.getElementById("groupe_select");
+        let comboValue = comboElement.value;
+        let button_index = document.getElementById("visuNotes");
+        button_index.href = "/visualisation/{{Auth::user()->code}}?semestre=" + comboValue;
+      }
+    </script>
     <!--  HEADER  -->
     <header class="header" id="header">
     <nav class="nav container">
@@ -77,15 +86,14 @@
               @if (Eleve::find(Auth::user()->code) != null)
                 @php 
                   $allGroupe = Historique_Groupes::all()->where('code_etudiant', Auth::user()->code);
-                  foreach($allGroupe as $groupe){
-                    $id_groupe = $groupe->id_groupe;
-                    echo Groupe::find($id_groupe)->parcour->semestre;
-                  }
-                  $parcour = Eleve::find(Auth::user()->code)->groupe->parcour->semestre;
-                  echo $parcour; 
                 @endphp
-                
-                <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
+                <select name="groupe_select" id="groupe_select" onchange="changerLink()">
+                  <option value="{{Eleve::find(Auth::user()->code)->groupe->id }}">{{Eleve::find(Auth::user()->code)->groupe->parcour->semestre->libelle}}</option>
+                  @foreach($allGroupe as $groupe_eleve)
+                  <option value="{{ Groupe::find($groupe_eleve->id_groupe)->id }}">{{ Groupe::find($groupe_eleve->id_groupe)->parcour->semestre->libelle }}</option>
+                  @endforeach
+                </select>
+                <a id="visuNotes" class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}?semestre="> Accéder à la visualitation des notes </a>
               @endif
             @else
             <form method="POST" action="{{ route('login') }}" class="form">

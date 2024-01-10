@@ -34,7 +34,7 @@ class Groupe extends Model
         return $this->belongsToMany(ressource::class,"enseignements", "id_groupe", "code_prof");
     }
 
-    public function parcours(){
-        return $this->hasOne(Parcours::class, "id_parcour");
+    public function parcour(){
+        return $this->hasOne(Parcours::class, "id_parcour", "parcours");
     }
 }

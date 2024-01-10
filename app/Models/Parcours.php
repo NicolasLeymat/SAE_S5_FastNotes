@@ -13,7 +13,7 @@ class Parcours extends Model
     public $incrementing = false;
     public $primaryKey = "id_parcour";
 
-    protected $fillable = ["id_parcour"];
+    protected $fillable = ["id_parcour", "id_semestre"];
 
     protected $id = "id_parcour";
 

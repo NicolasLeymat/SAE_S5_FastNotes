@@ -2,13 +2,77 @@
   use App\Models\Admin;
   use App\Models\Professeur;
   use App\Models\Eleve;
-
+  use App\Models\Parcours;
+  use App\Models\Historique_Groupes;
+  use App\Models\Groupe;
 @endphp
-@extends('layouts.fn')
 
-@section('title', 'Accueil Fast Notes')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-@section('content')
+    <!--  UNICONS  -->
+    <link
+    rel="stylesheet"
+    href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+
+    <!--  SWIPER CSS  -->
+    <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.min.css')}}" />
+    <!--  CSS  -->
+    <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" />
+
+    <title>Notes Iut</title>
+</head>
+<body>
+    <script>
+      function changerLink(){
+        let comboElement = document.getElementById("groupe_select");
+        let comboValue = comboElement.value;
+        let button_index = document.getElementById("visuNotes");
+        button_index.href = "/visualisation/{{Auth::user()->code}}?semestre=" + comboValue;
+      }
+    </script>
+    <!--  HEADER  -->
+    <header class="header" id="header">
+    <nav class="nav container">
+        <a href="{{ route('index') }}" class="nav_logo"
+        >Fast <br />
+        Notes</a
+        >
+        <div class="nav_menu" id="nav-menu">
+        <ul class="nav_list grid">
+          @auth 
+          <li class="nav_item">
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <x-dropdown-link :href="route('logout')"
+                  onclick="event.preventDefault();
+                    this.closest('form').submit();">
+                <p class="nav_link">{{ __('Se déconnecter') }}</p>
+              </x-dropdown-link>
+            </form>
+          </li>
+          @endauth
+        </ul>
+        <i class="uil uil-times nav_close" id="nav-close"></i>
+        </div>
+        <div class="nav_btns">
+        <i class="uil uil-moon change-theme" id="theme-button"></i>
+        <div class="nav_toggle" id="nav-toggle">
+            <i class="uil uil-apps"></i>
+        </div>
+        </div>
+    </nav>
+    </header>
+    <!--  HEADER FIN  -->
+
+    <!--  MAIN   -->
+    <main class="main">
+    <!-- HOME -->
+    <section class="home section" id="home">
         <div class="home_container container grid">
           <div class="home_content-fix">
             @auth
@@ -20,7 +84,16 @@
               <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
               @endif
               @if (Eleve::find(Auth::user()->code) != null)
-                <a class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}"> Accéder à la visualitation des notes </a>
+                @php 
+                  $allGroupe = Historique_Groupes::all()->where('code_etudiant', Auth::user()->code);
+                @endphp
+                <select name="groupe_select" id="groupe_select" onchange="changerLink()">
+                  <option value="{{Eleve::find(Auth::user()->code)->groupe->id }}">{{Eleve::find(Auth::user()->code)->groupe->parcour->semestre->libelle}}</option>
+                  @foreach($allGroupe as $groupe_eleve)
+                  <option value="{{ Groupe::find($groupe_eleve->id_groupe)->id }}">{{ Groupe::find($groupe_eleve->id_groupe)->parcour->semestre->libelle }}</option>
+                  @endforeach
+                </select>
+                <a id="visuNotes" class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}?semestre="> Accéder à la visualitation des notes </a>
               @endif
             @else
             <form method="POST" action="{{ route('login') }}" class="form">

@@ -1,7 +1,5 @@
 @extends('layouts.fn')
-
-@section('title', 'Mes notes')
-
+@section('title', 'Fast Notes')
 @section('content')
         <div class="home_container container grid">
           <div class="home_content">
@@ -23,6 +21,7 @@
             </b>             
             <table class="table-moyenne" >
               @foreach ($tabMoyennesCompetences as $key => $valeur)
+              
               <tr class="tab-row tab-row-dark">
                 <td class="tab-cell"><b>{{ $key }}</b></td>
                 @if ($valeur==="Pas disponible")

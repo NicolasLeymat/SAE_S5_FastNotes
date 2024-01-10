@@ -50,4 +50,13 @@ class UEController extends Controller
 
         return redirect()->route('ue.index')->withErrors($validator);
     }
+
+    public function destroy(UE $ue) {
+        
+        $ue->ressources()->detach();
+
+        $ue->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
 }

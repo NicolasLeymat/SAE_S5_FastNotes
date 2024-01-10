@@ -28,7 +28,11 @@
                       <td class="tab-cell" >{{ $listeCompetences[$i]->libelle }}</td>
                       <td class="tab-cell" >{{ $listeSemestres[$i]->libelle }}</td>
                       <td class="tab-cell" >{{ $listeSemestres[$i]->id_annee }}</td>
-                      <td><a class="tab-cell clear-cell button del-button " href="#">Supprimer </a></td>
+                      <form method="post" action = "{{route ('ue.destroy', ['ue'=>$tabUE[$i]->code]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button></td>
+                      </form>
                     </tr>
                     @endfor
                 </tbody>

@@ -1,3 +1,8 @@
+@php
+  use App\Models\Eleve;
+  use App\Models\Professeur;
+  use App\Models\Admin;
+@endphp
 <header class="header" id="header">
     <nav class="nav container">
         <a href="{{ route('index') }}" class="nav_logo"
@@ -6,6 +11,9 @@
         <div class="nav_menu" id="nav-menu">
         <ul class="nav_list grid">
           @auth 
+            @if (Admin::find(Auth::user()->code) != null) <li class="nav-items"> <a href="{{route('dashadmin')}}" class="nav_link">Dashboard Administrateur</a></li> @endif
+            @if (Eleve::find(Auth::user()->code) != null) <li class="nav-items"> <a href="/visualisation/{{Auth::user()->code}}" class="nav_link">Visualisation des notes</a></li> @endif 
+            @if (Professeur::find(Auth::user()->code) != null) <li class="nav-items"> <a href="{{ route('evaluations')}}" class="nav_link">Dashboard Professeur</a></li> @endif
           <li class="nav_item">
             <form method="POST" action="{{ route('logout') }}">
               @csrf

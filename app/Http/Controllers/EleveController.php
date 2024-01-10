@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ElevesImport;
 use App\Models\Competence;
 use App\Models\Eleve;
+use App\Models\Groupe;
 use App\Models\UE;
 use Hash;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class EleveController extends Controller
 {
 
     private $tabRessources;
+    private $groupe;
     private $tabNotes = [];
     private $tabCompetences = [];
     private $tabMoyennesCompetences = [];
@@ -33,7 +35,8 @@ class EleveController extends Controller
         return view('visuNote', $result);
     }
 
-    public function show(string $id){
+    public function show(string $id,Request $request){
+        $this->groupe = Groupe::find($request->get('semestre'));
         setlocale(LC_ALL, 'fr_FR.utf8');
         $this->user = Eleve::find($id);
         $this->initializeInfosEleves();
@@ -44,13 +47,17 @@ class EleveController extends Controller
             $this->tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($competence);
         }
         $moyenneSemestre = $this->moyenneSemestre();
-
         return view('visuNote')->with('tabEvaluations',$this->tabEvaluations)->with('tabNotes',$this->tabNotes)->with('tabMoyennesRessources',$this->tabMoyennesRessources)->with('tabMoyennesCompetences',$this->tabMoyennesCompetences)->with('moyenneSemestre',$moyenneSemestre);
     }
     
     public function ressourcesEleve(){
-        $groupe = $this->user->groupe;
-        $this->tabRessources = $groupe->ressources;
+        if($this->groupe != null){
+            $groupe = $this->groupe;
+            $this->tabRessources = $groupe->ressources;
+        }else{
+            $groupe = $this->user->groupe;
+            $this->tabRessources = $groupe->ressources;
+        }
     }
 
     public function evalsEleve(){
@@ -147,7 +154,7 @@ class EleveController extends Controller
         $this->evalsEleve();
         $this->listeCompetences();
         foreach($this->tabRessources as $ressource){
-            $this->tabMoyennesRessources[$ressource->code] = [$ressource->nom,0];
+            $this->tabMoyennesRessources[$ressource->code] = [$ressource->libelle,0];
         }
         foreach($this->user->evaluations as $eval){
             if($eval->pivot->note == null){
@@ -192,7 +199,7 @@ class EleveController extends Controller
         $tabEleves = Eleve::paginate(10);
         $listeGroupes = [];
         foreach ($tabEleves as $Eleves) {
-           array_push($listeGroupes,$Eleves->groupe) ;
+            array_push($listeGroupes,$Eleves->groupe) ;
         }
         
         return view('afficherEleves', compact('tabEleves','listeGroupes'));

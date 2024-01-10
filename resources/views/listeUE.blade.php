@@ -33,7 +33,7 @@
                     @endfor
                 </tbody>
             </table>
+            {{$tabUE->links('vendor.pagination.simple-default')}}
           </div>
         </div>
-@endsection
 @endsection

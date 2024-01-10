@@ -53,7 +53,7 @@ class ProfController extends Controller
 
         $prof = Professeur::create(['code'=>$request->input('code'), 'isProf'=>true, 'utilisateur'=>$utilisateur]);
 
-        return redirect()->route('index')->withErrors($validator);
+        return redirect()->route('profs.index')->withErrors($validator);
 
 
     }

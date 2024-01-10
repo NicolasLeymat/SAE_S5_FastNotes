@@ -395,10 +395,35 @@ img {
   color: var(--text-color-input-placeholder);
 }
 
+.add_form select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.add_form select option {
+  padding: 0.45rem;
+  border-radius: 0.3rem;
+}
+
 
 
 .flex_items{
   flex: 1 0 100%;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  margin: 0 0.3vw;
+}
+
+.page_button:hover {
+  font-weight: var(--font-semi-bold);
 }
 
 .form_input{

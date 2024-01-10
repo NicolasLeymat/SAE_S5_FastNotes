@@ -91,10 +91,4 @@
             </table>
           </div>
         </div>
-      </section>
-      <!-- HOME FIN -->
-    </main>
-    <!-- MAIN FIN -->
-
-
-    @endsection
+@endsection

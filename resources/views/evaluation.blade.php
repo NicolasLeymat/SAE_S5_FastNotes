@@ -89,7 +89,6 @@
             </table>
             <input class="button button_save_notes" type="button" value="Enregistrer les notes" onclick='confirmerSaisie()'>
         </form>
-        <button class="button" onclick="window.location.href='/evaluation/{{$evaluation->id}}/stats';" >Voir les stats</button>
         </div>
         </div>
 @endsection

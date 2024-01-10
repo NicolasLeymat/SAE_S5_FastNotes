@@ -130,4 +130,61 @@
             @endauth
           </div>
         </div>
-    @endsection
+      </section>
+      <!-- HOME FIN -->
+    </main>
+    <!-- MAIN FIN -->
+
+    <!-- FOOTER -->
+    <footer class="footer-index">
+    <div class="footer_bg">
+        <div class="footer_container container grid">
+        <div>
+            <h1 class="footer_title">Fast</h1>
+            <span class="footer_subtitle">Notes</span>
+        </div>
+
+        <ul class="footer_links">
+            <li>
+            <a href="" class="footer_link">Leymat Nicolas</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Mederic Demailly</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Noa Despaux</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">David Pacuraru</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Lucas Veslin</a>
+            </li>
+
+            <li>
+            <a href="" class="footer_link">Louis Camborieux</a>
+            </li>
+        </ul>
+        </div>
+        <p class="footer_copy">&#169; Code F. All rights reserved.</p>
+    </div>
+    </footer>
+    <!-- FOOTER FIN -->
+
+    <!-- SCROLL TOP  -->
+    <a href="#" class="scrollup" id="scroll-up">
+    <i class="uil uil-arrow-up scrollup_icon"></i>
+    </a>
+    <!-- SCROLL TOP FIN -->
+
+    <!--  SWIPER JS  -->
+    <script src="{{asset('assets/js/swiper-bundle.min.js')}}"></script>
+    <!--  MAIN JS  -->
+    <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+</body>
+</html>

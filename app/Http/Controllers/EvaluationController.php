@@ -9,7 +9,7 @@ use App\Models\Evaluation;
 use App\Mail\Notif;
 use App\Models\Groupe;
 use App\Models\Professeur;
-use App\Models\Utilisateur;
+use App\Models\Ressource;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 use BoxPlot;
@@ -31,8 +31,13 @@ class EvaluationController extends Controller
     public function index()
     {        
         $results = DB::table('evaluations')->get()->sortBy('libelle');
-        $user = Professeur::find(Auth::user()->code);
-        $ressources = $user->ressource->unique();
+        if (Gate::allows('isAdmin')) {
+            $ressources = Ressource::all();
+        }
+        else {
+            $user = Professeur::findOrFail(Auth::user()->code);
+            $ressources = $user->ressource->unique();
+        }
         $results = [];
         foreach ($ressources as $ressource){
             $evals = DB::table('evaluations')->distinct()->where('code_ressource',$ressource->code)->get();
@@ -46,9 +51,10 @@ class EvaluationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $listeRessources = Ressource::all();
+
+        return view('ajoutEval',compact('listeRessources'));
     }
 
     /**
@@ -56,7 +62,31 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customErrorMessages = [
+            'required' => 'Le champ :attribute est requis.',
+            'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
+            'regex' => 'Le champ :attribute doit contenir au moins une majuscule et un chiffre.',
+            'same' => 'Les mots de passe doivent être identiques'
+        ];
+        
+
+        $validator =  $request ->validate([
+            'libelle' => 'required|string|max:255',
+            'coefficient' => 'required|decimal:2',
+            'type' => 'required|string|max:255',
+            'date_epreuve' => 'nullable|date|after:yesterday',
+            'date_rattrapage'=>'nullable|date|after:date_epreuve',
+            'ressource'=>'required|string|max:255'],$customErrorMessages
+        );
+
+        $eval = Evaluation::create (['libelle'=>$request->input("libelle"),
+        'coefficient'=>$request->input("coefficient"),
+        'type'=>$request->input('type'),
+        'date_epreuve'=>$request->input('date_epreuve'),
+        'date_rattrapage'=>$request->input('date_rattrapage'),
+        'code_ressource'=>$request->input('ressource')]);
+
+        return redirect()->route('evaluation.index')->withErrors($validator);
     }
 
     /**
@@ -181,22 +211,32 @@ class EvaluationController extends Controller
         $notes = $this->getNotes($idEval, 'a');
         sort($notes);
         $len = count($notes);
-        if ($len%2 == 1) {
-            $rangMediane = ($len+1)/2;
-            $rangPQuartile = ($rangMediane)/2;
-            $rangTQuartile = $rangMediane+($rangMediane)/2;
-            $mediane = $notes[$rangMediane-1];
-            $pQuartile = $notes[$rangPQuartile-1];
-            $tQuartile = $notes[$rangTQuartile-1];
-        } else {
-            $rangMediane = $len/2;
-            $rangPQuartile = $rangMediane/2;
-            $rangTQuartile = $rangMediane+($rangMediane/2);
-            $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
-            $pQuartile = ($notes[$rangPQuartile-1]+$notes[$rangPQuartile])/2;
-            $tQuartile = ($notes[$rangTQuartile-1]+$notes[$rangTQuartile])/2;
+        if ($len == 0) {
+            $mediane = 0;
+            $pQuartile = 0;
+            $tQuartile = 0;
+            $firstNote = 0;
         }
-        $stats = array($pQuartile, $tQuartile, $notes[0], end($notes), $mediane,$pQuartile, $tQuartile, $notes[0], end($notes), $mediane);
+        else { 
+            if ($len%2 == 1) {
+                $rangMediane = ($len+1)/2;
+                $rangPQuartile = ($rangMediane)/2;
+                $rangTQuartile = $rangMediane+($rangMediane)/2;
+                $mediane = $notes[$rangMediane-1];
+                $pQuartile = $notes[$rangPQuartile-1];
+                $tQuartile = $notes[$rangTQuartile-1];
+            } 
+            else {
+                $rangMediane = $len/2;
+                $rangPQuartile = $rangMediane/2;
+                $rangTQuartile = $rangMediane+($rangMediane/2);
+                $mediane = ($notes[$rangMediane-1]+$notes[$rangMediane])/2;
+                $pQuartile = ($notes[$rangPQuartile-1]+$notes[$rangPQuartile])/2;
+                $tQuartile = ($notes[$rangTQuartile-1]+$notes[$rangTQuartile])/2;
+        }
+        $firstNote = $notes[0];
+    }
+        $stats = array($pQuartile, $tQuartile, $firstNote, end($notes), $mediane,$pQuartile, $tQuartile, $firstNote, end($notes), $mediane);
 
         require_once(base_path().'\libraries\jpgraph\src\jpgraph.php');
         require_once (base_path().'\libraries\jpgraph\src\jpgraph_stock.php');
@@ -238,7 +278,12 @@ class EvaluationController extends Controller
 
     function moyenne_ecart_type(string $idEval) {
         $notes = $this->getNotes($idEval, Auth::user()->code);
+        if (count($notes) == 0) {
+            $moyenne = "Non disponible";
+        }
+        else {
         $moyenne = array_sum($notes)/count($notes);
+        }
         $fVariance = 0.0;
         foreach ($notes as $i) {
             $fVariance += pow($i - $moyenne, 2);

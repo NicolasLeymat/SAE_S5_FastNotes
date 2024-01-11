@@ -17,7 +17,7 @@ class ProfMiddleware
      */
     public function handle($request, Closure $next)
 {
-    if (Gate::denies('isProf')) {
+    if (Gate::denies('isProf') && Gate::denies('isAdmin')) {
         abort(403, "Vous n'avez pas l'autorisation d'accéder à cette ressource.");
     }
 

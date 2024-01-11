@@ -134,7 +134,7 @@ class EvaluationController extends Controller
             if (!$exists || $oldnote != $note ) {
                 $evaluation->eleves()->syncWithoutDetaching([
                 $idEleve => ['note' => $note]]);
-                $notif = new Notif($evaluation,$eleve->utilisateur);
+                $notif = new Notif($evaluation,$eleve->utilisateur, $note);
                 Mail::to($eleve->utilisateur->email)->send($notif);
         }
     }

@@ -16,13 +16,15 @@ class Notif extends Mailable
 
     public $eval;
     public $user;
+    public $note;
     /**
      * Create a new message instance.
      */
-    public function __construct($evaluation, $utilisateur)
+    public function __construct($evaluation, $utilisateur, $note)
     {
         $this->eval = $evaluation;
         $this->user = $utilisateur;
+        $this->note = $note;
     }
 
     /**
@@ -30,7 +32,7 @@ class Notif extends Mailable
      */
     public function envelope(): Envelope
     {
-        $nomMatiere = $this->eval->ressource->libelle;
+        $nomMatiere = $this->eval->ressource->nom;
 
         return new Envelope(
             subject: "Nouvelle Note en $nomMatiere",
@@ -60,9 +62,9 @@ class Notif extends Mailable
     public function build()
     {
         return $this
-        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom])
+        ->with(['libelle_eval' => $this->eval->libelle, 'prenom' => $this->user->prenom, 'nom' => $this->user->nom, 'note' => $this->note])
         ->view('emails.notif_note')
-        ->cc('nicolas.leymat@etu.iut-tlse3.fr');
+        ->cc('lucas.veslin@etu.iut-tlse3.fr');
     }
 
 }

@@ -86,7 +86,7 @@ class EvaluationController extends Controller
         'date_rattrapage'=>$request->input('date_rattrapage'),
         'code_ressource'=>$request->input('ressource')]);
 
-        return redirect()->route('evaluation.index')->withErrors($validator);
+        return redirect()->route('evaluations')->withErrors($validator);
     }
 
     /**

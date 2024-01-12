@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotifController;
 use App\Http\Controllers\ProfController;
 use App\Http\Controllers\UEController;
+use App\Models\Utilisateur;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,12 +93,14 @@ Route::middleware('administrateur')->group(function () {
     })->name('dashadmin');
     Route::resource('profs', ProfController::class);
     Route::resource('ue', UEController::class);
+    Route::resource('utilisateurs',UtilisateurController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     
     Route::get('/ajouterProf',function () {
         return view('ajoutProf');
     })->name("ajouterProf");
+    
     Route::post('/ajouter_prof',[ProfController::class, 'store'])->name('ajouter_prof');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
 });

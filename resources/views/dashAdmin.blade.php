@@ -32,7 +32,7 @@
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des élèves</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEleves') }}">Afficher les élèves</a><br>
-                  <a class="tab-cell button button-admins" href="{{ route('ajoutEleve') }}">Ajouter un élève</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('utilisateurs.create') }}">Ajouter un élève</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ajoutEleve') }}">Ajouter des élèves</a>
                 </div>
                 <div class="flex_divs">
@@ -50,7 +50,7 @@
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des évaluations</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEvals') }}">Afficher les évaluations</a><br>
-                  <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter une évaluations</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('evaluation.create') }}">Ajouter une évaluation</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter des évaluations</a><br>
                 </div>
                 <div class="flex_divs">

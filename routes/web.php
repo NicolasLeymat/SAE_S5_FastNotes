@@ -85,7 +85,7 @@ Route::post('importEval', [EvaluationController::class, 'import'])->name("import
 Route::post('importEvals', [EvaluationController::class, 'import'])->name("importEvals");
 Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
 Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
-
+Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
 });

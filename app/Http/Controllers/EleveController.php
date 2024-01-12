@@ -146,7 +146,7 @@ class EleveController extends Controller
         if($notes == 0) {
             return 'Pas disponible';
         }
-        return $notes / $c;
+        return round($notes / $c, 2);
     }
 
     public function initializeInfosEleves(){
@@ -221,7 +221,7 @@ class EleveController extends Controller
         $tabMoyennesCompetences = $this->tabMoyennesCompetences;
         $tabMoyennesRessources = $this->tabMoyennesRessources;
         $tabCompetences = $this->tabCompetences;
-        $pdf = PDF::loadView('pdf', compact('user', 'tabMoyennesCompetences', 'tabMoyennesRessources', 'tabCompetences', 'nom','prenom'));
+        $pdf = PDF::loadView('pdf', compact('user', 'tabMoyennesCompetences', 'tabMoyennesRessources', 'tabCompetences', 'nom', 'prenom', 'moyenneSemestre'));
         $pdf->save(public_path("Notes".$prenom.$nom.".pdf"));
         $file=public_path("Notes".$prenom.$nom.".pdf");
             header('Content-Description: File Transfer');

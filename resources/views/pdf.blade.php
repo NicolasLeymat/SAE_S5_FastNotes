@@ -13,7 +13,7 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 7px;
             text-align: left;
         }
 
@@ -60,6 +60,8 @@
             @endforeach
         </tbody>
     </table>
+
+    <p>Moyenne du semestre : {{ $moyenneSemestre }}</p>
 
 </body>
 </html>

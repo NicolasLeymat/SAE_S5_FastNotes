@@ -14,6 +14,7 @@ use App\Models\Ressource;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use PDF;
 
 
 class EleveController extends Controller
@@ -66,7 +67,7 @@ class EleveController extends Controller
             abort(403, Gate::allows('Vous ne pouvez pas accéder aux notes'));
         }
 
-        if (!Gate::allows('matchId', $this->user->identification)){
+        if (!Gate::allows('matchId', $this->user->identification) && !Gate::allows('isAdmin')){
             abort(403, Gate::allows('Vous ne pouvez regarder que vos notes'));
         }
 
@@ -113,7 +114,7 @@ class EleveController extends Controller
         if($notes == 0){
             return 'Pas disponible';
         }
-        return $notes / $c;
+        return round($notes / $c,2);
     }
 
     public function listeCompetences() {
@@ -207,6 +208,8 @@ class EleveController extends Controller
 
     public function exportBulletinPDF(string $id){
         $this->user = Eleve::find($id);
+        $nom = Utilisateur::find($id)->nom;
+        $prenom = Utilisateur::find($id)->prenom;
         $this->initializeInfosEleves();
         foreach($this->tabRessources as $ressource){
             $this->tabMoyennesRessources[$ressource->code][1]=$this->moyenneParRessource($ressource);
@@ -219,8 +222,20 @@ class EleveController extends Controller
         $tabMoyennesCompetences = $this->tabMoyennesCompetences;
         $tabMoyennesRessources = $this->tabMoyennesRessources;
         $tabCompetences = $this->tabCompetences;
-        $pdf = PDF::loadView('pdf', compact('user', 'tabMoyennesCompetences', 'tabMoyennesRessources', 'tabCompetences'));
-        $pdf->save(public_path("test.pdf"));
+        $pdf = PDF::loadView('pdf', compact('user', 'tabMoyennesCompetences', 'tabMoyennesRessources', 'tabCompetences', 'nom','prenom'));
+        $pdf->save(public_path("Notes".$prenom.$nom.".pdf"));
+        $file=public_path("Notes".$prenom.$nom.".pdf");
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/pdf');
+            ob_clean();
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
     }
+
+
 
 }

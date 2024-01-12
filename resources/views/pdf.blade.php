@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relevé de Notes</title>
+    <title>Relevé de notes</title>
     <style>
         table {
             width: 100%;
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <h2>Relevé de Notes</h2>
+    <h2>Relevé de notes de {{$prenom}} {{$nom}}</h2>
 
     <table>
         <thead>

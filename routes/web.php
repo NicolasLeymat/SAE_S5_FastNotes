@@ -7,6 +7,11 @@ use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\NotifController;
 use App\Http\Controllers\ProfController;
 use App\Http\Controllers\UEController;
+use App\Http\Controllers\ParcoursController;
+use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\EnseignementController;
+use App\Http\Controllers\GroupeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +96,10 @@ Route::middleware('administrateur')->group(function () {
     })->name('dashadmin');
     Route::resource('profs', ProfController::class);
     Route::resource('ue', UEController::class);
+    Route::resource('parcours', ParcoursController::class);
+    Route::resource('ressources', RessourceController::class);
+    Route::resource('enseignements', EnseignementController::class);
+    Route::resource('groupes', GroupeController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
 });
@@ -99,3 +108,4 @@ Route::middleware('administrateur')->group(function () {
 Route::get('email', [NotifController::class, 'getRouteMail']);
 
 Route::post('/envoyerNotif', [NotifController::class, 'envoyerEmail'])->name('envoyerNotif');
+

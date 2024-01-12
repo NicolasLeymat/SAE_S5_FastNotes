@@ -32,7 +32,7 @@
     <header class="header" id="header">
     <nav class="nav container">
         <a href="{{ route('index') }}" class="nav_logo"
-        >Fast <br />
+        >Fast
         Notes</a
         >
         <div class="nav_menu" id="nav-menu">

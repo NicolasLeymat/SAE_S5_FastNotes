@@ -108,6 +108,8 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
 });
 
+Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
+
 
 Route::get('email', [NotifController::class, 'getRouteMail']);
 

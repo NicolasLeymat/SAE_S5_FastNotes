@@ -14,7 +14,6 @@ use App\Models\Ressource;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
-use PDF;
 
 
 class EleveController extends Controller

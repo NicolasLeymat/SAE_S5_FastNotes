@@ -204,6 +204,24 @@ class EleveController extends Controller
         return view('afficherEleves', compact('tabEleves','listeGroupes'));
     }
 
+    public function exportBulletinPDF(string $id){
+        $this->user = Eleve::find($id);
+        $this->initializeInfosEleves();
+        foreach($this->tabRessources as $ressource){
+            $this->tabMoyennesRessources[$ressource->code][1]=$this->moyenneParRessource($ressource);
+        }
+        foreach($this->tabCompetences as $competence){
+            $this->tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($competence);
+        }
+        $moyenneSemestre = $this->moyenneSemestre();
+        $user = $this->user;
+        $tabMoyennesCompetences = $this->tabMoyennesCompetences;
+        $tabMoyennesRessources = $this->tabMoyennesRessources;
+        $tabCompetences = $this->tabCompetences;
+        $pdf = PDF::loadView('pdf', compact('user', 'tabMoyennesCompetences', 'tabMoyennesRessources', 'tabCompetences'));
+        $pdf->save(public_path("test.pdf"));
+    }
+
 
 
 }

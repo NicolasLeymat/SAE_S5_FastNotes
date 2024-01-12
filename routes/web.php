@@ -93,6 +93,7 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('ue', UEController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
+    Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 });
 
 

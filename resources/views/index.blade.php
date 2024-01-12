@@ -27,14 +27,7 @@
     <title>Notes Iut</title>
 </head>
 <body>
-    <script>
-      function changerLink(){
-        let comboElement = document.getElementById("groupe_select");
-        let comboValue = comboElement.value;
-        let button_index = document.getElementById("visuNotes");
-        button_index.href = "/visualisation/{{Auth::user()->code}}?semestre=" + comboValue;
-      }
-    </script>
+
     <!--  HEADER  -->
     <header class="header" id="header">
     <nav class="nav container">
@@ -84,6 +77,15 @@
               <a class="Entreprise button button-index" href="{{ route('evaluations') }}"> Accéder à la dashboard professeur </a>
               @endif
               @if (Eleve::find(Auth::user()->code) != null)
+                <script>
+                  function changerLink(){
+                    let comboElement = document.getElementById("groupe_select");
+                    let comboValue = comboElement.value;
+                    let button_index = document.getElementById("visuNotes");
+                    let base_link = button_index.href;
+                    button_index.href = "/visualisation/{{Auth::user()->code}}?semestre=" + comboValue;
+                  }
+                </script>
                 @php 
                   $allGroupe = Historique_Groupes::all()->where('code_etudiant', Auth::user()->code);
                 @endphp

@@ -95,6 +95,8 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
 });
 
+Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
+
 
 Route::get('email', [NotifController::class, 'getRouteMail']);
 

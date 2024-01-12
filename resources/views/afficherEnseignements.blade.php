@@ -8,6 +8,7 @@
                     <th>Code prof</th>
                     <th>Groupe</th>
                     <th>Ressource</th>
+                    <th></th>
                   </tr> 
                 </thead>
                 @for ($i = 0; $i < count($tabEnseignements); $i++)

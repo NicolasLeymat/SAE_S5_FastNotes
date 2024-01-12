@@ -102,6 +102,10 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('groupes', GroupeController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
+    Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');
+    Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
+    Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
+    Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
 });
 
 

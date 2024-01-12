@@ -19,13 +19,13 @@
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des parcours</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les parcours</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherParcours') }}">Afficher les parcours</a><br>
                   <a class="tab-cell button button-admins">Ajouter un parcour</a><br>
                   <a class="tab-cell button button-admins">Ajouter des parcours</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des groupes</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les groupes</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherGroupes') }}">Afficher les groupes</a><br>
                   <a class="tab-cell button button-admins">Ajouter un groupe</a><br>
                   <a class="tab-cell button button-admins">Ajouter de groupes</a><br>
                 </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des ressources</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les ressources</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherRessources') }}">Afficher les ressources</a><br>
                   <a class="tab-cell button button-admins">Ajouter une ressource</a><br>
                   <a class="tab-cell button button-admins">Ajouter des ressources</a><br>
                 </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;">Gestion des enseignements</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les enseignements</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherEns') }}">Afficher les enseignements</a><br>
                   <a class="tab-cell button button-admins">Ajouter un enseignement</a><br>
                   <a class="tab-cell button button-admins">Ajouter des enseignements</a><br>
                 </div>

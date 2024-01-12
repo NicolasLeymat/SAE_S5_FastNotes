@@ -7,6 +7,7 @@
                   <tr>   
                     <th>Nom</th>
                     <th>Parcours</th>
+                    <th></th>
                   </tr> 
                 </thead>
                 @for ($i = 0; $i < count($tabGroupes); $i++)

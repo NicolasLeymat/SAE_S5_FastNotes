@@ -12,7 +12,7 @@
                 </thead>
                 @for ($i = 0; $i < count($tabRessources); $i++)
                   <tr class="tab-row tab-row-clear">
-                    <td class="tab-cell" >{{ $tabRessources[$i]->nom}}</td>
+                    <td class="tab-cell" >{{ $tabRessources[$i]->libelle}}</td>
                     <td class="tab-cell" >{{ $tabRessources[$i]->code}}</td>   
                     <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
                   </tr>

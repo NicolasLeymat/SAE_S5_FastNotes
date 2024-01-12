@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UE;
+use App\Models\Semestre;
+use App\Models\Competence;
 
 class UEController extends Controller
 {
@@ -17,5 +19,44 @@ class UEController extends Controller
         }
         
         return view('listeUE', compact('tabUE','listeCompetences','listeSemestres'));
+    }
+
+    public function create() {
+        $listeSemestres = Semestre::all();
+        $listeCompetences = Competence::all();
+
+        return view('ajoutUE',compact('listeSemestres','listeCompetences'));
+    }
+
+    public function store(Request $request) {
+        
+        $validator =  $request ->validate([
+            'code' => 'required|string|max:255|unique:ue',
+            'libelle' => 'required|string|max:255',
+            'competence'=>'required|string|max:255',
+            'semestre'=>'required|string|max:255']
+        );
+
+        $competence = Competence::findOrFail($request->input('competence'));
+        
+
+        $semestre = Semestre::findOrFail($request->input("semestre"));
+
+
+        $ue = UE::create(['libelle'=>$request->input('libelle'),
+        'code'=>$request->input('code'),
+        'code_competence'=>$competence->code,
+        'id_semestre'=>$semestre->id_semestre]);
+
+        return redirect()->route('ue.index')->withErrors($validator);
+    }
+
+    public function destroy(UE $ue) {
+        
+        $ue->ressources()->detach();
+
+        $ue->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 }

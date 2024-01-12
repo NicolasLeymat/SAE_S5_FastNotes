@@ -10,7 +10,7 @@ class UE extends Model
     use HasFactory;
 
     protected $table = "ue";
-    protected $fillable = ["code", "libelle"];
+    protected $fillable = ["code", "libelle","code_competence","id_semestre"];
 
     public $primaryKey = "code";
 

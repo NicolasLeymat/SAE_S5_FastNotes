@@ -1,5 +1,7 @@
 @extends('layouts.fn')
-@section('title', 'Fast Notes')
+
+@section('title', 'Liste des professeurs')
+
 @section('content')
         <div class="home_container container grid">
           <div class="home_content">
@@ -19,8 +21,12 @@
                     <td class="tab-cell "> {{ $prof["email"] }} </td>
                     <td class="tab-cell">
                     <button class="tab-cell clear-cell del-button" onclick="window.location.href='{{ route('profs.show', $prof['code']) }}'">Afficher informations</button>
-                    </td>                    
-                    <td class="tab-cell "><button class="tab-cell clear-cell del-button " onclick="window.location.href='#'">Supprimer </button> </td>
+                    </td>
+                    <form method="post" action = "{{route ('supprimerProf', ['prof'=>$prof['code']]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell "><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button> </td>
+                    </form>
                   </tr>
                 @endforeach
             </table>

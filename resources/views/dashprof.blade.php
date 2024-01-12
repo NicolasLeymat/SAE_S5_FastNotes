@@ -1,5 +1,7 @@
 @extends('layouts.fn')
-@section('title', 'Fast Notes')
+
+@section('title', 'Liste des évaluations')
+
 @section('content')
         <div class="home_container container grid">
             <div class="home_content dashprof_content">

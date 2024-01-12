@@ -13,7 +13,7 @@ class Semestre extends Model
         "id","libelle"
     ];
     public $timestamps = false;
-    public $primaryKey = "id";
+    public $primaryKey = "id_semestre";
     public $incrementing = false;
 
     public function ue(){
@@ -25,7 +25,7 @@ class Semestre extends Model
     }
 
     public function parcours(){
-        return $this->hasMany(Parcours::class, "id", "id");
+        return $this->hasMany(Parcours::class, "id_semestre", "id_semestre");
     }
 
     public function annee(){

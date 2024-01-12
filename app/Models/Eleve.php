@@ -11,7 +11,7 @@ class Eleve extends Utilisateur
 
     protected $table = "eleves";
 
-    protected $fillable = ['identification', 'id_groupe'];
+    protected $fillable = ['identification', 'id_groupe','code'];
 
 
     public function utilisateur(){

@@ -142,6 +142,14 @@ return new class extends Migration
             $table->primary(['id_groupe', 'code_ressource', 'code_prof']);
         });
 
+        Schema::create('ancien_groupes', function (Blueprint $table) {
+            $table->string("code_etudiant");
+            $table->string("id_groupe");
+            $table->foreign('code_etudiant')->references('code')->on('eleves');
+            $table->foreign('id_groupe')->references('id')->on('groupes');
+            $table->primary(['id_groupe','code_etudiant']);
+        });
+
         
     }
     
@@ -166,5 +174,6 @@ return new class extends Migration
         Schema::dropIfExists('enseignements');
         Schema::dropIfExists('annee');
         Schema::dropIfExists('parcours');
+        Schema::dropIfExists('ancien_groupes');
     }
 };

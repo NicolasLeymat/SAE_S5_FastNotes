@@ -14,7 +14,7 @@ use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\EnseignementController;
 use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\AnneeController;
-
+use App\Http\Controllers\SemestreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,11 +105,13 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('enseignements', EnseignementController::class);
     Route::resource('groupes', GroupeController::class);
     Route::resource('annees', AnneeController::class);
+    Route::resource('semestres', SemestreController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
     Route::get('/afficherAnnees', [AnneeController::class, 'index'])->name('afficherAnnees');
+    Route::get('/afficherSemestres', [SemestreController::class, 'index'])->name('afficherSemestres');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
     

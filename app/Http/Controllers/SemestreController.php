@@ -19,7 +19,7 @@ class SemestreController extends Controller
     public function create() {
         $listeAnnees = Annee::all();
 
-        return view('ajoutSemestre',compact('listeAnnees'));
+        return view('ajouts.ajoutSemestre',compact('listeAnnees'));
     }
 
     public function store(Request $request) {

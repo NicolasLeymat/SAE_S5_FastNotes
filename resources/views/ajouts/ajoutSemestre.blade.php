@@ -16,7 +16,7 @@
     </div>
     @endif
         
-        <form action="{{route('semestre.store')}}" method = "POST" name="form_sem" id="form_sem" class="add_form">
+        <form action="{{route('semestres.store')}}" method = "POST" name="form_sem" id="form_sem" class="add_form">
             <fieldset>
             @csrf
 

@@ -7,14 +7,14 @@
               <div class="items_admin flex_forms">
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des années</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les années</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('annees.index') }}">Afficher les années</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('annees.create') }}">Ajouter une années</a><br>
                   <a class="tab-cell button button-admins">Ajouter des années</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des semestres</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les semestres</a><br>
-                  <a class="tab-cell button button-admins">Ajouter un semestre</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherSemestres') }}" >Afficher les semestres</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('semestres.create') }}">Ajouter un semestre</a><br>
                   <a class="tab-cell button button-admins">Ajouter des semestres</a><br>
                 </div>
                 <div class="flex_divs">

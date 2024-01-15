@@ -15,7 +15,6 @@ use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\EnseignementController;
 use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\AnneeController;
-use App\Http\Controllers\SemestreController;
 
 /*
 |--------------------------------------------------------------------------

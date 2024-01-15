@@ -42,7 +42,7 @@ class EvaluationController extends Controller
                 array_push($results, $eval);
             }
         }
-        return view('dashprof')->with('evals', $results);
+        return view('dashboards.dashprof')->with('evals', $results);
     }
 
     /**
@@ -51,7 +51,7 @@ class EvaluationController extends Controller
     public function create() {
         $listeRessources = Ressource::all();
 
-        return view('ajoutEval',compact('listeRessources'));
+        return view('ajouts.ajoutEval',compact('listeRessources'));
     }
 
     /**
@@ -101,7 +101,7 @@ class EvaluationController extends Controller
             $groupe= array_unique($groupes);
         }
         $evaluation = $this->eval;
-        return view('evaluation',compact('evaluation','eleves','groupe'));        
+        return view('notes.evaluation',compact('evaluation','eleves','groupe'));        
     }
 
     /**
@@ -300,14 +300,14 @@ class EvaluationController extends Controller
 
     public function afficherEvals(){
         $tabEvals = Evaluation::paginate(10);
-        return view('afficherEvals', compact('tabEvals'));
+        return view('affichage_elements.afficherEvals', compact('tabEvals'));
     }
 
     public function showStats(string $idEval){
         $this->initializeInfosEvaluation($idEval);
         $evaluation =$this->eval;
         $stats = $this->boxPlot($idEval);
-        return view('stats',compact('stats','evaluation'));
+        return view('notes.stats',compact('stats','evaluation'));
     }
 
     public function initializeInfosEvaluation($idEval){

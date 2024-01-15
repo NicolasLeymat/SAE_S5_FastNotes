@@ -9,12 +9,11 @@ class AnneeController extends Controller
 {
     public function index() {
         $tabAnnees = Annee::paginate(10);
-        
-        return view('afficherAnnees', compact('tabAnnees'));
+        return view('affichage_elements.afficherAnnees', compact('tabAnnees'));
     }
 
     public function create(){
-        return view('ajoutAnnee');
+        return view('ajouts.ajoutAnnee');
     }
 
     public function store(Request $request){
@@ -39,6 +38,6 @@ class AnneeController extends Controller
             "annee_fin"=>$request->input('afin')
         ]);
 
-        return redirect()->route('annees.index')->withErrors($validator);
+        return redirect()->route('affichage_elements.annees.index')->withErrors($validator);
     }
 }

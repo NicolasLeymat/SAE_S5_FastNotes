@@ -11,12 +11,12 @@ class RessourceController extends Controller
 {
     public function index() {
         $tabRessources = Ressource::paginate(10);
-        return view('afficherRessources', compact('tabRessources'));
+        return view('affichage_elements.afficherRessources', compact('tabRessources'));
     }
 
     public function create(){
         $listeCompetences = UE::all();
-        return view('ajoutRessource', compact('listeCompetences'));
+        return view('ajouts.ajoutRessource', compact('listeCompetences'));
     }
 
     public function store(Request $request) {

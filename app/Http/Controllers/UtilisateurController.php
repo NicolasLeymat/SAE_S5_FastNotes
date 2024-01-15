@@ -20,7 +20,7 @@ class UtilisateurController extends Controller
             $parc = Parcours::findOrFail($grp->parcours);
             $tabParcours[$grp->id]=$parc;
         }
-        return view('ajoutUtilisateur',compact('listeGroupes', 'tabParcours', 'request'));
+        return view('ajouts.ajoutUtilisateur',compact('listeGroupes', 'tabParcours', 'request'));
     }
 
     public function store(Request $request) {

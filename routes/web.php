@@ -38,7 +38,7 @@ Route::middleware('professeur')->group(function () {
 });
 
 Route::get('/dashadmin', function () {
-    return view('dashAdmin');
+    return view('dashboards.dashAdmin');
 })->name('dashadmin');
 
 Route::get('/ajoutEleve', function () {
@@ -95,7 +95,7 @@ Route::middleware('eleve')->group(function () {
 
 Route::middleware('administrateur')->group(function () {
     Route::get('/dashadmin', function () {
-        return view('dashAdmin');
+        return view('dashboards.dashAdmin');
     })->name('dashadmin');
     Route::resource('profs', ProfController::class);
     Route::resource('ue', UEController::class);

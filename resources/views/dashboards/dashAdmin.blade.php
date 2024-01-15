@@ -65,6 +65,12 @@
                   <a class="tab-cell button button-admins">Ajouter un enseignement</a><br>
                   <a class="tab-cell button button-admins">Ajouter des enseignements</a><br>
                 </div>
+                <div class="flex_divs">
+                  <p style="margin-top:10px;color:white;">Gestion des ressources d'un groupe</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherEns') }}">Afficher ressources des groupes</a><br>
+                  <a class="tab-cell button button-admins">Ajouter une ressource à un groupe</a><br>
+                  <a class="tab-cell button button-admins">Ajouter des ressources à un groupe</a><br>
+                </div>
               </div>
             @endauth
           </div>

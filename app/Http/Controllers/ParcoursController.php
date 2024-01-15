@@ -15,6 +15,6 @@ class ParcoursController extends Controller
             array_push($listeSemestres,$parcours->semestre);
             
         }
-        return view('afficherParcours', compact('tabParcours','listeSemestres'));
+        return view('affichage_elements.afficherParcours', compact('tabParcours','listeSemestres'));
     }
 }

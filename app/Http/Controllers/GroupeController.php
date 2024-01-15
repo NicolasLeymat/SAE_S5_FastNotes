@@ -10,6 +10,6 @@ class GroupeController extends Controller
     public function index() {
         $tabGroupes = Groupe::paginate(10);
         
-        return view('afficherGroupes', compact('tabGroupes'));
+        return view('affichage_elements.afficherGroupes', compact('tabGroupes'));
     }
 }

@@ -17,14 +17,14 @@ class UEController extends Controller
             array_push($listeCompetences,$UE->competence) ;
             array_push($listeSemestres,$UE->semestre);
         }
-        return view('listeUE', compact('tabUE','listeCompetences','listeSemestres'));
+        return view('affichage_elements.listeUE', compact('tabUE','listeCompetences','listeSemestres'));
     }
 
     public function create() {
         $listeSemestres = Semestre::all();
         $listeCompetences = Competence::all();
 
-        return view('ajoutUE',compact('listeSemestres','listeCompetences'));
+        return view('ajouts.ajoutUE',compact('listeSemestres','listeCompetences'));
     }
 
     public function store(Request $request) {

@@ -21,7 +21,7 @@ class ProfController extends Controller
         foreach ($tabProf as $prof) {
            array_push($listeUtilisateurs,$prof->utilisateur) ;
         }
-        return view('listeProfs', compact('tabProf','listeUtilisateurs'));
+        return view('affichage_elements.listeProfs', compact('tabProf','listeUtilisateurs'));
     }
 
     public function store(Request $request) {
@@ -72,7 +72,7 @@ class ProfController extends Controller
             //dd($semestre);
             array_push($resListe,["nomRessource" => $enseignement["nom"],"groupe" => $groupe->libelle,"semestre"=>$semestre["libelle"],"periode"=>$semestre["id_annee"]]);
         }
-        return view ('infoProf',compact('utilisateur','resListe'));
+        return view ('affichage_elements.infoProf',compact('utilisateur','resListe'));
 
     }
 

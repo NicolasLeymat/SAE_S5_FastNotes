@@ -11,6 +11,6 @@ class EnseignementController extends Controller
     public function index() {
         $tabEnseignements = Enseignement::paginate(10);
         
-        return view('afficherEnseignements', compact('tabEnseignements'));
+        return view('affichage_elements.afficherEnseignements', compact('tabEnseignements'));
     }
 }

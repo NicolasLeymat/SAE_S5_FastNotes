@@ -32,7 +32,7 @@ class Notif extends Mailable
      */
     public function envelope(): Envelope
     {
-        $nomMatiere = $this->eval->ressource->nom;
+        $nomMatiere = $this->eval->ressource->libelle;
 
         return new Envelope(
             subject: "Nouvelle Note en $nomMatiere",

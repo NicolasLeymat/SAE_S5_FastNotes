@@ -35,7 +35,7 @@ class Groupe extends Model
     }
 
     
-    public function parcours(){
+    public function parcour(){
         return $this->belongsTo(Parcours::class, "parcours","id_parcour");
     }
 }

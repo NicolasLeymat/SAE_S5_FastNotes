@@ -49,7 +49,7 @@ class ProfController extends Controller
         'prenom'=>$request->input('prenom'),
         'code'=>$request->input('code'),
         'password'=>Hash::make($request->input('password')),
-        'email'=>$request->input('code')]);
+        'email'=>$request->input('email')]);
 
         $prof = Professeur::create(['code'=>$request->input('code'), 'isProf'=>true, 'utilisateur'=>$utilisateur]);
 

@@ -17,7 +17,6 @@ class UEController extends Controller
             array_push($listeCompetences,$UE->competence) ;
             array_push($listeSemestres,$UE->semestre);
         }
-        
         return view('listeUE', compact('tabUE','listeCompetences','listeSemestres'));
     }
 

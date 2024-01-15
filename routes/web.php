@@ -103,6 +103,8 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('ressources', RessourceController::class);
     Route::resource('enseignements', EnseignementController::class);
     Route::resource('groupes', GroupeController::class);
+    Route::resource('ressource', RessourceController::class);
+    Route::resource('annee', RessourceController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');

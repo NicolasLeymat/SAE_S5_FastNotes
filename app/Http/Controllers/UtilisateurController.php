@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UtilisateurController extends Controller
 {
-    public function create() {
+    public function create(Request $request) {
         $listeGroupes = Groupe::all();
         $tabParcours = [];
         foreach ($listeGroupes as $grp) {
             $parc = Parcours::findOrFail($grp->parcours);
             $tabParcours[$grp->id]=$parc;
         }
-        //dd ($tabParcours);
-
-        return view('ajoutUtilisateur',compact('listeGroupes', 'tabParcours'));
+        return view('ajoutUtilisateur',compact('listeGroupes', 'tabParcours', 'request'));
     }
 
     public function store(Request $request) {

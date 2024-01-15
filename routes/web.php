@@ -109,12 +109,7 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
-    
-    Route::get('/ajouterProf',function () {
-        return view('ajoutProf');
-    })->name("ajouterProf");
-    
-    Route::post('/ajouter_prof',[ProfController::class, 'store'])->name('ajouter_prof');
+    Route::get('/ajoutUtilisateur', [UtilisateurController::class, 'create'])->name('ajoutUtilisateur');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
 });
 

@@ -10,7 +10,7 @@ class Semestre extends Model
     use HasFactory;
     protected $table = "semestres";
     protected $fillable = [
-        "id","libelle"
+        "id_semestre","libelle", "id_annee"
     ];
     public $timestamps = false;
     public $primaryKey = "id_semestre";

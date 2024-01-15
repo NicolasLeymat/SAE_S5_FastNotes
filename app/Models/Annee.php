@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Annee extends Model
 {
     use HasFactory;
-    protected $table = "annee";
+    protected $table = "annees";
     protected $fillable = [
-        "id","annee_debut", "annee_fin"
+        "id_annee","annee_debut", "annee_fin"
     ];
     public $timestamps = false;
-    public $primaryKey = "id";
+    public $primaryKey = "id_annee";
     public $incrementing = false;
 
     public function ue(){

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Annee extends Model
 {
     use HasFactory;
-    protected $table = "annee";
+    protected $table = "annees";
     protected $fillable = [
         "id","annee_debut", "annee_fin"
     ];

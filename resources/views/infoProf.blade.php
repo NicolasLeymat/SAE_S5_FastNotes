@@ -29,7 +29,29 @@
                 <td class="tab-cell">{{$enseignement["periode"]}}</td>
             </tr>
         @endforeach
+    <form method="post" action="{{ route('ajouterEnseignements') }}">
+        @csrf
+            <tr>
+                <td class="tab-cell">
+                    <select name="ressource">
+                    @foreach ($listeRessources as $ressource)
+                        <option value="{{$ressource->code}}">{{$ressource->libelle}}</option>
+                    @endforeach
+                    </select>
+                </td>
+                <td class="tab-cell centered-cell">                    
+                    <select name="groupe">
+                    @foreach ($listeGroupes as $groupe)
+                        <option value="{{$groupe->code}}">{{$groupe->libelle . "(". $groupe->parcours}}</option>
+                    @endforeach
+                    </select></td>
+                <td class="tab-cell"></td>
+                <td class="tab-cell"></td>
+            </tr>
         </table>
+        <button type="button" onclick="addRow()">Ajouter une ligne</button>
+            <button type="submit">Soumettre</button>
+    </form>
     </div>
 </div>
 

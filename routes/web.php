@@ -109,6 +109,7 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
+    Route::get('/ajouterEnseignements',[EnseignementController::class,'ajouterEnseignements'])->name('ajouterEnseignements');
     
     Route::get('/ajouterProf',function () {
         return view('ajoutProf');

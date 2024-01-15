@@ -13,4 +13,8 @@ class EnseignementController extends Controller
         
         return view('afficherEnseignements', compact('tabEnseignements'));
     }
+
+    public function ajouterEnseignements () {
+        return "ok";
+    }
 }

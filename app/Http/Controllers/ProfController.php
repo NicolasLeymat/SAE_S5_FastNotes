@@ -10,6 +10,7 @@ use App\Models\Semestre;
 use App\Models\Utilisateur;
 use Illuminate\Validation\Rule;
 
+use DB;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -80,6 +81,10 @@ class ProfController extends Controller
         $profId = $request->input('prof');
 
         $prof = Professeur::findOrFail($profId);
+
+        $req = DB::table('enseignements')
+        ->where('code_prof',$prof->code)
+        ->delete();
 
         $prof->delete();
 

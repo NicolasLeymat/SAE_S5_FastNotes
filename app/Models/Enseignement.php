@@ -17,14 +17,14 @@ class Enseignement extends Model
     protected $table = "enseignements";
 
     public function professeur () {
-        return $this->hasOne(Professeur::class,"code_utilisateur","code");
+        return $this->hasOne(Professeur::class,"code","code_prof");
     }
 
     public function ressource () {
-        return $this->hasOne(Ressource::class,"code_ressource","code");
+        return $this->hasOne(Ressource::class,"code","code_ressource");
     }
 
     public function groupe () {
-        return $this->hasOne(Groupe::class,"id_groupe","id");
+        return $this->hasOne(Groupe::class,"id","id_groupe");
     }
 }

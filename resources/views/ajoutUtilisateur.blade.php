@@ -1,5 +1,5 @@
 @extends('layouts.fn')
-@section('title', 'Ajouter un professeur')
+@section('title', 'Ajouter un utilisateur')
 @section('content')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -65,8 +65,12 @@
 
             <label for="type">Type d'utilisateur</label>
             <select name="type" id="type">
-                <option value="professeur">Professeur</option>
-                <option value="eleve">Éleve</option>
+                @if($request->type == 'prof')
+                    <option value="professeur">Professeur</option>
+                @endif
+                @if($request->type == 'eleve')
+                    <option value="eleve">Éleve</option>
+                @endif
             </select>
 
 

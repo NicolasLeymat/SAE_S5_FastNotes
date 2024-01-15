@@ -336,6 +336,7 @@ img {
   border: none;
   border-radius: 0px !important;
   transition: 0.35s;
+  text-decoration: underline;
 }
 
 .del-button:hover{
@@ -393,6 +394,7 @@ img {
   padding: 8px;
   box-sizing: border-box;
   margin-bottom: 16px;
+  margin-top: 15px;
 }
 
 .add_form fieldset {

@@ -20,8 +20,8 @@
                     <td class="tab-cell" >{{ $tabEleves[$i]->code}}</td>
                     <td class="tab-cell" >{{ $tabEleves[$i]->utilisateur->nom}}</td>
                     <td class="tab-cell" >{{ $tabEleves[$i]->utilisateur->prenom}}</td>
-                    <td class="tab-cell "> {{ $listeGroupes[$i]->libelle }} </td>
-                    <td class="tab-cell" >{{ $listeGroupes[$i]->parcours }}</td>
+                    <td class="tab-cell "> {{ optional($listeGroupes[$i])->libelle ?? '-' }} </td>
+                    <td class="tab-cell" >{{ optional($listeGroupes[$i])->parcours ?? '-' }}</td>
                     <td class="tab-cell" ><a class="clear-cell button del-button " href="/pdf/{{ $tabEleves[$i]->code }}"> Télécharger le relevé de notes </a></td>
                     <td><a class="clear-cell button del-button " href="#"> Supprimer </a> </td>
                   </tr>

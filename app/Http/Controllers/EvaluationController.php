@@ -162,9 +162,18 @@ class EvaluationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $evalId = $request->input('eval');
+
+        $eval = Evaluation::findOrFail($evalId);
+
+        $req = DB::table('note_evaluation')
+        ->where('id_evaluation', $evalId)
+        ->delete();
+
+        $eval->delete();
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 
     public function boxPlot($idEval){
@@ -288,15 +297,6 @@ class EvaluationController extends Controller
             }
         }
     }
-
-                    // $profs = $eval->ressource->professeur;
-                    // foreach($profs as $prof) {
-                    //     $rappel = new Rappel($eval,$prof->utilisateur, $groupe);
-                    //     Mail::to($prof->utilisateur->email)->send($rappel);
-
-
-
-
 
     public function afficherEvals(){
         $tabEvals = Evaluation::paginate(10);

@@ -118,6 +118,8 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/ajoutUtilisateur', [UtilisateurController::class, 'create'])->name('ajoutUtilisateur');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
+    Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
+    
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

@@ -66,6 +66,6 @@ class EvaluationImport implements ToCollection,/*WithHeadingRow,*/WithMultipleSh
     }
 
     public function sheets(): array{
-        return ["INFO--Epreuves"=> $this];
+        return ["INFOS-EPREUVES"=> $this];
     }
 }

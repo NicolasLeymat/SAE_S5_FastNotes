@@ -7,7 +7,7 @@
                   <tr>   
                     <th>Parcours</th>
                     <th>Semestre</th>
-                    <th>Annee</th>
+                    <th>Année</th>
                     <th></th>
                   </tr> 
                 </thead>
@@ -16,7 +16,11 @@
                     <td class="tab-cell" >{{ $tabParcours[$i]->id_parcour}}</td>
                     <td class="tab-cell "> {{ $listeSemestres[$i]->libelle }} </td>
                     <td class="tab-cell "> {{ $listeSemestres[$i]->id_annee }} </td> 
-                    <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerParcours', ['id'=>$tabParcours[$i]->id_parcour]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell"><button class="clear-cell button del-button " type="submit">Supprimer </button> </td>
+                    </form>
                   </tr>
                 @endfor
             </table>

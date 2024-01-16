@@ -23,7 +23,11 @@
                     <td class="tab-cell "> {{ $listeGroupes[$i]->libelle }} </td>
                     <td class="tab-cell" >{{ $listeGroupes[$i]->parcours }}</td>
                     <td class="tab-cell" ><a class="clear-cell button del-button " href="/pdf/{{ $tabEleves[$i]->code }}"> Télécharger le relevé de notes </a></td>
-                    <td><a class="clear-cell button del-button " href="#"> Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerEleve', ['eleve'=>$tabEleves[$i]->code]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell "><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button> </td>
+                    </form>  
                   </tr>
                 @endfor
             </table>

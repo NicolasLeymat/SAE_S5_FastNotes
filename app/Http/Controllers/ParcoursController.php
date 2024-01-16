@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Semestre;
+use App\Models\Groupe;
 use App\Models\Parcours;
+use DB;
 
 class ParcoursController extends Controller
 {
@@ -43,5 +45,24 @@ class ParcoursController extends Controller
         $parcours = Parcours::create(['id_parcour' => $request->input('id'), 'id_semestre' => $request->input('semestre')]);
 
         return redirect()->route('parcours.index')->withErrors($validator);
+    }
+
+    public function destroy(Request $request) {
+        $parcoursId = $request->input('id');
+
+        $listeGroupesAssocies = [];
+        $listeGroupesAssocies = DB::table('groupes')->where('parcours', $parcoursId)->get();
+
+        foreach($listeGroupesAssocies as $groupeAssocie) {
+            $groupe = Groupe::findOrFail($groupeAssocie->id);
+            $groupe->parcours = null;
+            $groupe->save();
+        }
+
+        $req = DB::table('parcours')
+        ->where('id_parcour',$parcoursId)
+        ->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 }

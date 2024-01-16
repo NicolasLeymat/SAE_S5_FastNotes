@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class EvaluationImport implements ToCollection, WithStartRow,WithCalculatedFormulas
+class EvaluationImport implements ToCollection,/*WithHeadingRow,*/WithMultipleSheets, WithStartRow,WithCalculatedFormulas
 {
     /**
     * @param Collection $collection
@@ -63,5 +63,9 @@ class EvaluationImport implements ToCollection, WithStartRow,WithCalculatedFormu
 
     public function startRow(): int{
         return 3;
+    }
+
+    public function sheets(): array{
+        return ["INFOS-EPREUVES"=> $this];
     }
 }

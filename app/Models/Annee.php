@@ -16,7 +16,7 @@ class Annee extends Model
     public $primaryKey = "id_annee";
     public $incrementing = false;
 
-    public function ue(){
-        return $this->hasMany(Semestre::class, 'id', 'id');
+    public function semestres(){
+        return $this->hasMany(Semestre::class, 'id_annee', 'id_annee');
     }
 }

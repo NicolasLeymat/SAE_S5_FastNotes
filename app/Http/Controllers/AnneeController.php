@@ -26,18 +26,34 @@ class AnneeController extends Controller
             'unique' => 'Ce code est déja utilisé'
         ];
 
+        $id = $request->input('adeb')."-".$request->input('afin');
+        $request->merge(['id_annee'=>$id]);
+
         $validator =  $request ->validate([
             'adeb'=>['required','numeric','regex:/[0-9]{4}/'],
-            'afin'=>['required','numeric','regex:/[0-9]{4}/','gt:adeb']
-        ]);
+            'afin'=>['required','numeric','regex:/[0-9]{4}/','gt:adeb'],
+            'id_annee' => 'required|unique:annees',
+        ], $customErrorMessages);
 
-        $id = $request->input('adeb')."-".$request->input('afin');
         $annee = Annee::create([
             "id_annee" => $id,
             "annee_debut"=>$request->input('adeb'),
             "annee_fin"=>$request->input('afin')
         ]);
 
-        return redirect()->route('affichage_elements.annees.index')->withErrors($validator);
+        return redirect()->route('annees.index')->withErrors($validator);
     }
+
+    public function destroy(Request $request) {
+        dd($request);
+        $_id_annee = $request->input("annee");
+        $annee = Annee::findOrFail($_id_annee);
+        //dd($annee->semestres);
+        foreach($annee->semestres as $semestre){
+            $semestre->destroy(['semestre'=>$semestre->id_semestre]);
+        }
+        $req = $annee->delete();
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
 }

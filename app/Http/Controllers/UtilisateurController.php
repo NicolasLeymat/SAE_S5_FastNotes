@@ -8,7 +8,10 @@ use App\Models\Parcours;
 use App\Models\Utilisateur;
 use App\Models\Professeur;
 use App\Models\Eleve;
+use Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+
 
 
 class UtilisateurController extends Controller
@@ -67,5 +70,48 @@ class UtilisateurController extends Controller
             return redirect()->route('afficherEleves');
         }
 
+    }
+
+    public function show() {
+        $utilisateur = Auth::user();
+
+        return view('affichage_elements.profil',compact('utilisateur'));
+    }
+
+    public function modifierMDP (Request $request) {
+        
+
+        $customErrorMessages = [
+            'required' => 'Le champ :attribute est requis.',
+            'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
+            'regex' => 'Le champ :attribute doit contenir au moins une majuscule et un chiffre.',
+            'same' => 'Les mots de passe doivent être identiques',
+        ];
+
+        $validator =  $request ->validate([
+            'password' =>'required|string',
+            'code' => 'required|string|max:255|exists:users,code',
+            'new-password' => ['required','string','min:8','regex:/[A-Z]/','regex:/[0-9]/'],
+            'confirm-password'=>'required|same:new-password',
+            ],$customErrorMessages);
+
+        if (!Auth::attempt($request->only('code', 'password'))) {
+            return redirect()->back()->withErrors(['mot_de_passe' => 'Erreur : Mot de passe incorrect'])->withInput();
+        }
+
+        $utilisateur = Utilisateur::findOrFail($request->input("code"));
+        $oldpass = $utilisateur->password;
+        $utilisateur->password = Hash::make($request->input('new-password'));
+        $utilisateur->save();
+
+
+
+
+        return redirect()->back();
+    }
+
+    
+    public function modifierNotif () {
+        return "ok";
     }
 }

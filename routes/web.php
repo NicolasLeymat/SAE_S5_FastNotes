@@ -66,6 +66,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/modifierMDP',[UtilisateurController::class,'modifierMDP'])->name('modifierMDP');
+    Route::post('/modifierNotif',[UtilisateurController::class,'modifierNotif'])->name('modifierNotif');
+    Route::get('/profil',[UtilisateurController::class,'show'])->name('profil');
 });
 
 require __DIR__.'/auth.php';

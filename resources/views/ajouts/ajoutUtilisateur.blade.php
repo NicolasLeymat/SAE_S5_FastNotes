@@ -74,7 +74,7 @@
             </select>
 
 
-            {{ $listeGroupes }}
+
             <label for="groupe" class="info_eleve">Groupe</label>
             <select name="groupe" id="groupe" class="info_eleve">
                 @foreach($listeGroupes as $groupe)

@@ -1,14 +1,14 @@
 @extends('layouts.fn')
 
-@section('title', 'Infos groupe '.$groupe->libelle)
+@section('title', 'Infos groupe '.$groupes->libelle)
 
 @section('content')
 <div class ="home_container container grid">
     <div class="home_content">
         <div>
-        <h2> Informations sur le groupe {{$groupe->libelle}}</h2>
+        <h2> Informations sur le groupe {{$groupes->libelle}}</h2>
 
-        <h3> Identifiant du groupe : {{$groupe->id}}</h3>
+        <h3> Identifiant du groupe : {{$groupes->id}}</h3>
         </div>
         <div class="items_admin flex_forms">
             <div class="flex_divs_tab">
@@ -28,10 +28,22 @@
                         <td class="tab-cell" >{{ $eleves[$i]->utilisateur->code}}</td>
                         <td class="tab-cell" >{{ $eleves[$i]->utilisateur->nom}}</td>
                         <td class="tab-cell" >{{ $eleves[$i]->utilisateur->prenom}}</td>
-                        <td><a class="clear-cell button del-button " href="{{ route('') }}">Supprimer </a> </td>
+                        <td><a class="clear-cell button del-button " href="/supprimerEleveGroupe?id_eleve={{$eleves[$i]->utilisateur->code}}">Supprimer </a> </td>
                     </tr>
                     @endfor
                 </table>
+                <label for="eleves" class="info_eleve">Eleves</label>
+                    <select name="eleves" id="eleves" class="info_eleve">
+                        @foreach($elevesNonGroupe as $eleve)
+                            <option value="{{$eleve->code}}">
+                                @if ($eleve->id_groupe!=null) 
+                                    {{ $eleve->id_groupe." ".$eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                @else
+                                    {{ $eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                @endif
+                            </option>
+                        @endforeach
+                    </select>
             </div>
         </div>
     </div>

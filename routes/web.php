@@ -122,6 +122,7 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
     Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
+    Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
     
 });
 

@@ -1071,7 +1071,7 @@ input::-webkit-inner-spin-button {
 }
 
 .flex_divs{
-  width: 305px;
+  width: 265px;
   aspect-ratio : 1 / 1;
   text-align: center;
   background-color: var(--container-color-admins);

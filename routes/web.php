@@ -111,6 +111,7 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
+    Route::get('/afficherGroupesInfo', [GroupeController::class, 'infoGroupe'])->name('infoGoupes');
     Route::get('/afficherAnnees', [AnneeController::class, 'index'])->name('afficherAnnees');
     Route::get('/afficherSemestres', [SemestreController::class, 'index'])->name('afficherSemestres');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');

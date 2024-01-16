@@ -17,6 +17,15 @@ class GroupeController extends Controller
     public function create() {
         $listeParcours = Parcours::all();
 
-        return view ('ajoutGroupe',compact('listeParcours'));
+        return view ('ajouts.ajoutGroupe',compact('listeParcours'));
     }
+
+    public function infoGroupe(Request $request){
+        //A recup : Liste des eleves, Liste des 
+        $groupe = Groupe::find($request->groupe);
+        $eleves = $groupe->eleves;
+        return view('affichage_elements.infoGroupe', compact('groupe','eleves'));
+    }
+
+    public function 
 }

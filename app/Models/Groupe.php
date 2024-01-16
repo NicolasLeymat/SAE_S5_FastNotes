@@ -34,7 +34,6 @@ class Groupe extends Model
         return $this->belongsToMany(ressource::class,"enseignements", "id_groupe", "code_prof");
     }
 
-    
     public function parcour(){
         return $this->belongsTo(Parcours::class, "parcours","id_parcour");
     }

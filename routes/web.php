@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EleveController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SemestreController;
 use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EvaluationController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\ParcoursController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\EnseignementController;
 use App\Http\Controllers\GroupeController;
-
+use App\Http\Controllers\AnneeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ Route::middleware('professeur')->group(function () {
 });
 
 Route::get('/dashadmin', function () {
-    return view('dashAdmin');
+    return view('dashboards.dashAdmin');
 })->name('dashadmin');
 
 Route::get('/ajoutEleve', function () {
@@ -94,7 +95,7 @@ Route::middleware('eleve')->group(function () {
 
 Route::middleware('administrateur')->group(function () {
     Route::get('/dashadmin', function () {
-        return view('dashAdmin');
+        return view('dashboards.dashAdmin');
     })->name('dashadmin');
     Route::resource('profs', ProfController::class);
     Route::resource('ue', UEController::class);
@@ -103,15 +104,25 @@ Route::middleware('administrateur')->group(function () {
     Route::resource('ressources', RessourceController::class);
     Route::resource('enseignements', EnseignementController::class);
     Route::resource('groupes', GroupeController::class);
+    Route::resource('annees', AnneeController::class);
+    Route::resource('semestres', SemestreController::class);
+    Route::resource('ressource', RessourceController::class);
     Route::get('/afficherEleves', [EleveController::class, 'afficherEleves'])->name('afficherEleves');
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
+    Route::get('/afficherGroupesInfo', [GroupeController::class, 'infoGroupe'])->name('infoGoupes');
+    Route::get('/afficherAnnees', [AnneeController::class, 'index'])->name('afficherAnnees');
+    Route::get('/afficherSemestres', [SemestreController::class, 'index'])->name('afficherSemestres');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
     Route::post('/ajouterEnseignements',[EnseignementController::class,'ajouterEnseignements'])->name('ajouterEnseignements');
     Route::get('/ajoutUtilisateur', [UtilisateurController::class, 'create'])->name('ajoutUtilisateur');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
+    Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
+    Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
+    Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
+    
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

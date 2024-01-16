@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Professeur extends Utilisateur
 {
     use HasFactory;
-
     protected $table = "professeurs";
     protected $fillable = 
         [
@@ -29,7 +28,6 @@ class Professeur extends Utilisateur
 
     public function enseignements()
     {
-        return $this->belongsToMany(Ressource::class, 'enseignements', 'code_prof', 'code_ressource')
-            ->withPivot('id_groupe'); 
+        return $this->hasMany(Enseignement::class, 'code_prof', 'code');
     }
 }

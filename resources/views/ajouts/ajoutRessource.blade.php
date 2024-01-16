@@ -5,7 +5,6 @@
 <div class="home_container container grid">
     <div class="home_content">
     <h2>Ajouter une Ressource </h2>
-
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -16,28 +15,24 @@
     </div>
     @endif
         
-        <form action="{{route('Ressource.store')}}" method = "POST" name="form_ue" id="form_ue" class="add_form">
+        <form action="{{route('ressource.store')}}" method = "POST" name="form_ue" id="form_ue" class="add_form">
             <fieldset>
             @csrf
             <label for="code">Code</label>
             <input name="code" type="text" id="code" placeholder="Code d'identification"></input>
 
             <label for="libelle">Libellé</label>
-            <input name="libelle" type="text" id="libelle" placeholder="Libellé de l'UE"></input>
+            <input name="libelle" type="text" id="libelle" placeholder="Libellé de la ressource"></input>
 
             <label for="competence">Compétence</label>
-            <select name="competence">
+            <select name="competence" style="margin-bottom:15px;">
                 @foreach($listeCompetences as $competence)
                     <option value="{{$competence->code}}">{{$competence->libelle}}</option>
                 @endforeach
             </select>
 
-            <label from="semestre">Semestre</label>
-            <select name="semestre">
-                @foreach($listeSemestres as $semestre)
-                    <option value="{{$semestre->id_semestre}}">{{$semestre->libelle. " ".$semestre->id_annee}}</option>
-                @endforeach
-            </select>
+            <label for="coef">Coefficient</label>
+            <input name="coef" type="number" id="coef" placeholder="Coefficient de la ressource dans la competence" min=0 max=1 step="0.01"></input>
             
             <input name="envoyer" type="submit" class="button" value="Enregistrer"></input>
             </fieldset>

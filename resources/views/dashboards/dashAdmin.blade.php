@@ -6,61 +6,61 @@
             @auth
               <div class="items_admin flex_forms">
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des années</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les années</a><br>
-                  <a class="tab-cell button button-admins">Ajouter une années</a><br>
+                  <p style="margin-top:10px;color:white;">Gestion des années</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('annees.index') }}">Afficher les années</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('annees.create') }}">Ajouter une années</a><br>
                   <a class="tab-cell button button-admins">Ajouter des années</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des semestres</p> <br>
-                  <a class="tab-cell button button-admins">Afficher les semestres</a><br>
-                  <a class="tab-cell button button-admins">Ajouter un semestre</a><br>
+                  <p style="margin-top:10px;color:white;">Gestion des semestres</p> <br>
+                  <a class="tab-cell button button-admins" href="{{ route('afficherSemestres') }}" >Afficher les semestres</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('semestres.create') }}">Ajouter un semestre</a><br>
                   <a class="tab-cell button button-admins">Ajouter des semestres</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des parcours</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des parcours</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherParcours') }}">Afficher les parcours</a><br>
                   <a class="tab-cell button button-admins">Ajouter un parcour</a><br>
                   <a class="tab-cell button button-admins">Ajouter des parcours</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des groupes</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des groupes</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherGroupes') }}">Afficher les groupes</a><br>
                   <a class="tab-cell button button-admins" href="{{route('groupe.create')}}">Ajouter un groupe</a><br>
                   <a class="tab-cell button button-admins">Ajouter de groupes</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des élèves</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des élèves</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEleves') }}">Afficher les élèves</a><br>
                   <a class="tab-cell button button-admins" href="/ajoutUtilisateur?type=eleve">Ajouter un élève</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ajoutEleve') }}">Ajouter des élèves</a>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des UE</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des UE</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('ue.index') }}">Afficher les UE</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ue.create')}}">Ajouter une UE</a><br>
                   <a class="tab-cell button button-admins">Ajouter des UE</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des ressources</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des ressources</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherRessources') }}">Afficher les ressources</a><br>
-                  <a class="tab-cell button button-admins">Ajouter une ressource</a><br>
+                  <a class="tab-cell button button-admins" href= "{{ route('ressource.create') }}">Ajouter une ressource</a><br>
                   <a class="tab-cell button button-admins">Ajouter des ressources</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des évaluations</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des évaluations</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEvals') }}">Afficher les évaluations</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('evaluation.create') }}">Ajouter une évaluation</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ajoutEval') }}">Ajouter des évaluations</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des professeurs</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des professeurs</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('profs.index') }}">Afficher les professeurs</a><br>
                   <a class="tab-cell button button-admins" href="/ajoutUtilisateur?type=prof">Ajouter un professeur</a><br>
                   <a class="tab-cell button button-admins">Ajouter des professeurs</a><br>
                 </div>
                 <div class="flex_divs">
-                  <p style="margin-top:10px;">Gestion des enseignements</p> <br>
+                  <p style="margin-top:10px;color:white;">Gestion des enseignements</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEns') }}">Afficher les enseignements</a><br>
                   <a class="tab-cell button button-admins">Ajouter un enseignement</a><br>
                   <a class="tab-cell button button-admins">Ajouter des enseignements</a><br>

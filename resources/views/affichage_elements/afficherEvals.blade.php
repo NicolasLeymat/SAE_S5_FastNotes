@@ -21,11 +21,16 @@
                     <td class="tab-cell" >{{ $tabEvals[$i]->date_epreuve }}</td>
                     <td class="tab-cell" >{{ $tabEvals[$i]->date_rattrapage }}</td>
                     <td class="tab-cell" >{{ $tabEvals[$i]->code_resource }}</td>
-                    <td class="tab-cell "><button class="tab-cell clear-cell del-button " onclick="window.location.href='#'">Supprimer </button> </td>
+                    <form method="post" action = "{{route ('supprimerEval', ['eval'=>$tabEvals[$i]->id]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell "><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button> </td>
+                    </form>
                   </tr>
                 @endfor
             </table>
             {{$tabEvals->links('vendor.pagination.simple-default')}}
           </div>
         </div>
+        {{ $tabEvals->links() }}
 @endsection

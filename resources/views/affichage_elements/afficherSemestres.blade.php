@@ -5,17 +5,15 @@
             <table class="eleve-tab">
                 <thead class="tab-row-dark">
                   <tr>   
-                    <th>Code prof</th>
-                    <th>Groupe</th>
-                    <th>Ressource</th>
+                    <th>Titre</th>
+                    <th>Année du semestre</th>
                     <th></th>
                   </tr> 
                 </thead>
-                @for ($i = 0; $i < count($tabEnseignements); $i++)
+                @for ($i = 0; $i < count($tabSemestres); $i++)
                   <tr class="tab-row tab-row-clear">
-                    <td class="tab-cell" >{{ $tabEnseignements[$i]->code_prof}}</td>
-                    <td class="tab-cell" >{{ $tabEnseignements[$i]->id_groupe}}</td>
-                    <td class="tab-cell" >{{ $tabEnseignements[$i]->code_ressource}}</td>  
+                    <td class="tab-cell" >{{ $tabSemestres[$i]->libelle}}</td>
+                    <td class="tab-cell" >{{ $tabSemestres[$i]->id_annee}}</td>  
                     <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
                   </tr>
                 @endfor

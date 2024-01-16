@@ -17,10 +17,14 @@ class UtilisateurController extends Controller
         $listeGroupes = Groupe::all();
         $tabParcours = [];
         foreach ($listeGroupes as $grp) {
-            $parc = Parcours::findOrFail($grp->parcours);
-            $tabParcours[$grp->id]=$parc;
+            if($grp->parcours!=null){
+                $parc = Parcours::findOrFail($grp->parcours);
+                $tabParcours[$grp->id]=$parc;
+            }else{
+                $tabParcours[$grp->id]=null;
+            }
         }
-        return view('ajoutUtilisateur',compact('listeGroupes', 'tabParcours', 'request'));
+        return view('ajouts.ajoutUtilisateur',compact('listeGroupes', 'tabParcours', 'request'));
     }
 
     public function store(Request $request) {

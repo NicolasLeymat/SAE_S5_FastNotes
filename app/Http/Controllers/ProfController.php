@@ -11,6 +11,7 @@ use App\Models\Utilisateur;
 use App\Models\Ressource;
 use Illuminate\Validation\Rule;
 
+use DB;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -22,7 +23,7 @@ class ProfController extends Controller
         foreach ($tabProf as $prof) {
            array_push($listeUtilisateurs,$prof->utilisateur) ;
         }
-        return view('listeProfs', compact('tabProf','listeUtilisateurs'));
+        return view('affichage_elements.listeProfs', compact('tabProf','listeUtilisateurs'));
     }
 
     public function store(Request $request) {
@@ -74,7 +75,7 @@ class ProfController extends Controller
             $semestre = $parcours->semestre;
             array_push($resListe,["nomRessource" => $enseignement["libelle"],"groupe" => $groupe->libelle,"semestre"=>$semestre["libelle"],"periode"=>$semestre["id_annee"]]);
         }
-        return view ('infoProf',compact('utilisateur','resListe','listeRessources','listeGroupes'));
+        return view ('affichage_elements.infoProf',compact('utilisateur','resListe'));
 
     }
 
@@ -82,8 +83,14 @@ class ProfController extends Controller
         $profId = $request->input('prof');
 
         $prof = Professeur::findOrFail($profId);
+        $user = Utilisateur::findOrFail($profId);
+
+        $req = DB::table('enseignements')
+        ->where('code_prof',$prof->code)
+        ->delete();
 
         $prof->delete();
+        $user->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }

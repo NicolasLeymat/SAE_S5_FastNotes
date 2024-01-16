@@ -14,6 +14,7 @@ use App\Models\Ressource;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use DB;
 
 
 class EleveController extends Controller
@@ -32,7 +33,7 @@ class EleveController extends Controller
     
     public function index(){
         $result = Utilisateur::paginate(10);
-        return view('visuNote', $result);
+        return view('notes.visuNote', $result);
     }
 
     public function show(string $id,Request $request){
@@ -47,7 +48,7 @@ class EleveController extends Controller
             $this->tabMoyennesCompetences[$competence->libelle] = $this->moyenneParCompetence($competence);
         }
         $moyenneSemestre = $this->moyenneSemestre();
-        return view('visuNote')->with('tabEvaluations',$this->tabEvaluations)->with('tabNotes',$this->tabNotes)->with('tabMoyennesRessources',$this->tabMoyennesRessources)->with('tabMoyennesCompetences',$this->tabMoyennesCompetences)->with('moyenneSemestre',$moyenneSemestre);
+        return view('notes.visuNote')->with('tabEvaluations',$this->tabEvaluations)->with('tabNotes',$this->tabNotes)->with('tabMoyennesRessources',$this->tabMoyennesRessources)->with('tabMoyennesCompetences',$this->tabMoyennesCompetences)->with('moyenneSemestre',$moyenneSemestre);
     }
     
     public function ressourcesEleve(){
@@ -202,7 +203,7 @@ class EleveController extends Controller
             array_push($listeGroupes,$Eleves->groupe) ;
         }
         
-        return view('afficherEleves', compact('tabEleves','listeGroupes'));
+        return view('affichage_elements.afficherEleves', compact('tabEleves','listeGroupes'));
     }
 
     public function exportBulletinPDF(string $id){
@@ -235,6 +236,20 @@ class EleveController extends Controller
             readfile($file);
     }
 
+    public function destroy(Request $request) {
+        $eleveId = $request->input('eleve');
 
+        $eleve = Eleve::findOrFail($eleveId);
+        $user = Utilisateur::findOrFail($eleveId);
+
+        $req = DB::table('note_evaluation')
+        ->where('code_eleve',$eleveId)
+        ->delete();
+
+        $eleve->delete();
+        $user->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
 
 }

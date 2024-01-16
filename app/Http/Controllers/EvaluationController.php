@@ -45,7 +45,7 @@ class EvaluationController extends Controller
                 array_push($results, $eval);
             }
         }
-        return view('dashprof')->with('evals', $results);
+        return view('dashboards.dashprof')->with('evals', $results);
     }
 
     /**
@@ -54,7 +54,7 @@ class EvaluationController extends Controller
     public function create() {
         $listeRessources = Ressource::all();
 
-        return view('ajoutEval',compact('listeRessources'));
+        return view('ajouts.ajoutEval',compact('listeRessources'));
     }
 
     /**
@@ -134,7 +134,8 @@ class EvaluationController extends Controller
             }
             $groupe= array_unique($groupes);
         }
-        return view('evaluation',compact('evaluation','eleves','groupe','stats'));        
+        $evaluation = $this->eval;
+        return view('notes.evaluation',compact('evaluation','eleves','groupe'));        
     }
 
     /**
@@ -202,9 +203,18 @@ class EvaluationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $evalId = $request->input('eval');
+
+        $eval = Evaluation::findOrFail($evalId);
+
+        $req = DB::table('note_evaluation')
+        ->where('id_evaluation', $evalId)
+        ->delete();
+
+        $eval->delete();
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 
     public function boxPlot($idEval){
@@ -354,23 +364,14 @@ class EvaluationController extends Controller
         }
     }
 
-                    // $profs = $eval->ressource->professeur;
-                    // foreach($profs as $prof) {
-                    //     $rappel = new Rappel($eval,$prof->utilisateur, $groupe);
-                    //     Mail::to($prof->utilisateur->email)->send($rappel);
-
-
-
-
-
     public function afficherEvals(){
         $tabEvals = Evaluation::paginate(10);
-        return view('afficherEvals', compact('tabEvals'));
+        return view('affichage_elements.afficherEvals', compact('tabEvals'));
     }
 
     public function showStats(string $idEval){
         $stats = $this->boxPlot($idEval);
         $evaluation = Evaluation::find($idEval);
-        return view('stats',compact('stats','evaluation'));
+        return view('notes.stats',compact('stats','evaluation'));
     }
 }

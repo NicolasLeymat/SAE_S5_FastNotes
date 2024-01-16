@@ -8,8 +8,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ElevesImport implements ToCollection, WithHeadingRow
+class ElevesImport implements ToCollection, WithMultipleSheets, WithHeadingRow
 {
     /**
     * @param Collection $rows
@@ -32,5 +33,9 @@ class ElevesImport implements ToCollection, WithHeadingRow
                 'id_groupe' => $row["groupe"]
             ]);
         }
+    }
+
+    public function sheets(): array{
+        return ["INFOS-ELEVES"=> $this];
     }
 }

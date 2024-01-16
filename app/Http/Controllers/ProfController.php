@@ -81,12 +81,14 @@ class ProfController extends Controller
         $profId = $request->input('prof');
 
         $prof = Professeur::findOrFail($profId);
+        $user = Utilisateur::findOrFail($profId);
 
         $req = DB::table('enseignements')
         ->where('code_prof',$prof->code)
         ->delete();
 
         $prof->delete();
+        $user->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }

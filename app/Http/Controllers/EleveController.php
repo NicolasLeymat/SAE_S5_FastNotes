@@ -14,6 +14,7 @@ use App\Models\Ressource;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use DB;
 
 
 class EleveController extends Controller
@@ -235,6 +236,20 @@ class EleveController extends Controller
             readfile($file);
     }
 
+    public function destroy(Request $request) {
+        $eleveId = $request->input('eleve');
 
+        $eleve = Eleve::findOrFail($eleveId);
+        $user = Utilisateur::findOrFail($eleveId);
+
+        $req = DB::table('note_evaluation')
+        ->where('code_eleve',$eleveId)
+        ->delete();
+
+        $eleve->delete();
+        $user->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
 
 }

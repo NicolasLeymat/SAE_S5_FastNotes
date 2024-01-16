@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UE;
 use Illuminate\Http\Request;
 use App\Models\Ressource;
+use DB;
 
 
 class RessourceController extends Controller
@@ -50,5 +51,31 @@ class RessourceController extends Controller
         ]);
 
         return redirect()->route('ressource.index')->withErrors($validator);
+    }
+
+    public function destroy(Request $request) {
+        $ressourceCode = $request->input('ressource');
+
+        $ressource = Ressource::findOrFail($ressourceCode);
+
+        $delEnseignements = DB::table('enseignements')
+        ->where('code_ressource',$ressourceCode)
+        ->delete();
+
+        $delCoeff = DB::table('coefficient_ue')
+        ->where('code_ressource', $ressourceCode)
+        ->delete();
+
+        $delRessourceGroupe = DB::table('ressource_groupe')
+        ->where('code_ressource', $ressourceCode)
+        ->delete();
+
+        foreach($ressource->evaluations as $eval){
+            $eval->destroy(['eval'=>$eval->id]);
+        }
+
+        $ressource->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 }

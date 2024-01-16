@@ -120,7 +120,9 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
     Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
     Route::delete('supprimerParcours',[ParcoursController::class, 'destroy' ])->name('supprimerParcours');
-    
+    Route::delete('supprimerGroupe',[GroupeController::class, 'destroy' ])->name('supprimerGroupe');
+    Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
+    Route::delete('supprimerRessource',[RessourceController::class, 'destroy' ])->name('supprimerRessource');
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

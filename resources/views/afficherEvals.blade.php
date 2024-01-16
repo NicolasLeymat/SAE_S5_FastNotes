@@ -25,6 +25,7 @@
                   </tr>
                 @endfor
             </table>
+            {{$tabEvals->links('vendor.pagination.simple-default')}}
           </div>
         </div>
 @endsection

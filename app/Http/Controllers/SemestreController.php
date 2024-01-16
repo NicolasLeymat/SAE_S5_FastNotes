@@ -58,13 +58,14 @@ class SemestreController extends Controller
         $_id_semestre = $request->input("semestre");
         $semestre = Semestre::findOrFail($_id_semestre);
         
-        /*foreach($semestre->ue as $u){
+        foreach($semestre->ue as $u){
             $u->id_semestre = null;
-        }*/
-
-        /*foreach($semestre->parcours as $p){
-            $p->destroy(['id'=>$parcours->id_parcour]);
-        }*/
+            $u->save();
+        }
+        foreach($semestre->parcours as $p){
+            $req = new Request(['id'=>$p->id_parcour]);
+            app(ParcoursController::class)->destroy($req);
+        }
 
         $req = $semestre->delete();
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');

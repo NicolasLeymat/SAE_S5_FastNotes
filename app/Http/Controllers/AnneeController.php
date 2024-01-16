@@ -45,12 +45,13 @@ class AnneeController extends Controller
     }
 
     public function destroy(Request $request) {
-        dd($request);
         $_id_annee = $request->input("annee");
         $annee = Annee::findOrFail($_id_annee);
-        //dd($annee->semestres);
         foreach($annee->semestres as $semestre){
-            $semestre->destroy(['semestre'=>$semestre->id_semestre]);
+            //dd($semestre->id_semestre);
+            //$semestre->oh(['semestre'=>$semestre->id_semestre]);
+            $req = new Request(['semestre'=>$semestre->id_semestre]);
+            app(SemestreController::class)->destroy($req);
         }
         $req = $annee->delete();
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');

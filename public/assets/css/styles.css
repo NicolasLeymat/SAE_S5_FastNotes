@@ -508,6 +508,10 @@ img {
   transition: 0.35s;
 }
 
+.ligne_ajout {
+  display: none;
+}
+
 input.checkbox_missing {
   transform: scale(1.5);
 }

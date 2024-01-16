@@ -8,6 +8,7 @@ use App\Models\Groupe;
 use App\Models\Parcours;
 use App\Models\Semestre;
 use App\Models\Utilisateur;
+use App\Models\Ressource;
 use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Hash;
@@ -64,13 +65,14 @@ class ProfController extends Controller
         $prof = Professeur::with('enseignements')->findOrFail($idProf);
         $utilisateur = $prof->utilisateur;
         $enseignements = $prof->enseignements;
+        $listeRessources = Ressource::all();
+        $listeGroupes = Groupe::all();
         $resListe = [];
         foreach ($enseignements as $enseignement) {
             $groupe = Groupe::findOrFail($enseignement->pivot->id_groupe);
             $parcours = Parcours::findOrFail($groupe->parcours);
             $semestre = $parcours->semestre;
-            //dd($semestre);
-            array_push($resListe,["nomRessource" => $enseignement["nom"],"groupe" => $groupe->libelle,"semestre"=>$semestre["libelle"],"periode"=>$semestre["id_annee"]]);
+            array_push($resListe,["nomRessource" => $enseignement["libelle"],"groupe" => $groupe->libelle,"semestre"=>$semestre["libelle"],"periode"=>$semestre["id_annee"]]);
         }
         return view ('affichage_elements.infoProf',compact('utilisateur','resListe'));
 

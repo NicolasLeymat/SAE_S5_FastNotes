@@ -115,6 +115,7 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherSemestres', [SemestreController::class, 'index'])->name('afficherSemestres');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
+    Route::post('/ajouterEnseignements',[EnseignementController::class,'ajouterEnseignements'])->name('ajouterEnseignements');
     Route::get('/ajoutUtilisateur', [UtilisateurController::class, 'create'])->name('ajoutUtilisateur');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
 });

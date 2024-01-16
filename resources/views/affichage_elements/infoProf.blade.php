@@ -13,7 +13,12 @@
         </div>
 
         <h2> Enseignements </h2>
-        <table class="note-tab">
+ 
+
+        <form method="post" action="{{ route('ajouterEnseignements') }}" class="add_form">
+        @csrf
+        <input type="hidden" name="professeur" value = "{{ $utilisateur->code }}">
+        <table class="note-tab" id="enseign_table">
             <tr class="tab-row tab-row-dark">
                 <th>Ressource</th>
                 <th>Groupe</th>
@@ -29,9 +34,94 @@
                 <td class="tab-cell">{{$enseignement["periode"]}}</td>
             </tr>
         @endforeach
+            <tr class="ligne_ajout">
+                <td class="tab-cell">
+                    <select>
+                    @foreach ($listeRessources as $ressource)
+                        <option value="{{$ressource->code}}">{{$ressource->libelle}}</option>
+                    @endforeach
+                    </select>
+                </td>
+                <td class="tab-cell centered-cell">                    
+                    <select>
+                    @foreach ($listeGroupes as $groupe)
+                        <option value="{{$groupe->id}}">{{$groupe->libelle . " (". $groupe->parcour->semestre->libelle. " ".$groupe->parcour->semestre->id_annee.")"}}</option>
+                    @endforeach
+                    </select></td>
+                <td class="tab-cell groupe-cell"></td>
+                <td class="tab-cell semestre-cell"></td>
+                <td><button type="button" class="button del-button" onclick="removeRow(this)">Supprimer</button></td>
+            </tr>
         </table>
+        <button type="button" onclick="addRow()" class="button">Ajouter un enseignement</button>
+            <button type="submit" class="button" disabled  id="valider">Confirmer les ajouts</button>
+    </form>
     </div>
 </div>
 
-
 @endsection
+<script>
+    let rowCounter = 0;
+    let compteur = 0;
+    let boutonValider = null;
+    document.addEventListener('DOMContentLoaded', function() {
+        boutonValider = document.getElementById("valider");
+        boutonValider.style.display = "none";
+
+
+
+    })
+
+
+
+    function addRow() {
+        var tableau = document.getElementById("enseign_table");
+        var ligne = document.querySelector(".ligne_ajout");
+        boutonValider.removeAttribute("disabled");
+        boutonValider.style.display = "inline-block";
+
+        var nouvelle_ligne = ligne.cloneNode(true);
+        var select = nouvelle_ligne.querySelectorAll("select");
+
+        select[0].name = "ressource["+rowCounter+"]";
+        select[1].name = "groupe["+rowCounter+"]";
+        let cellGroupe = select[1].parentNode.nextElementSibling;
+        let cellAnnees = cellGroupe.nextElementSibling;
+        let selectedValue = select[1].options[0].innerHTML;
+        let tabString = selectedValue.split(" ")
+        cellGroupe.innerHTML = tabString[1].split("(")[1]+" "+tabString[2];
+        cellAnnees.innerHTML = tabString[3].split(")")[0];
+
+        
+        select[1].addEventListener('change',function (event) {
+            selectedValue = event.target.options[event.target.selectedIndex].innerHTML;
+            console.log("Nouvelle valeur sélectionnée : " + selectedValue);
+            tabString = selectedValue.split(" ")
+            console.log(tabString[1].split('('));
+            cellGroupe.innerHTML = tabString[1].split("(")[1]+" "+tabString[2];
+            cellAnnees.innerHTML = tabString[3].split(")")[0];
+
+
+        })
+
+        console.log(select.name);
+
+        nouvelle_ligne.classList.remove("ligne_ajout");
+
+        tableau.appendChild(nouvelle_ligne);
+
+        rowCounter++;
+        compteur++;
+    }
+
+    function removeRow(button) {
+        const row = button.closest("tr");
+        compteur--;
+        if (compteur <=0) {
+            boutonValider.style.display = "none"
+        }
+        row.remove();
+    }
+
+
+</script>

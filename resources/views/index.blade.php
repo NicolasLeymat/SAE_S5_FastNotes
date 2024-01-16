@@ -69,7 +69,7 @@
         <div class="home_container container grid">
           <div class="home_content-fix">
             @auth
-              <h2 class="section_title">Bienvenue sur Fast Notes  </br>M/Mme. {{ Auth::user()->nom }} {{ Auth::user()->prenom }} </h2>
+              <h2 class="section_title">Bienvenue sur Fast Notes  </br>{{ Auth::user()->nom }} {{ Auth::user()->prenom }} </h2>
               @if(Admin::find(Auth::user()->code) != null)
               <a class="Entreprise button button-index" href="{{ route('dashadmin') }}"> Accéder à la dashboard Admin </a>
               @endif

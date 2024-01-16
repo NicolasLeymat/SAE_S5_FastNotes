@@ -42,7 +42,7 @@ Route::get('/dashadmin', function () {
 })->name('dashadmin');
 
 Route::get('/ajoutEleve', function () {
-    return view('ajoutEleves');
+    return view('ajouts.ajoutEleves');
 })->name('ajoutEleve');
 
 Route::get('/ajoutEval', function () {

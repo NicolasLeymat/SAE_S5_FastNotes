@@ -50,11 +50,13 @@ class SemestreController extends Controller
         'libelle'=>$libelle,
         'id_annee'=>$annee_verif->id_annee]);
 
-        return redirect()->route('semestre.index')->withErrors($validator);
+        return redirect()->route('semestres.index')->withErrors($validator);
 
     }
 
-    public function destroy(UE $ue) {
-        //...
+    public function destroy(Request $request) {
+        $_id_semestre = $request->input("semestre");
+        $req = Semestre::findOrFail($_id_semestre)->delete();
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
     }
 }

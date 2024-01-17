@@ -131,7 +131,9 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
     Route::delete('supprimerRessource',[RessourceController::class, 'destroy' ])->name('supprimerRessource');
     Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
+    Route::get('/supprimerRessourceGroupe',[GroupeController::class, 'delRessourceFromGroupes' ])->name('supprimerRessourceGroupe');
     Route::post('/addEleveGroupe',[GroupeController::class, 'addEleveToGroupe' ])->name('addEleveGroupe');
+    Route::post('/addRessourceGroupe',[GroupeController::class, 'addRessourceToGroupe' ])->name('addRessourceGroupe');
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

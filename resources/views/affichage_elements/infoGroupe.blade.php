@@ -67,27 +67,32 @@
                     <tr class="tab-row tab-row-clear">
                         <td class="tab-cell" >{{ $ressources[$i]->code}}</td>
                         <td class="tab-cell" >{{ $ressources[$i]->libelle}}</td>
-                        <td><a class="clear-cell button del-button " href="/supprimerEleveGroupe?id_ressource={{$ressources[$i]->code}}">Supprimer </a> </td>
+                        <td><a class="clear-cell button del-button " href="/supprimerRessourceGroupe?id_ressource={{$ressources[$i]->code}}&groupeId={{ $groupes->id }}">Supprimer </a> </td>
                     </tr>
                     @endfor
                 </table>
                 </div>
-                <form action="{{ route('addEleveGroupe') }}" class="" method="post">
+                <form action="{{ route('addRessourceGroupe') }}" class="" method="post">
                 @csrf
                     <label for="eleves" class="info_eleve">Ressources :</label>
                         <input type="hidden" name="groupe_id" value="{{$groupes->id}}"></input>
-                        <select name="eleves" id="eleves" class="info_eleve">
-                            @foreach($elevesNonGroupe as $eleve)
-                                <option value="{{$eleve->code}}">
-                                    @if ($eleve->id_groupe!=null) 
-                                        {{ $eleve->id_groupe." ".$eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
-                                    @else
-                                        {{ $eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
-                                    @endif
+                        <select name="ressource" id="ressource" class="info_eleve">
+                            @foreach($ressourceNonGroupe as $ressource)
+                                <option value="{{$ressource->code}}">
+                                    {{ $ressource->code." ".$ressource->libelle}}
                                 </option>
                             @endforeach
                         </select>
-                        <input name="envoyer" type="submit" class="button" value="Ajouter l'élève"></input>
+                        
+                        <select name="prof" id="prof" class="info_eleve">
+                            @foreach($profs as $prof)
+                                <option value="{{$prof->utilisateur->code}}">
+                                    {{ $prof->utilisateur->code." ".$prof->utilisateur->nom." ".$prof->utilisateur->prenom}}
+                                </option>
+                            @endforeach
+                        </select>
+                        <br>
+                        <input name="envoyer" type="submit" class="button" value="Ajouter la ressource"></input>
                     </form>
             </div>
         </div>

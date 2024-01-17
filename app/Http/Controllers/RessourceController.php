@@ -6,7 +6,8 @@ use App\Models\UE;
 use Illuminate\Http\Request;
 use App\Models\Ressource;
 use DB;
-
+use Excel;
+use App\Imports\RessourceImport;
 
 class RessourceController extends Controller
 {
@@ -77,5 +78,19 @@ class RessourceController extends Controller
         $ressource->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            Excel::import(new RessourceImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyRessources', 'Les ressources ont été ajoutées avec succès');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

@@ -16,7 +16,12 @@
                     <td class="tab-cell" >{{ $tabAnnees[$i]->id_annee}}</td>
                     <td class="tab-cell" >{{ $tabAnnees[$i]->annee_debut}}</td>
                     <td class="tab-cell" >{{ $tabAnnees[$i]->annee_fin}}</td>   
-                    <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerAnnee', ['annee'=>$tabAnnees[$i]->id_annee]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class=" "><button class="clear-cell button del-button " type="submit">Supprimer </button> </td>
+                    </form>  
+
                   </tr>
                 @endfor
             </table>

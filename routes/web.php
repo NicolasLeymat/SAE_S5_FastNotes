@@ -61,6 +61,10 @@ Route::get('/ajoutRessource', function () {
     return view('ajouts.ajoutRessources');
 })->name('ajoutRessource');
 
+Route::get('/ajoutEnseignements', function () {
+    return view('ajouts.ajoutEnseignements');
+})->name('ajoutEnseignements');
+
 Route::get('/ajoutSemestre', function () {
     return view('ajouts.ajoutSemestres');
 })->name('ajoutSemestre');
@@ -108,6 +112,7 @@ Route::post('importRessources', [RessourceController::class, 'import'])->name("i
 Route::post('importSemestres', [SemestreController::class, 'import'])->name("importSemestres");
 Route::post('importAnnees', [AnneeController::class, 'import'])->name("importAnnees");
 Route::post('importParcours', [ParcoursController::class, 'import'])->name("importParcours");
+Route::post('importEnseignements', [EnseignementController::class, 'import'])->name("importEnseignements");
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);

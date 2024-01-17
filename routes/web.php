@@ -45,6 +45,10 @@ Route::get('/ajoutEleve', function () {
     return view('ajouts.ajoutEleves');
 })->name('ajoutEleve');
 
+Route::get('/ajoutAnnees', function () {
+    return view('ajouts.ajoutAnnees');
+})->name('ajoutAnnees');
+
 Route::get('/ajoutEval', function () {
     return view('ajouts.ajoutEvals');
 })->name('ajoutEval');
@@ -88,6 +92,7 @@ Route::post('importEval', [EvaluationController::class, 'import'])->name("import
 Route::post('importEvals', [EvaluationController::class, 'import'])->name("importEvals");
 Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
 Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
+Route::post('importAnnees', [AnneeController::class, 'import'])->name("importAnnees");
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);

@@ -16,7 +16,7 @@ use Excel;
 class GroupeController extends Controller
 {
     public function index() {
-        $tabGroupes = Groupe::paginate(10);
+        $tabGroupes = Groupe::all();
         
         return view('affichage_elements.afficherGroupes', compact('tabGroupes'));
     }

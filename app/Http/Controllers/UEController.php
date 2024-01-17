@@ -12,7 +12,7 @@ use Excel;
 class UEController extends Controller
 {
     public function index(){
-        $tabUE = UE::paginate(10);
+        $tabUE = UE::all();
         $listeCompetences = [];
         $listeSemestres = [];
         foreach ($tabUE as $UE) {

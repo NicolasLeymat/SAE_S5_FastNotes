@@ -12,7 +12,7 @@ use App\Imports\RessourceImport;
 class RessourceController extends Controller
 {
     public function index() {
-        $tabRessources = Ressource::paginate(10);
+        $tabRessources = Ressource::all();
         return view('affichage_elements.afficherRessources', compact('tabRessources'));
     }
 

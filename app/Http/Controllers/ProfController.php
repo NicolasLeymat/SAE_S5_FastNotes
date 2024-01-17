@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Hash;
 class ProfController extends Controller
 {
     public function index(){
-        $tabProf = Professeur::paginate(10);
+        $tabProf = Professeur::all();
         $listeUtilisateurs = [];
         foreach ($tabProf as $prof) {
-           array_push($listeUtilisateurs,$prof->utilisateur) ;
+            array_push($listeUtilisateurs,$prof->utilisateur) ;
         }
         return view('affichage_elements.listeProfs', compact('tabProf','listeUtilisateurs'));
     }

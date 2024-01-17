@@ -2,7 +2,8 @@
 @section('title', 'Fast Notes')
 @section('content')
         <div class="home_container container grid">
-            <table class="eleve-tab">
+          <div class="scroll_div_large">  
+            <table class="eleve-tab scroll_table">
                 <thead class="tab-row-dark">
                   <tr>   
                     <th>Parcours</th>
@@ -25,4 +26,5 @@
                 @endfor
             </table>
           </div>
+        </div>
 @endsection

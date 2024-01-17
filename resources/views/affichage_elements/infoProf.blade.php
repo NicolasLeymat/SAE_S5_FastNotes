@@ -41,10 +41,20 @@
                     @endforeach
                     </select>
                 </td>
-                <td class="tab-cell centered-cell">                    
+                <td class="tab-cell centered-cell">  
+                @php
+                    function getLibelleSemestre ($groupe) {
+                        return optional(optional($groupe->parcour)->semestre)->libelle ?? '(aucun semestre)';
+                    }
+
+                    function getIdAnnee ($groupe) {
+                        return optional(optional($groupe->parcour)->semestre)->id_annee ?? ' - ';
+                    }
+                @endphp    
+                
                     <select>
                     @foreach ($listeGroupes as $groupe)
-                        <option value="{{$groupe->id}}">{{$groupe->libelle . " (". $groupe->parcour->semestre->libelle. " ".$groupe->parcour->semestre->id_annee.")"}}</option>
+                        <option value="{{$groupe->id}}">{{$groupe->libelle ." ". getLibelleSemestre($groupe)." ".getIdAnnee($groupe)}}</option>
                     @endforeach
                     </select></td>
                 <td class="tab-cell groupe-cell"></td>
@@ -88,17 +98,18 @@
         let cellAnnees = cellGroupe.nextElementSibling;
         let selectedValue = select[1].options[0].innerHTML;
         let tabString = selectedValue.split(" ")
-        cellGroupe.innerHTML = tabString[1].split("(")[1]+" "+tabString[2];
-        cellAnnees.innerHTML = tabString[3].split(")")[0];
+        cellGroupe.innerHTML = tabString[1]+" "+tabString[2];
+        cellAnnees.innerHTML = tabString[3];
 
         
         select[1].addEventListener('change',function (event) {
             selectedValue = event.target.options[event.target.selectedIndex].innerHTML;
             console.log("Nouvelle valeur sélectionnée : " + selectedValue);
             tabString = selectedValue.split(" ")
-            console.log(tabString[1].split('('));
-            cellGroupe.innerHTML = tabString[1].split("(")[1]+" "+tabString[2];
-            cellAnnees.innerHTML = tabString[3].split(")")[0];
+            console.log(tabString);
+            console.log(tabString[1]);
+            cellGroupe.innerHTML = tabString[1]+" "+tabString[2];
+            cellAnnees.innerHTML = tabString[3];
 
 
         })

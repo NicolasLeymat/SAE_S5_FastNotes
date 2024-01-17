@@ -70,12 +70,20 @@ class ProfController extends Controller
         $listeGroupes = Groupe::all();
         $resListe = [];
         foreach ($enseignements as $enseignement) {
-            $groupe = Groupe::findOrFail($enseignement->pivot->id_groupe);
-            $parcours = Parcours::findOrFail($groupe->parcours);
-            $semestre = $parcours->semestre;
-            array_push($resListe,["nomRessource" => $enseignement["libelle"],"groupe" => $groupe->libelle,"semestre"=>$semestre["libelle"],"periode"=>$semestre["id_annee"]]);
+            $groupe = Groupe::findOrFail($enseignement->id_groupe);
+            $parcours = Parcours::find($groupe->parcours);
+            $ressource = Ressource::findOrFail($enseignement->code_ressource);
+            if ($parcours == null) {
+                $libelleSemestre = " - ";
+                $anneeSemestre = " - ";
+            }
+            else {
+                $libelleSemestre = $parcours->semestre["libelle"];
+                $anneeSemestre = $parcours->semestre["id_annee"];
+            }
+            array_push($resListe,["nomRessource" => $ressource["libelle"],"groupe" => $groupe->libelle,"semestre"=>$libelleSemestre,"periode"=>$anneeSemestre]);
         }
-        return view ('affichage_elements.infoProf',compact('utilisateur','resListe'));
+        return view ('affichage_elements.infoProf',compact('utilisateur','resListe','listeRessources','listeGroupes'));
 
     }
 

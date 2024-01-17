@@ -134,7 +134,6 @@ class EvaluationController extends Controller
             }
             $groupe= array_unique($groupes);
         }
-        $evaluation = $this->eval;
         return view('notes.evaluation',compact('evaluation','eleves','groupe'));        
     }
 
@@ -165,8 +164,10 @@ class EvaluationController extends Controller
             if (!$exists || $oldnote != $note ) {
                 $evaluation->eleves()->syncWithoutDetaching([
                 $idEleve => ['note' => $note]]);
-                $notif = new Notif($evaluation,$eleve->utilisateur,$note);
-                Mail::to($eleve->utilisateur->email)->send($notif);
+                if ($eleve->utilisateur->notifications) {
+                    $notif = new Notif($evaluation,$eleve->utilisateur,$note);
+                    Mail::to($eleve->utilisateur->email)->send($notif);
+                }
         }
     }
     }

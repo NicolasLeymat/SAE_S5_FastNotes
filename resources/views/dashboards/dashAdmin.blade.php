@@ -26,7 +26,7 @@
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des groupes</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherGroupes') }}">Afficher les groupes</a><br>
-                  <a class="tab-cell button button-admins">Ajouter un groupe</a><br>
+                  <a class="tab-cell button button-admins" href="{{route('groupes.create')}}">Ajouter un groupe</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ajoutGroupe') }}">Ajouter des groupes</a><br>
                 </div>
                 <div class="flex_divs">

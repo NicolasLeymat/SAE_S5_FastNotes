@@ -29,6 +29,7 @@
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
   --text-color-input-placeholder: hsl(0, 0%, 66%);
+  --error-color: hsl(360, 90%, 38%);
 
 
   /*========== Font and typography ==========*/
@@ -94,6 +95,7 @@ body.dark-theme {
   --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
   --text-color-input: hsl(0, 26%, 93%);
+
 }
 
 /*========== Button Dark/Light ==========*/
@@ -481,6 +483,44 @@ img {
   margin-left:auto;
   margin-right: auto;
   border-collapse: collapse;
+}
+
+.spaced-div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-form {
+  margin-top: 10px;
+}
+
+#profile-form label, #profile-form input {
+  margin-top : 3px;
+  margin-bottom: 3px;
+}
+
+#profile-form legend {
+  font-size: 1.15em;
+  font-weight: bold;
+}
+
+#profile-form fieldset {
+  margin-bottom: 10px;
+  margin-top:10px;
+}
+
+.profile-form .button {
+  margin-top: 5px;
+  padding: 0.5rem;
+}
+
+.error-message {
+  font-size: var(--small-font-size);
+  color: var(--error-color);
+}
+
+.profile-form input {
+  margin-bottom: 15px;
 }
 
 .button_save_notes{
@@ -942,6 +982,7 @@ input::-webkit-inner-spin-button {
     margin-top: 4.5rem;
   }
 }
+
 
 /* For large devices */
 

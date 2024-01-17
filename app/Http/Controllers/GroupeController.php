@@ -7,6 +7,8 @@ use App\Models\Groupe;
 use App\Models\Parcours;
 use App\Models\Eleve;
 use DB;
+use App\Imports\GroupeImport;
+use Excel;
 
 class GroupeController extends Controller
 {
@@ -69,5 +71,19 @@ class GroupeController extends Controller
         $eleve->id_groupe = $request->post('groupe_id');
         $eleve->save();
         return redirect()->back()->with('message','Ajout de l\'élève au groupe avec succès');
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            Excel::import(new GroupeImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyRessources', 'Les ressources ont été ajoutées avec succès');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

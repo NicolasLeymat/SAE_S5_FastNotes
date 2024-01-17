@@ -45,7 +45,7 @@
                   <p style="margin-top:10px;color:white;">Gestion des ressources</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherRessources') }}">Afficher les ressources</a><br>
                   <a class="tab-cell button button-admins" href= "{{ route('ressource.create') }}">Ajouter une ressource</a><br>
-                  <a class="tab-cell button button-admins">Ajouter des ressources</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutRessource') }}">Ajouter des ressources</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des évaluations</p> <br>

@@ -123,7 +123,7 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
     Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
-    
+    Route::post('/addEleveGroupe',[GroupeController::class, 'addEleveToGroupe' ])->name('addEleveGroupe');
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

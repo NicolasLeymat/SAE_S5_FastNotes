@@ -26,9 +26,10 @@ class GroupeController extends Controller
         //A recup : Liste des eleves, Liste des 
         
         $groupes = Groupe::find($request->groupe);
+        $ressources = $groupes->ressource;
         $elevesNonGroupe = Eleve::where('id_groupe', '!=', $request->groupe)->orWhereNull('id_groupe')->get();
         $eleves = $groupes->eleves;
-        return view('affichage_elements.infoGroupe', compact('groupes','eleves', 'elevesNonGroupe'));
+        return view('affichage_elements.infoGroupe', compact('groupes','eleves', 'elevesNonGroupe', 'ressources'));
     }
 
     public function delElevesFromGroupes(Request $request){
@@ -37,5 +38,13 @@ class GroupeController extends Controller
         $eleve->id_groupe = null;
         $eleve->save();
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function addEleveToGroupe(Request $request){
+        $code_eleve = $request->post('eleves');
+        $eleve = Eleve::find($code_eleve);
+        $eleve->id_groupe = $request->post('groupe_id');
+        $eleve->save();
+        return redirect()->back()->with('message','Ajout de l\'élève au groupe avec succès');
     }
 }

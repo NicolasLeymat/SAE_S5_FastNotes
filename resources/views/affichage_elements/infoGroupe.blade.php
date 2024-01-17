@@ -3,17 +3,18 @@
 @section('title', 'Infos groupe '.$groupes->libelle)
 
 @section('content')
-<div class ="home_container container grid">
-    <div class="home_content">
-        <div>
+<div class ="home_container container full_home">
+    <div class="home_content full_home">
+        <div class="text_center">
         <h2> Informations sur le groupe {{$groupes->libelle}}</h2>
 
         <h3> Identifiant du groupe : {{$groupes->id}}</h3>
         </div>
         <div class="items_admin flex_forms">
             <div class="flex_divs_tab">
-                <h2> Elèves : </h2>
-                    <table class="eleve-tab">
+                <h2 style="margin-top:10px;"> Elèves : </h2>
+                <div class="scroll_div">
+                    <table class="eleve-tab scroll_table">
                     <thead class="tab-row-dark">
                     <tr>   
                         <th>Code</th>
@@ -32,18 +33,62 @@
                     </tr>
                     @endfor
                 </table>
-                <label for="eleves" class="info_eleve">Eleves</label>
-                    <select name="eleves" id="eleves" class="info_eleve">
-                        @foreach($elevesNonGroupe as $eleve)
-                            <option value="{{$eleve->code}}">
-                                @if ($eleve->id_groupe!=null) 
-                                    {{ $eleve->id_groupe." ".$eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
-                                @else
-                                    {{ $eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
-                                @endif
-                            </option>
-                        @endforeach
-                    </select>
+            </div>
+                <form action="{{ route('addEleveGroupe') }}" class="" method="post">
+                @csrf
+                    <label for="eleves" class="info_eleve">Eleves</label>
+                        <input type="hidden" name="groupe_id" value="{{$groupes->id}}"></input>
+                        <select name="eleves" id="eleves" class="info_eleve">
+                            @foreach($elevesNonGroupe as $eleve)
+                                <option value="{{$eleve->code}}">
+                                    @if ($eleve->id_groupe!=null) 
+                                        {{ $eleve->id_groupe." ".$eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                    @else
+                                        {{ $eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                        <input name="envoyer" type="submit" class="button" value="Ajouter l'élève"></input>
+                    </form>
+            </div>
+            <div class="flex_divs_tab">
+                <h2 style="margin-top:10px;"> Ressources : </h2>
+                    <div class="scroll_div">
+                    <table class="eleve-tab scroll_table">
+                    <thead class="tab-row-dark">
+                    <tr>   
+                        <th>Code ressource</th>
+                        <th>Libelle</th>
+                        <th></th>
+                    </tr> 
+                    </thead>
+                    @for ($i = 0; $i < count($ressources); $i++)
+                    <tr class="tab-row tab-row-clear">
+                        <td class="tab-cell" >{{ $ressources[$i]->code}}</td>
+                        <td class="tab-cell" >{{ $ressources[$i]->libelle}}</td>
+                        <td><a class="clear-cell button del-button " href="/supprimerEleveGroupe?id_ressource={{$ressources[$i]->code}}">Supprimer </a> </td>
+                    </tr>
+                    @endfor
+                </table>
+                </div>
+                <form action="{{ route('addEleveGroupe') }}" class="" method="post">
+                @csrf
+                    <label for="eleves" class="info_eleve">Ressources :</label>
+                        <input type="hidden" name="groupe_id" value="{{$groupes->id}}"></input>
+                        <select name="eleves" id="eleves" class="info_eleve">
+                            @foreach($elevesNonGroupe as $eleve)
+                                <option value="{{$eleve->code}}">
+                                    @if ($eleve->id_groupe!=null) 
+                                        {{ $eleve->id_groupe." ".$eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                    @else
+                                        {{ $eleve->utilisateur->code." ". $eleve->utilisateur->nom." ". $eleve->utilisateur->prenom}}
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                        <input name="envoyer" type="submit" class="button" value="Ajouter l'élève"></input>
+                    </form>
             </div>
         </div>
     </div>

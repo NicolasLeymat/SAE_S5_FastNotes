@@ -285,7 +285,7 @@ img {
 }
 
 .nav_link:hover {
-  color: var(--first-color);
+  color: var(--first-color-lighter);
 }
 
 .nav_icon {

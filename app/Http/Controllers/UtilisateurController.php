@@ -100,7 +100,6 @@ class UtilisateurController extends Controller
         }
 
         $utilisateur = Utilisateur::findOrFail($request->input("code"));
-        $oldpass = $utilisateur->password;
         $utilisateur->password = Hash::make($request->input('new-password'));
         $utilisateur->save();
 
@@ -111,7 +110,21 @@ class UtilisateurController extends Controller
     }
 
     
-    public function modifierNotif () {
-        return "ok";
+    public function modifierNotif (Request $request) {
+        $utilisateur = Utilisateur::findOrFail($request->input("code"));
+
+
+
+
+        if ($request->input('notif')) {
+            $utilisateur->notifications = true;
+        }
+        else {
+            $utilisateur->notifications = false;
+        }
+
+        $utilisateur->save();
+        return redirect()->back();
+
     }
 }

@@ -55,6 +55,7 @@
             <h2> Notifications </h2>
             <form method="post" action="{{ route('modifierNotif') }}"  class="profile-form">
                 @csrf
+                <input type="hidden" name="code" value = "{{ $utilisateur->code }}">
                 <input type="checkbox" id="notif" name="notif" @if ($utilisateur->notifications) checked @endif />
                 <label for="notif">Autoriser les notifications par e-mail </label>
                 <br>

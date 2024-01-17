@@ -21,7 +21,7 @@
                   <p style="margin-top:10px;color:white;">Gestion des parcours</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherParcours') }}">Afficher les parcours</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('parcours.create') }}">Ajouter un parcours</a><br>
-                  <a class="tab-cell button button-admins">Ajouter des parcours</a><br>
+                  <a class="tab-cell button button-admins" href="{{route('ajoutsParcours')}}">Ajouter des parcours</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des groupes</p> <br>

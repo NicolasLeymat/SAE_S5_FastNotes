@@ -16,7 +16,11 @@
                     <td class="tab-cell" >{{ $tabGroupes[$i]->id}}</td>
                     <td class="tab-cell" >{{ $tabGroupes[$i]->parcours}}</td>  
                     <td><a class="clear-cell button del-button " href="afficherGroupesInfo?groupe={{ $tabGroupes[$i]->id}}">afficher les informations du groupe </a> </td>
-                    <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerGroupe', ['groupe'=>$tabGroupes[$i]->id]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell "><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button> </td>
+                    </form>
                   </tr>
                 @endfor
             </table>

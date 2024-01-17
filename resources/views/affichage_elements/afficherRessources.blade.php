@@ -14,7 +14,11 @@
                   <tr class="tab-row tab-row-clear">
                     <td class="tab-cell" >{{ $tabRessources[$i]->libelle}}</td>
                     <td class="tab-cell" >{{ $tabRessources[$i]->code}}</td>   
-                    <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerRessource', ['ressource'=>$tabRessources[$i]->code]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class="tab-cell "><button class="tab-cell clear-cell del-button " type="submit">Supprimer </button> </td>
+                    </form>
                   </tr>
                 @endfor
             </table>

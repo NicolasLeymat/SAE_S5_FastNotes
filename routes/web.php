@@ -42,11 +42,15 @@ Route::get('/dashadmin', function () {
 })->name('dashadmin');
 
 Route::get('/ajoutEleve', function () {
-    return view('ajoutEleves');
+    return view('ajouts.ajoutEleves');
 })->name('ajoutEleve');
 
+Route::get('/ajoutAnnees', function () {
+    return view('ajouts.ajoutAnnees');
+})->name('ajoutAnnees');
+
 Route::get('/ajoutEval', function () {
-    return view('ajoutEvals');
+    return view('ajouts.ajoutEvals');
 })->name('ajoutEval');
 
 Route::get('/evaluation', function () {
@@ -88,6 +92,7 @@ Route::post('importEval', [EvaluationController::class, 'import'])->name("import
 Route::post('importEvals', [EvaluationController::class, 'import'])->name("importEvals");
 Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
 Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
+Route::post('importAnnees', [AnneeController::class, 'import'])->name("importAnnees");
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
@@ -121,7 +126,10 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
     Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
+    Route::delete('supprimerParcours',[ParcoursController::class, 'destroy' ])->name('supprimerParcours');
+    Route::delete('supprimerGroupe',[GroupeController::class, 'destroy' ])->name('supprimerGroupe');
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
+    Route::delete('supprimerRessource',[RessourceController::class, 'destroy' ])->name('supprimerRessource');
     Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
     Route::post('/addEleveGroupe',[GroupeController::class, 'addEleveToGroupe' ])->name('addEleveGroupe');
 });

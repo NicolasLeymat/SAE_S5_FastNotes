@@ -85,6 +85,10 @@
                     let base_link = button_index.href;
                     button_index.href = "/visualisation/{{Auth::user()->code}}?semestre=" + comboValue;
                   }
+
+
+                  document.addEventListener('DOMContentLoaded', function() {
+                    changerLink() })
                 </script>
                 @php 
                   $allGroupe = Historique_Groupes::all()->where('code_etudiant', Auth::user()->code);

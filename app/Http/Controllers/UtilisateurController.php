@@ -74,8 +74,21 @@ class UtilisateurController extends Controller
 
     public function show() {
         $utilisateur = Auth::user();
+        if ($utilisateur ->admin()->count() >0) {
+            $role = "Administrateur";
+        }
+        else if ($utilisateur-> professeur()->count() >0) {
+            $role = "Professeur";
+        }
+        else if ($utilisateur -> eleves()->count()>0) {
+            $role = "Eleve";
+        }
+        else {
+            $role = "aucun rôle";
+        }
 
-        return view('affichage_elements.profil',compact('utilisateur'));
+
+        return view('affichage_elements.profil',compact('utilisateur', 'role'));
     }
 
     public function modifierMDP (Request $request) {

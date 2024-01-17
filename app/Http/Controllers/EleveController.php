@@ -54,10 +54,10 @@ class EleveController extends Controller
     public function ressourcesEleve(){
         if($this->groupe != null){
             $groupe = $this->groupe;
-            $this->tabRessources = $groupe->ressources;
+            $this->tabRessources = $groupe->ressource;
         }else{
             $groupe = $this->user->groupe;
-            $this->tabRessources = $groupe->ressources;
+            $this->tabRessources = $groupe->ressource;
         }
     }
 
@@ -105,8 +105,9 @@ class EleveController extends Controller
         foreach($competence->ressources as $ressource) {
             $ressourcesCoef[$ressource->code] = $ressource->pivot->coefficient;
         }
+        //dd ($ressourcesCoef);
         foreach($ressourcesCoef as $key => $valeur){
-            if($this->tabMoyennesRessources[$key][1] != "Pas disponible"){
+            if(isset($this->tabMoyennesRessources[$key]) && $this->tabMoyennesRessources[$key][1] != "Pas disponible"){
                 $notes += $valeur * $this->tabMoyennesRessources[$key][1];
                 $c += $valeur;
             }

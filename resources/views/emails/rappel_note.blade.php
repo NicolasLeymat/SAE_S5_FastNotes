@@ -13,8 +13,6 @@
 
     <p>Veuillez remplir les notes manquantes sur notre plateforme : <a href="http://127.0.0.1:8000">Fast Notes</a>.</p>
 
-    <p>Merci de votre coopération et de contribuer à la gestion des évaluations !</p>
-
     <p>Cordialement,<br>
     L'équipe Fast Notes</p>
 </body>

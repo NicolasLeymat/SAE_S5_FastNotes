@@ -73,11 +73,16 @@
                 @endif
             </select>
 
-
             <label for="groupe" class="info_eleve">Groupe</label>
             <select name="groupe" id="groupe" class="info_eleve">
                 @foreach($listeGroupes as $groupe)
-                    <option value="{{$groupe->id}}">{{$groupe->libelle." ".$tabParcours[$groupe->id]->semestre->libelle. " (".$tabParcours[$groupe->id]->semestre->id_annee.") "}}</option>
+                    <option value="{{$groupe->id}}">
+                        @if ($tabParcours[$groupe->id]!=null) 
+                            {{$groupe->libelle." ".$tabParcours[$groupe->id]->semestre->libelle. " (".$tabParcours[$groupe->id]->semestre->id_annee.") "}}
+                        @else
+                            {{$groupe->libelle}}
+                        @endif
+                    </option>
                 @endforeach
             </select>
 

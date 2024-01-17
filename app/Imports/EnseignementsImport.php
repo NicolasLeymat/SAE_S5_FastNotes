@@ -2,13 +2,13 @@
 
 namespace App\Imports;
 
-use App\Models\Evaluation;
+use App\Models\Enseignement;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class EvaluationImport implements ToCollection, WithHeadingRow, WithMultipleSheets
+class EnseignementsImport implements ToCollection, WithHeadingRow, WithMultipleSheets
 {
     /**
     * @param Collection $rows
@@ -16,12 +16,9 @@ class EvaluationImport implements ToCollection, WithHeadingRow, WithMultipleShee
     public function collection(Collection $rows)
     {
         foreach ($rows as $row){
-            Evaluation::create([
-                'libelle' => $row['libelle'],
-                'coefficient' => $row['coefficient'],
-                'type' => $row['type'],
-                'date_epreuve' => $row['date_epreuve'],
-                'date_rattrapage' => $row['date_rattrapage'],
+            Enseignement::create([
+                'code_prof' => $row['code_prof'],
+                'id_groupe' => $row['id_groupe'],
                 'code_ressource' => $row['code_ressource'],
             ]);
             
@@ -29,6 +26,6 @@ class EvaluationImport implements ToCollection, WithHeadingRow, WithMultipleShee
     }
 
     public function sheets(): array{
-        return ["INFOS-EPREUVES"=> $this];
+        return ["INFOS-ENSEIGNEMENTS"=> $this];
     }
 }

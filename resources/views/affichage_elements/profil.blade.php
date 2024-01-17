@@ -18,7 +18,10 @@
         <h2> Informations</h2>
 
         <h3> Code de connexion  : {{$utilisateur->code}}</h3>
+        <h3> Nom  : {{$utilisateur->nom}}</h3>
+        <h3> Prénom  : {{$utilisateur->prenom}}</h3>
         <h3> Adresse e-mail : {{$utilisateur->email}}</h3>
+        <h3> Compte {{$role}} </h3>
         </div>
  
 

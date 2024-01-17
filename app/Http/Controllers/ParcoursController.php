@@ -7,6 +7,8 @@ use App\Models\Semestre;
 use App\Models\Groupe;
 use App\Models\Parcours;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ParcoursImport;
 
 class ParcoursController extends Controller
 {
@@ -64,5 +66,19 @@ class ParcoursController extends Controller
         ->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function import(Request $request){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new ParcoursImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successImportingParcours', 'Les parcours ont été ajoutés avec succés');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

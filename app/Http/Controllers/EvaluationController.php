@@ -72,7 +72,7 @@ class EvaluationController extends Controller
 
         $validator =  $request ->validate([
             'libelle' => 'required|string|max:255',
-            'coefficient' => 'required|decimal:2',
+            'coefficient' => 'required|decimal:1',
             'type' => 'required|string|max:255',
             'date_epreuve' => 'nullable|date|after:yesterday',
             'date_rattrapage'=>'nullable|date|after:date_epreuve',

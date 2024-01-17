@@ -39,7 +39,7 @@
                   <p style="margin-top:10px;color:white;">Gestion des UE</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('ue.index') }}">Afficher les UE</a><br>
                   <a class="tab-cell button button-admins" href="{{ route('ue.create')}}">Ajouter une UE</a><br>
-                  <a class="tab-cell button button-admins">Ajouter des UE</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('ajoutUE') }}">Ajouter des UE</a><br>
                 </div>
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des ressources</p> <br>

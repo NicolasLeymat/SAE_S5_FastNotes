@@ -508,6 +508,10 @@ img {
   transition: 0.35s;
 }
 
+.ligne_ajout {
+  display: none;
+}
+
 input.checkbox_missing {
   transform: scale(1.5);
 }
@@ -1067,12 +1071,22 @@ input::-webkit-inner-spin-button {
 }
 
 .flex_divs{
-  width: 305px;
+  width: 265px;
   aspect-ratio : 1 / 1;
   text-align: center;
   background-color: var(--container-color-admins);
   margin-right: 10px;
   margin-top: 20px;
+  border: transparent;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px var(--container-color-shadow);
+}
+
+.flex_divs_tab{
+  width: 45%;
+  aspect-ratio : 1 / 0.75;
+  text-align: center;
+  background-color: var(--container-color-admins);
   border: transparent;
   border-radius: 15px;
   box-shadow: 5px 5px 5px var(--container-color-shadow);
@@ -1092,4 +1106,27 @@ input::-webkit-inner-spin-button {
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.scroll_div{
+  height: 20em;
+  width: 90%;
+  margin-left:auto;
+  margin-right: auto;
+  overflow-y: scroll;
+  
+}
+
+.scroll_table{
+  width: 100%;
+}
+
+.scroll_table thead {
+  width: 100%;
+  position: sticky;
+  top: 0;
+}
+
+.text_center{
+  text-align: center;
 }

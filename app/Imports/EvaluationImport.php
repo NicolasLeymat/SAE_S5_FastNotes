@@ -6,8 +6,9 @@ use App\Models\Evaluation;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class EvaluationImport implements ToCollection, WithHeadingRow
+class EvaluationImport implements ToCollection, WithHeadingRow, WithMultipleSheets
 {
     /**
     * @param Collection $rows
@@ -25,10 +26,6 @@ class EvaluationImport implements ToCollection, WithHeadingRow
             ]);
             
         }
-    }
-
-    public function startRow(): int{
-        return 3;
     }
 
     public function sheets(): array{

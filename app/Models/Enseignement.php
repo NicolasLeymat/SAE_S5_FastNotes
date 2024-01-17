@@ -14,6 +14,8 @@ class Enseignement extends Model
     public $incrementing = false;
     protected $primaryKey = array('code_prof', 'id_groupe', 'code_ressource');
 
+    protected $fillable = ['code_prof', 'id_groupe', 'code_ressource'];
+
     protected $table = "enseignements";
 
     public function professeur () {

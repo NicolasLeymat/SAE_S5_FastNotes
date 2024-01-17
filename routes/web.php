@@ -45,6 +45,10 @@ Route::get('/ajoutEleve', function () {
     return view('ajouts.ajoutEleves');
 })->name('ajoutEleve');
 
+Route::get('/ajoutAnnees', function () {
+    return view('ajouts.ajoutAnnees');
+})->name('ajoutAnnees');
+
 Route::get('/ajoutEval', function () {
     return view('ajouts.ajoutEvals');
 })->name('ajoutEval');
@@ -98,6 +102,7 @@ Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("
 Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
 Route::post('importRessources', [RessourceController::class, 'import'])->name("importRessources");
 Route::post('importSemestres', [SemestreController::class, 'import'])->name("importSemestres");
+Route::post('importAnnees', [AnneeController::class, 'import'])->name("importAnnees");
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
@@ -121,10 +126,12 @@ Route::middleware('administrateur')->group(function () {
     Route::get('/afficherEvals', [EvaluationController::class, 'afficherEvals'])->name('afficherEvals');
     Route::get('/afficherEnseignement', [EnseignementController::class, 'index'])->name('afficherEns');
     Route::get('/afficherGroupes', [GroupeController::class, 'index'])->name('afficherGroupes');
+    Route::get('/afficherGroupesInfo', [GroupeController::class, 'infoGroupe'])->name('infoGoupes');
     Route::get('/afficherAnnees', [AnneeController::class, 'index'])->name('afficherAnnees');
     Route::get('/afficherSemestres', [SemestreController::class, 'index'])->name('afficherSemestres');
     Route::get('/afficherParcours', [ParcoursController::class, 'index'])->name('afficherParcours');
     Route::get('/afficherRessource', [RessourceController::class, 'index'])->name('afficherRessources');
+    Route::post('/ajouterEnseignements',[EnseignementController::class,'ajouterEnseignements'])->name('ajouterEnseignements');
     Route::get('/ajoutUtilisateur', [UtilisateurController::class, 'create'])->name('ajoutUtilisateur');
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
@@ -133,6 +140,8 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerGroupe',[GroupeController::class, 'destroy' ])->name('supprimerGroupe');
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
     Route::delete('supprimerRessource',[RessourceController::class, 'destroy' ])->name('supprimerRessource');
+    Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
+    Route::post('/addEleveGroupe',[GroupeController::class, 'addEleveToGroupe' ])->name('addEleveGroupe');
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Annee;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\AnneesImport;
 
 class AnneeController extends Controller
 {
@@ -39,5 +41,19 @@ class AnneeController extends Controller
         ]);
 
         return redirect()->route('affichage_elements.annees.index')->withErrors($validator);
+    }
+
+    public function import(Request $request){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new AnneesImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successImportingYears', 'Les années ont été ajoutés avec succés');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

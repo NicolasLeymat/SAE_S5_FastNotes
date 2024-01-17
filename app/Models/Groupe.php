@@ -12,7 +12,7 @@ class Groupe extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ["id","libelle","semestre","annee"];
+    protected $fillable = ["id", "libelle", "parcours"];
 
     protected $id = "id";
 

@@ -26,4 +26,12 @@ class EvaluationImport implements ToCollection, WithHeadingRow
             
         }
     }
+
+    public function startRow(): int{
+        return 3;
+    }
+
+    public function sheets(): array{
+        return ["INFOS-EPREUVES"=> $this];
+    }
 }

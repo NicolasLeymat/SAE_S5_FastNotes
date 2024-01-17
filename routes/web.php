@@ -46,7 +46,7 @@ Route::get('/ajoutEleve', function () {
 })->name('ajoutEleve');
 
 Route::get('/ajoutEval', function () {
-    return view('ajoutEvals');
+    return view('ajouts.ajoutEvals');
 })->name('ajoutEval');
 
 Route::get('/evaluation', function () {

@@ -246,12 +246,12 @@ class EvaluationController extends Controller
     public function import(Request $request){   
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            //dd($request);
+
             Excel::import(new EvaluationImport, $request->file('file'));
     
             // You can add more logic here after importing the file.
     
-            return redirect()->back()->with('successManyEleves', 'Les élèves ont été ajoutés avec succés');
+            return redirect()->back()->with('successManyEvaluations', 'Les évaluations ont été ajoutées avec succès');
         }else{
             return redirect()->back()->with('error', 'Please upload a file.');
         }

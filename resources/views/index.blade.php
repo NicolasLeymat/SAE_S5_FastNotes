@@ -96,7 +96,9 @@
                 <select name="groupe_select" id="groupe_select" onchange="changerLink()">
                   <option value="{{Eleve::find(Auth::user()->code)->groupe->id }}">{{Eleve::find(Auth::user()->code)->groupe->parcour->semestre->libelle}}</option>
                   @foreach($allGroupe as $groupe_eleve)
-                  <option value="{{ Groupe::find($groupe_eleve->id_groupe)->id }}">{{ Groupe::find($groupe_eleve->id_groupe)->parcour->semestre->libelle }}</option>
+                    @if(Eleve::find(Auth::user()->code)->groupe->parcour->semestre->libelle != Groupe::find($groupe_eleve->id_groupe)->parcour->semestre->libelle)
+                      <option value="{{ Groupe::find($groupe_eleve->id_groupe)->id }}">{{ Groupe::find($groupe_eleve->id_groupe)->parcour->semestre->libelle }}</option>
+                    @endif
                   @endforeach
                 </select>
                 <a id="visuNotes" class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}?semestre="> Accéder à la visualitation des notes </a>

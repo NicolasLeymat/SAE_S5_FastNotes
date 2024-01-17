@@ -7,6 +7,8 @@ use App\Models\Semestre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use App\Imports\SemestreImport;
+use Excel;
 
 class SemestreController extends Controller
 {
@@ -56,5 +58,19 @@ class SemestreController extends Controller
 
     public function destroy(UE $ue) {
         //...
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            Excel::import(new SemestreImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyRessources', 'Les ressources ont été ajoutées avec succès');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

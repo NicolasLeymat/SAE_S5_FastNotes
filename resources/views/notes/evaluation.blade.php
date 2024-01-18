@@ -27,6 +27,18 @@
         }
     }
 
+    function absence(code){
+        var checked = code.checked;
+        var id = code.id;
+        var note = document.getElementById("note"+id);
+        if(checked){
+            note.value='';
+            note.disabled=true;
+        }else{
+            note.disabled=false;
+        }
+    }
+
     function changertab(){
         var selection = document.getElementById("groupe_select");
         var valeurSelectionnee = selection.value;
@@ -81,8 +93,8 @@
                     <td class="tab-cell clear-cell">{{$eleve['nom']}}</td>
                     <td class="tab-cell clear-cell">{{$eleve['prenom']}}</td>
                     <td class="tab-cell clear-cell" id="groupe_Cell">{{$eleve['id_groupe']}}</td>
-                    <td class="clear-cell"><input id="" class="input note_input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
-                    <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="isAbsent" class="checkbox_missing"></td>
+                    <td class="clear-cell"><input id="{{'note'.$eleve['identification']}}" class="input note_input" type="number" step="0.001" name="notes[{{ $eleve['code'] }}][note]" value="{{ $eleve['note'] }}" min= 0 max=20 ></td>
+                    <td class="tab-cell clear-cell"><input type="checkbox" name="absent" id="{{$eleve['identification']}}" onchange='absence({{$eleve["identification"]}})' class="checkbox_missing"></td>
                 </tr>
             @endforeach
             </table>

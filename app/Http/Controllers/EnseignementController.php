@@ -13,7 +13,7 @@ use DB;
 class EnseignementController extends Controller
 {
     public function index() {
-        $tabEnseignements = Enseignement::paginate(10);
+        $tabEnseignements = Enseignement::all();
         
         return view('affichage_elements.afficherEnseignements', compact('tabEnseignements'));
     }

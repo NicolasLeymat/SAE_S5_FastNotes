@@ -7,6 +7,7 @@
 
         <div class="home_container container grid">
           <div class="home_content">
+          <div class="scroll_div_large">
             <table class="UE_tab">
               <thead class="tab-row-dark">
                   <tr>
@@ -37,7 +38,7 @@
                     @endfor
                 </tbody>
             </table>
-            {{$tabUE->links('vendor.pagination.simple-default')}}
+          </div>
           </div>
         </div>
 @endsection

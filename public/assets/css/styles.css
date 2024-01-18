@@ -285,7 +285,7 @@ img {
 }
 
 .nav_link:hover {
-  color: var(--first-color);
+  color: var(--first-color-lighter);
 }
 
 .nav_icon {
@@ -1151,6 +1151,14 @@ input::-webkit-inner-spin-button {
 
 .scroll_div{
   height: 20em;
+  width: 90%;
+  margin-left:auto;
+  margin-right: auto;
+  overflow-y: scroll;
+  
+}
+.scroll_div_large{
+  height: 38em;
   width: 90%;
   margin-left:auto;
   margin-right: auto;

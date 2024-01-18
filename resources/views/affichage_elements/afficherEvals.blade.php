@@ -3,7 +3,8 @@
 @section('content')
         <div class="home_container container grid">
           <div class="home_content">
-            <table class="prof-tab note-tab">
+          <div class="scroll_div_large">
+            <table class="prof-tab note-tab scroll_table">
                 <tr>
                     <th>Evaluation</th>
                     <th>Coefficient</th>
@@ -29,8 +30,7 @@
                   </tr>
                 @endfor
             </table>
-            {{$tabEvals->links('vendor.pagination.simple-default')}}
+          </div>
           </div>
         </div>
-        {{ $tabEvals->links() }}
 @endsection

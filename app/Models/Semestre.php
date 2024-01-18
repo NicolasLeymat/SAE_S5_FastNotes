@@ -17,7 +17,7 @@ class Semestre extends Model
     public $incrementing = false;
 
     public function ue(){
-        return $this->hasMany(UE::class, 'code', 'id');
+        return $this->hasMany(UE::class, 'code', 'id_semestre');
     }
 
     public function groupe(){

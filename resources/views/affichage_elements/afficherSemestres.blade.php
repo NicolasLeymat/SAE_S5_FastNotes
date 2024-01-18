@@ -2,7 +2,8 @@
 @section('title', 'Fast Notes')
 @section('content')
         <div class="home_container container grid">
-            <table class="eleve-tab">
+          <div class="scroll_div_large">
+            <table class="eleve-tab scroll_table">
                 <thead class="tab-row-dark">
                   <tr>   
                     <th>Titre</th>
@@ -14,9 +15,15 @@
                   <tr class="tab-row tab-row-clear">
                     <td class="tab-cell" >{{ $tabSemestres[$i]->libelle}}</td>
                     <td class="tab-cell" >{{ $tabSemestres[$i]->id_annee}}</td>  
-                    <td><a class="clear-cell button del-button " href="#">Supprimer </a> </td>
+                    <form method="post" action = "{{route ('supprimerSemestre', ['semestre'=>$tabSemestres[$i]->id_semestre]) }}">
+                      @csrf
+                      @method('DELETE')
+                      <td class=" "><button class="clear-cell button del-button " type="submit">Supprimer </button> </td>
+                    </form>  
+
                   </tr>
                 @endfor
             </table>
           </div>
+        </div>
 @endsection

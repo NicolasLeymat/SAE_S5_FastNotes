@@ -42,12 +42,40 @@ Route::get('/dashadmin', function () {
 })->name('dashadmin');
 
 Route::get('/ajoutEleve', function () {
-    return view('ajoutEleves');
+    return view('ajouts.ajoutEleves');
 })->name('ajoutEleve');
 
+Route::get('/ajoutAnnees', function () {
+    return view('ajouts.ajoutAnnees');
+})->name('ajoutAnnees');
+
+Route::get('/ajoutsParcours', function () {
+    return view('ajouts.ajoutsParcours');
+})->name('ajoutsParcours');
+
 Route::get('/ajoutEval', function () {
-    return view('ajoutEvals');
+    return view('ajouts.ajoutEvals');
 })->name('ajoutEval');
+
+Route::get('/ajoutRessource', function () {
+    return view('ajouts.ajoutRessources');
+})->name('ajoutRessource');
+
+Route::get('/ajoutEnseignements', function () {
+    return view('ajouts.ajoutEnseignements');
+})->name('ajoutEnseignements');
+
+Route::get('/ajoutSemestre', function () {
+    return view('ajouts.ajoutSemestres');
+})->name('ajoutSemestre');
+
+Route::get('/ajoutGroupe', function () {
+    return view('ajouts.ajoutGroupes');
+})->name('ajoutGroupe');
+
+Route::get('/ajoutUE', function () {
+    return view('ajouts.ajoutUEs');
+})->name('ajoutUE');
 
 Route::get('/evaluation', function () {
     return view('evaluation');
@@ -92,6 +120,13 @@ Route::post('importEval', [EvaluationController::class, 'import'])->name("import
 Route::post('importEvals', [EvaluationController::class, 'import'])->name("importEvals");
 Route::post('importEleves', [EleveController::class, 'addManyStudents'])->name("importEleves");
 Route::post('importEleve', [EleveController::class, 'addOneStudent'])->name("importEleve");
+Route::post('importRessources', [RessourceController::class, 'import'])->name("importRessources");
+Route::post('importSemestres', [SemestreController::class, 'import'])->name("importSemestres");
+Route::post('importAnnees', [AnneeController::class, 'import'])->name("importAnnees");
+Route::post('importGroupes', [GroupeController::class, 'import'])->name("importGroupes");
+Route::post('importUEs', [UEController::class, 'import'])->name("importUEs");
+Route::post('importParcours', [ParcoursController::class, 'import'])->name("importParcours");
+Route::post('importEnseignements', [EnseignementController::class, 'import'])->name("importEnseignements");
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');
 Route::middleware('eleve')->group(function () {
     Route::resource('visualisation', EleveController::class);
@@ -125,8 +160,16 @@ Route::middleware('administrateur')->group(function () {
     Route::delete('supprimerProf',[ProfController::class, 'destroy' ])->name('supprimerProf');
     Route::delete('supprimerEnseignement',[EnseignementController::class, 'destroy' ])->name('supprimerEnseignement');
     Route::delete('supprimerEval',[EvaluationController::class, 'destroy' ])->name('supprimerEval');
+    Route::delete('supprimerSemestre',[SemestreController::class, 'destroy' ])->name('supprimerSemestre');
+    Route::delete('supprimerAnnee',[AnneeController::class, 'destroy' ])->name('supprimerAnnee');
+    Route::delete('supprimerParcours',[ParcoursController::class, 'destroy' ])->name('supprimerParcours');
+    Route::delete('supprimerGroupe',[GroupeController::class, 'destroy' ])->name('supprimerGroupe');
     Route::delete('supprimerEleve',[EleveController::class, 'destroy' ])->name('supprimerEleve');
-    
+    Route::delete('supprimerRessource',[RessourceController::class, 'destroy' ])->name('supprimerRessource');
+    Route::get('/supprimerEleveGroupe',[GroupeController::class, 'delElevesFromGroupes' ])->name('supprimerEleveGroupe');
+    Route::get('/supprimerRessourceGroupe',[GroupeController::class, 'delRessourceFromGroupes' ])->name('supprimerRessourceGroupe');
+    Route::post('/addEleveGroupe',[GroupeController::class, 'addEleveToGroupe' ])->name('addEleveGroupe');
+    Route::post('/addRessourceGroupe',[GroupeController::class, 'addRessourceToGroupe' ])->name('addRessourceGroupe');
 });
 
 Route::get('pdf/{id}', [EleveController::class, 'exportBulletinPDF'])->name('pdf');

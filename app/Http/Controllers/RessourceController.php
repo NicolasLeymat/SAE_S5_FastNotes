@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\UE;
 use Illuminate\Http\Request;
 use App\Models\Ressource;
-
+use DB;
+use Excel;
+use App\Imports\RessourceImport;
 
 class RessourceController extends Controller
 {
     public function index() {
-        $tabRessources = Ressource::paginate(10);
+        $tabRessources = Ressource::all();
         return view('affichage_elements.afficherRessources', compact('tabRessources'));
     }
 
@@ -50,5 +52,45 @@ class RessourceController extends Controller
         ]);
 
         return redirect()->route('ressource.index')->withErrors($validator);
+    }
+
+    public function destroy(Request $request) {
+        $ressourceCode = $request->input('ressource');
+
+        $ressource = Ressource::findOrFail($ressourceCode);
+
+        $delEnseignements = DB::table('enseignements')
+        ->where('code_ressource',$ressourceCode)
+        ->delete();
+
+        $delCoeff = DB::table('coefficient_ue')
+        ->where('code_ressource', $ressourceCode)
+        ->delete();
+
+        $delRessourceGroupe = DB::table('ressource_groupe')
+        ->where('code_ressource', $ressourceCode)
+        ->delete();
+
+        foreach($ressource->evaluations as $eval){
+            $eval->destroy(['eval'=>$eval->id]);
+        }
+
+        $ressource->delete();
+
+        return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            Excel::import(new RessourceImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyRessources', 'Les ressources ont été ajoutées avec succès');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

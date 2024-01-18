@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\UE;
 use App\Models\Semestre;
 use App\Models\Competence;
+use App\Imports\UEImport;
+use Excel;
 
 class UEController extends Controller
 {
     public function index(){
-        $tabUE = UE::paginate(10);
+        $tabUE = UE::all();
         $listeCompetences = [];
         $listeSemestres = [];
         foreach ($tabUE as $UE) {
@@ -57,5 +59,19 @@ class UEController extends Controller
         $ue->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function import(Request $request){   
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            Excel::import(new UEImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successManyRessources', 'Les ressources ont été ajoutées avec succès');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

@@ -17,7 +17,10 @@ class Ressource extends Model
 
     public $incrementing = false;
 
-    
+    public function enseignements(){
+        return $this->hasMany(Enseignement::class, 'code_ressource', 'code');
+    }
+
     public function evaluations() {
         return $this->hasMany(Evaluation::class, 'code_ressource');
     }

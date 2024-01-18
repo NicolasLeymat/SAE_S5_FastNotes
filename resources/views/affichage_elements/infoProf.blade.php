@@ -13,7 +13,6 @@
         </div>
 
         <h2> Enseignements </h2>
- 
 
         <form method="post" action="{{ route('ajouterEnseignements') }}" class="add_form">
         @csrf

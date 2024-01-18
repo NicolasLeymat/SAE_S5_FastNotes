@@ -4,11 +4,11 @@
         <div class="home_container container grid">
           <div class="home_content">
             @auth
-              <form action="{{ route('importEleves') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('importSemestres') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="file"> Selectionner un fichier : </label>
                 <input type="file" name="file" id="file">
-                <button class="Entreprise button button-order" type="submit"> Ajouter des élèves </button>
+                <button class="Entreprise button button-order" type="submit"> Ajouter des semestres </button>
               </form>
             @endauth
           </div>

@@ -12,7 +12,7 @@ class Groupe extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ["id","libelle","semestre","annee","parcours"];
+    protected $fillable = ["id", "libelle", "parcours"];
 
     protected $id = "id";
 
@@ -36,5 +36,9 @@ class Groupe extends Model
 
     public function parcour(){
         return $this->belongsTo(Parcours::class, "parcours","id_parcour");
+    }
+
+    public function enseignement(){
+        return $this->hasMany(Enseignement::class, "id_groupe", "id");
     }
 }

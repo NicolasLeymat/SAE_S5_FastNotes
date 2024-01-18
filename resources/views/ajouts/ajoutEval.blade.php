@@ -24,7 +24,7 @@
             <input name="libelle" type="text" id="libelle" placeholder="Libellé"></input>
 
             <label for="coefficient">Coefficient</label>
-            <input name="coefficient" type="number" step=".01" id="coefficient" placeholder="Coefficient de l'évaluation"></input>
+            <input name="coefficient" type="number" step=".1" id="coefficient" placeholder="Coefficient de l'évaluation"></input>
 
             <label for="type">Type</label>
             <input name="type" type="text" id="type" placeholder="Type de l'évaluation"></input>

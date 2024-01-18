@@ -45,7 +45,7 @@
             <label for="new-password">Nouveau mot de passe</label>
             <input type="password" name="new-password"></input>
 
-            <label for="confirm-password">Confirmer mot de passe</label>
+            <label for="confirm-password">Confirmer le mot de passe</label>
             <input type="password" name="confirm-password"></input>
         </fieldset>
 

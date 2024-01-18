@@ -69,7 +69,7 @@
                     <tr class="tab-row-dark">
                         <th class="tab-cell">Numéro étudiant</th>
                         <th class="tab-cell">Nom</th>
-                        <th class="tab-cell">Prenom</th>
+                        <th class="tab-cell">Prénom</th>
                         <th class="tab-cell">Groupe</th>
                         <th class="tab-cell">Note</th>
                         <th class="tab-cell">Absent</th>

@@ -32,7 +32,7 @@
             </select>
 
             <label for="coef">Coefficient</label>
-            <input name="coef" type="number" id="coef" placeholder="Coefficient de la ressource dans la competence" min=0 max=1 step="0.01"></input>
+            <input name="coef" type="number" id="coef" placeholder="Coefficient de la ressource dans la compétence" min=0 max=1 step="0.01"></input>
             
             <input name="envoyer" type="submit" class="button" value="Enregistrer"></input>
             </fieldset>

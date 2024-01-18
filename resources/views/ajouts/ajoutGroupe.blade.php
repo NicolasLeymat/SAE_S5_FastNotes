@@ -20,11 +20,11 @@
         <form action="{{route('groupes.store')}}" method = "POST" name="form_user" id="form_user" class="add_form">
             <fieldset>
             @csrf
-            <label for="libelle">Libelle</label>
+            <label for="libelle">Libellé</label>
             <input name="libelle" type="text" id="libelle" placeholder="Libellé du groupe "></input>
 
 
-            <label for="parcours">parcours du groupe</label>
+            <label for="parcours">Parcours du groupe</label>
             <select name="parcours" id="parcours">
                 @foreach ($listeParcours as $parcours)
                     <option value="{{$parcours->id_parcour}}">{{$parcours->id_parcour." ".$parcours->semestre->libelle." ".$parcours->semestre->id_annee}}</option>

@@ -62,7 +62,7 @@
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des enseignements</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('afficherEns') }}">Afficher les enseignements</a><br>
-                  <a class="tab-cell button button-admins">Ajouter un enseignement</a><br>
+                  <br>
                   <a class="tab-cell button button-admins" href="{{route('ajoutEnseignements')}}">Ajouter des enseignements</a><br>
                 </div>
               </div>

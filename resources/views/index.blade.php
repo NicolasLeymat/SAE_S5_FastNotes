@@ -124,27 +124,7 @@
 
         <ul class="footer_links">
             <li>
-            <a href="" class="footer_link">Leymat Nicolas</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Mederic Demailly</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Noa Despaux</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">David Pacuraru</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Lucas Veslin</a>
-            </li>
-
-            <li>
-            <a href="" class="footer_link">Louis Camborieux</a>
+            <a href="" class="footer_link">Qui sommes-nous ?</a>
             </li>
         </ul>
         </div>

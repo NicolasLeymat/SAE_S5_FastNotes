@@ -8,7 +8,7 @@
 
         <ul class="footer_links">
             <li>
-            <a href="" class="footer_link">Qui sommes-nous</a>
+            <a href="" class="footer_link">Qui sommes-nous ?</a>
             </li>
         </ul>
         </div>

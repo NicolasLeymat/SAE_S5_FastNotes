@@ -1177,10 +1177,11 @@ input::-webkit-inner-spin-button {
 }
 .scroll_div_large{
   height: 38em;
-  width: 90%;
+  width: 100%;
   margin-left:auto;
   margin-right: auto;
   overflow-y: scroll;
+  overflow-x: none;
   
 }
 

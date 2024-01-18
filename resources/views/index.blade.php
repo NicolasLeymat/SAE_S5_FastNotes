@@ -101,7 +101,7 @@
                     @endif
                   @endforeach
                 </select>
-                <a id="visuNotes" class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}?semestre="> Accéder à la visualitation des notes </a>
+                <a id="visuNotes" class="Entreprise button button-index" href="/visualisation/{{Auth::user()->code}}?semestre="> Accéder à la visualisation des notes </a>
               @endif
             @else
             <form method="POST" action="{{ route('login') }}" class="form">

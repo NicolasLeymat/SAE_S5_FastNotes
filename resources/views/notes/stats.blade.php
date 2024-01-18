@@ -32,7 +32,7 @@
         <p>Moyenne : {{$stats['moyenne']}}</p>
         </div>
         <div style="display:flex; justify-content: center; align-items: center;">
-        <p>Ecart type : {{$stats['ecart_type']}}</p>
+        <p>Écart type : {{$stats['ecart_type']}}</p>
         </div>
         </div>
         </div>

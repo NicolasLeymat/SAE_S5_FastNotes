@@ -6,12 +6,12 @@
           <div class="scroll_div_large">
             <table class="prof-tab note-tab scroll_table">
                 <tr>
-                    <th>Evaluation</th>
+                    <th>Évaluation</th>
                     <th>Coefficient</th>
                     <th>Type</th>
-                    <th>Date epreuve</th>
+                    <th>Date épreuve</th>
                     <th>Date rattrapage</th>
-                    <th>Code resource</th>
+                    <th>Code ressource</th>
                     
                 </tr>
                 @for ($i = 0; $i < count($tabEvals); $i++)

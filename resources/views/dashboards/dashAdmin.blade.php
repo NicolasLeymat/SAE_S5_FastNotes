@@ -8,7 +8,7 @@
                 <div class="flex_divs">
                   <p style="margin-top:10px;color:white;">Gestion des années</p> <br>
                   <a class="tab-cell button button-admins" href="{{ route('annees.index') }}">Afficher les années</a><br>
-                  <a class="tab-cell button button-admins" href="{{ route('annees.create') }}">Ajouter une années</a><br>
+                  <a class="tab-cell button button-admins" href="{{ route('annees.create') }}">Ajouter une année</a><br>
                   <a class="tab-cell button button-admins" href="{{route('ajoutAnnees')}}">Ajouter des années</a><br>
                 </div>
                 <div class="flex_divs">

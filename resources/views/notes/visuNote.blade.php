@@ -6,7 +6,7 @@
         <div class="home_container container grid">
           <div class="home_content">
           @csrf
-            <b class="semestre-m"> <p>Moyenne du Semestre :</p>
+            <b class="semestre-m"> <p>Moyenne du semestre :</p>
             @if($moyenneSemestre < 10)
               <p style="color:red">
             @elseif($moyenneSemestre >= 10 && $moyenneSemestre < 15)

@@ -7,7 +7,7 @@
                   <thead class="tab-row-dark">
                     <tr>   
                       <th>Année</th>
-                      <th>Debut</th>
+                      <th>Début</th>
                       <th>Fin</th>
                       <th></th>
                     </tr> 

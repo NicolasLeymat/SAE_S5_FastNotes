@@ -12,11 +12,11 @@
               <thead class="tab-row-dark">
                   <tr>
                       <th>Code UE</th>
-                      <th>Libelle UE</th>
+                      <th>Libellé UE</th>
                       <th>Code compétence</th>
-                      <th>Libelle compétence</th>
-                      <th>Libelle semestre</th>
-                      <th>Periode </th>
+                      <th>Libellé compétence</th>
+                      <th>Libellé semestre</th>
+                      <th>Période </th>
                       <th class="tab-cell"></th>
                   </tr>
                 </thead>

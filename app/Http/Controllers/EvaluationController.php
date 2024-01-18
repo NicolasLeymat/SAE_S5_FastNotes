@@ -301,7 +301,7 @@ class EvaluationController extends Controller
         }     
         $size = count($notes) - 1;
         $res = [];
-        $res['moyenne'] = $moyenne;
+        $res['moyenne'] = round($moyenne, 2);
         if ($size == 0){
             $res['ecart_type'] = 0;
         } else {

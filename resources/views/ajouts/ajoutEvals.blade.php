@@ -6,7 +6,7 @@
             @auth
               <form action="{{ route('importEvals') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <label for="file"> Selectionner un fichier : </label>
+                <label for="file"> Sélectionner un fichier : </label>
                 <input type="file" name="file" id="file">
                 <button class="Entreprise button button-order" type="submit"> Ajouter des évaluations </button>
               </form>

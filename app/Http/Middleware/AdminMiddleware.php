@@ -17,6 +17,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
 {
+    if (!auth()->check()) {
+        return redirect()->route('login')->with('error', "Vous devez être connecté pour accéder à cette ressource.")->setStatusCode(403);
+    }
+
     if (Gate::denies('isAdmin')) {
         abort(403, "Vous n'avez pas l'autorisation d'accéder à cette ressource.");
     }

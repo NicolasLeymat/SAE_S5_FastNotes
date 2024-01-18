@@ -10,6 +10,8 @@ use App\Models\Semestre;
 use App\Models\Utilisateur;
 use App\Models\Ressource;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProfsImport;
 
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -101,5 +103,19 @@ class ProfController extends Controller
         $user->delete();
 
         return redirect()->back()->with('message', 'Suppression effectuée avec succès.');
+    }
+
+    public function import(Request $request){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            //dd($request);
+            Excel::import(new ProfsImport, $request->file('file'));
+    
+            // You can add more logic here after importing the file.
+    
+            return redirect()->back()->with('successImportingProfs', 'Les professeurs ont été ajoutés avec succés');
+        }else{
+            return redirect()->back()->with('error', 'Please upload a file.');
+        }
     }
 }

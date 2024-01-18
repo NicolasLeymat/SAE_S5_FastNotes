@@ -1157,6 +1157,14 @@ input::-webkit-inner-spin-button {
   overflow-y: scroll;
   
 }
+.scroll_div_large{
+  height: 38em;
+  width: 90%;
+  margin-left:auto;
+  margin-right: auto;
+  overflow-y: scroll;
+  
+}
 
 .scroll_table{
   width: 100%;

@@ -198,7 +198,7 @@ class EleveController extends Controller
     }
 
     public function afficherEleves(){
-        $tabEleves = Eleve::paginate(10);
+        $tabEleves = Eleve::all();
         $listeGroupes = [];
         foreach ($tabEleves as $Eleves) {
             array_push($listeGroupes,$Eleves->groupe) ;

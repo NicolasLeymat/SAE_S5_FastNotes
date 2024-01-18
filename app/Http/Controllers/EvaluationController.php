@@ -370,7 +370,7 @@ class EvaluationController extends Controller
     }
 
     public function afficherEvals(){
-        $tabEvals = Evaluation::paginate(10);
+        $tabEvals = Evaluation::all();
         return view('affichage_elements.afficherEvals', compact('tabEvals'));
     }
 

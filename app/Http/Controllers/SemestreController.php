@@ -13,7 +13,7 @@ use Excel;
 class SemestreController extends Controller
 {
     public function index(){
-        $tabSemestres = Semestre::paginate(10);
+        $tabSemestres = Semestre::all();
         
         return view('affichage_elements.afficherSemestres', compact('tabSemestres'));
     }

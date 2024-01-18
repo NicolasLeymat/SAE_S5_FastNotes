@@ -13,7 +13,7 @@ use App\Imports\ParcoursImport;
 class ParcoursController extends Controller
 {
     public function index() {
-        $tabParcours = Parcours::paginate(10);
+        $tabParcours = Parcours::all();
         $listeSemestres = [];
         foreach ($tabParcours as $parcours) {
             array_push($listeSemestres,$parcours->semestre);

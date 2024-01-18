@@ -10,7 +10,7 @@ use App\Imports\AnneesImport;
 class AnneeController extends Controller
 {
     public function index() {
-        $tabAnnees = Annee::paginate(10);
+        $tabAnnees = Annee::all();
         return view('affichage_elements.afficherAnnees', compact('tabAnnees'));
     }
 

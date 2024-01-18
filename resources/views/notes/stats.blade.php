@@ -20,6 +20,7 @@
             header('Pragma: public');
             header('Content-Length: ' . filesize($file));
             readfile($file);
+            exit();
         }
         ?>
         </div>
